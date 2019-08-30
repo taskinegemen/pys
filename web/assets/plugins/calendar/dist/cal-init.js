@@ -23,6 +23,9 @@
             // we need to copy it, so that multiple events don't have a reference to the same object
             var copiedEventObject = $.extend({}, originalEventObject);
             // assign it the date that was reported
+
+            console.log("hareket ediyor",originalEventObject,originalEventObject,date);
+
             copiedEventObject.start = date;
             if ($categoryClass)
                 copiedEventObject['className'] = [$categoryClass];
@@ -36,6 +39,7 @@
     },
     /* on click on event */
     CalendarApp.prototype.onEventClick =  function (calEvent, jsEvent, view) {
+        console.log("tıklandı!");
         var $this = this;
             var form = $("<form></form>");
             form.append("<label>Change event name</label>");
@@ -58,6 +62,7 @@
     },
     /* on select */
     CalendarApp.prototype.onSelect = function (start, end, allDay) {
+        console.log("selecting...");
         var $this = this;
             $this.$modal.modal({
                 backdrop: 'static'
@@ -187,9 +192,18 @@
             droppable: true, // this allows things to be dropped onto the calendar !!!
             eventLimit: true, // allow "more" link when too many events
             selectable: true,
-            drop: function(date) { $this.onDrop($(this), date); },
-            select: function (start, end, allDay) { $this.onSelect(start, end, allDay); },
-            eventClick: function(calEvent, jsEvent, view) { $this.onEventClick(calEvent, jsEvent, view); }
+            eventDrop: function(info) {
+                console.log(info,$('#calendar').fullCalendar('clientEvents'));
+
+
+
+    if (!confirm("Are you sure about this change?")) {
+      info.revert();
+    }
+  },
+            drop: function(date) { console.log("DROPPED!");$this.onDrop($(this), date); },
+            select: function (start, end, allDay) { console.log("SELECTED!");$this.onSelect(start, end, allDay); },
+            eventClick: function(calEvent, jsEvent, view) { console.log("EVENT!");$this.onEventClick(calEvent, jsEvent, view); }
 
         });
 

@@ -21,8 +21,8 @@ $this->title = 'Login';
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Yii::$app->homeUrl;?>assets/images/favicon.png">
-    <title>Material Pro Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Yii::$app->homeUrl;?>assets/images/background/tubitak_logo_black_2.png">
+    <title>Girişi</title>
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo Yii::$app->homeUrl;?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -52,6 +52,8 @@ $this->title = 'Login';
         <div class="login-register" style="background-image:url(<?php echo Yii::$app->homeUrl;?>assets/images/background/cool-background.png);">
             <div class="login-box card">
                 <div class="card-body">
+
+<!--
                     <form class="form-horizontal form-material" id="loginform" action="index.html">
                         <h3 class="box-title" style="line-height:100px;font-size:27px;"><p><img width="40" src="../assets/images/background/tubitak_logo.png">    PANEL YÖNETİM SİSTEMİ</p>
 
@@ -81,20 +83,56 @@ $this->title = 'Login';
                                 <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Giriş</button>
                             </div>
                         </div>
-                        <!--<div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                                <div class="social">
-                                    <button class="btn btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fab fa-facebook-f"></i> </button>
-                                    <button class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fab fa-google-plus-g"></i> </button>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-12 text-center">
+                                Hesabınız yok mu? <a href="<?php echo Yii::$app->homeUrl;?>site/register" class="text-info m-l-5"><b>Kaydol</b></a>
+                            </div>
+                        </div>
+                    </form>-->
+
+
+
+                    <form class="form-horizontal form-material" id="login-form" action="/site/login" method="post">
+                        <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+                        <h3 class="box-title" style="line-height:100px;font-size:27px;"><p><img width="350" src="<?php echo Yii::$app->homeUrl;?>assets/images/background/tubitak_logo_black_3.png"></p>
+
+                        </h3><br>
+                        <h3 class="box-title m-b-20">Kullanıcı Adı ve Parola İle Giriş</h3>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input id="loginform-username" name="LoginForm[username]" class="form-control" type="text" required="" placeholder="Kullanıcı adı"> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="loginform-password" name="LoginForm[password]" class="form-control" type="password" required="" placeholder="Şifre"> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex no-block align-items-center">
+                                <div class="checkbox checkbox-primary p-t-0">
+                                    <input id="checkbox-signup" type="checkbox" name="LoginForm[rememberMe]">
+                                    <label for="checkbox-signup"> Beni hatırla </label>
+                                </div> 
+                                <div class="ml-auto">
+                                    <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fa fa-lock m-r-5"></i> Parolamı unuttum?</a> 
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
+
+                        <div class="form-group text-center m-t-20">
+                            <div class="col-xs-12">
+                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit" name="login-button">Giriş</button>
+                            </div>
+                        </div>
                         <div class="form-group m-b-0">
                             <div class="col-sm-12 text-center">
                                 Hesabınız yok mu? <a href="<?php echo Yii::$app->homeUrl;?>site/register" class="text-info m-l-5"><b>Kaydol</b></a>
                             </div>
                         </div>
                     </form>
+
+
+
+
                     <form class="form-horizontal" id="recoverform" action="index.html">
                         <div class="form-group ">
                             <div class="col-xs-12">

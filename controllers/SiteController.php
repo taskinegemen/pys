@@ -32,7 +32,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    //'logout' => ['post'],
                 ],
             ],
         ];
@@ -71,14 +71,22 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        //echo print_r(Yii::$app->request->post());
          $this->layout = false;
 
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            
+            $this->redirect(array('site/mytasks'));
+            //return $this->goHome();
         }
+
+
+
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            //$this->redirect(array('site/author'));
             return $this->goBack();
         }
 
@@ -94,6 +102,12 @@ class SiteController extends Controller
         return $this->render('register');
     }
 
+    public function actionMytasks()
+    {
+        $this->layout = false;
+
+        return $this->render('mytasks');
+    }
     /**
      * Logout action.
      *
