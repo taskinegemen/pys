@@ -1,104 +1,152 @@
 <?php
 
 namespace app\models;
+use yii\web\IdentityInterface;
+use Yii;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $user_id
+ * @property string $user_name
+ * @property string $user_surname
+ * @property string $user_email
+ * @property string $user_iban
+ * @property string $user_instution
+ * @property string $user_mobile
+ * @property string $user_yok_researcher_id
+ *
+ * @property Evaluation[] $evaluations
+ * @property ManagedBy[] $managedBies
+ * @property Userproposal[] $userproposals
+ * @property Userrole[] $userroles
+ */
+class User extends \yii\db\ActiveRecord  implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'user';
+    }
 
     /**
      * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile'], 'required'],
+            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile', 'user_yok_researcher_id'], 'string'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'user_id' => 'User ID',
+            'user_name' => 'User Name',
+            'user_surname' => 'User Surname',
+            'user_email' => 'User Email',
+            'user_password' => 'User Password',
+            'user_iban' => 'User Iban',
+            'user_instution' => 'User Instution',
+            'user_mobile' => 'User Mobile',
+            'user_yok_researcher_id' => 'User Yok Researcher ID',
+        ];
+    }
+
+
+    /**
+     * Finds an identity by the given ID.
+     *
+     * @param string|int $id the ID to be looked for
+     * @return IdentityInterface|null the identity object that matches the given ID.
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne($id);
     }
 
-    /**
-     * {@inheritdoc}
+   /**
+     * Finds an identity by the given token.
+     *
+     * @param string $token the token to be looked for
+     * @return IdentityInterface|null the identity object that matches the given token.
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['access_token' => $token]);
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @return int|string current user ID
      */
     public function getId()
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string current user auth key
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->user_password;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $authKey
+     * @return bool if auth key is valid for current user
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @param string $authKey
+     * @return bool if auth key is valid for current user
      */
-    public function validatePassword($password)
+    public function validatePassword($authKey)
     {
-        return $this->password === $password;
+//echo print_r($this->getAuthKey(),$authKey);
+        return $this->getAuthKey() === $authKey;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvaluations()
+    {
+        return $this->hasMany(Evaluation::className(), ['evaluation_managed_by' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getManagedBies()
+    {
+        return $this->hasMany(ManagedBy::className(), ['managed_by_user_user_id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserproposals()
+    {
+        return $this->hasMany(Userproposal::className(), ['userproposal_user_id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserroles()
+    {
+        return $this->hasMany(Userrole::className(), ['userrole_user_user_id' => 'user_id']);
     }
 }

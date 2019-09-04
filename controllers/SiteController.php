@@ -1,7 +1,6 @@
 <?php
 
 namespace app\controllers;
-
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,7 +8,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-
+use app\models\User;
+use app\models\Userproposal;
+use app\models\Proposal;
 class SiteController extends Controller
 {
     /**
@@ -105,8 +106,45 @@ class SiteController extends Controller
     public function actionMytasks()
     {
         $this->layout = false;
+        if(Yii::$app->request->get('proposal_id'))
+        {
+            $request=Yii::$app->request;
+            $proposal_id=$request->get('proposal_id');
+            $selected_proposal=Proposal::find()->where(['proposal_id'=>$proposal_id])->one();
+        }
+        else
+        {
+            $selected_proposal=new Proposal();
+        }
+        //echo print_r($selected_proposal);
+        $all_proposals=Userproposal::find()->where(['userproposal_user_id' => Yii::$app->user->identity->user_id])->all();
+        //print_r($all_proposals);Yii::$app->end();
+        //print_r(Userproposal::find()->all());Yii::$app->end();
+        return $this->render('mytasks',
+                [
+                    'all_proposals'=>$all_proposals,
+                    'selected_proposal'=>$selected_proposal
+                ]);
+    }
 
-        return $this->render('mytasks');
+    public function actionUserproposalacceptancestatus()
+    {
+        $this->layout = false;
+        $request=Yii::$app->request;
+        $userproposal_acceptance_status=$request->get('userproposal_acceptance_status');
+        $userproposal_proposal_id=$request->get('userproposal_proposal_id');
+        $proposal=Userproposal::find()->where(
+                                                [
+                                                    'userproposal_user_id' => Yii::$app->user->identity->user_id,
+                                                    'userproposal_proposal_id'=>$userproposal_proposal_id,
+                                                ])->one();
+        if($proposal)
+        {
+            $proposal->userproposal_acceptance_status=$userproposal_acceptance_status;
+            $proposal->save();
+            $this->redirect('mytasks');
+        }
+
     }
     /**
      * Logout action.
@@ -154,4 +192,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 }

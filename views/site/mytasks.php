@@ -7,7 +7,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use app\helpers\Helper;
 $this->title = 'My Tasks';
 //echo print_r(Yii::$app->user);
 ?>
@@ -311,25 +311,26 @@ $this->title = 'My Tasks';
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/user.png" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
+                                            <!--<div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>-->
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <h4><?php echo Yii::$app->user->identity->user_name." ".Yii::$app->user->identity->user_surname;?></h4>
+                                                <p class="text-muted"><?php echo Yii::$app->user->identity->user_email;?></p>
+                                                <!--<a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>-->
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <!--<li><a href="#"><i class="ti-user"></i> My Profile</a></li>-->
+                                    <li><a href="#"><i class="ti-wallet"></i> Ödemeler</a></li>
+                                    <!--<li><a href="#"><i class="ti-email"></i> Inbox</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <li><a href="#"><i class="ti-settings"></i> Ayarlar</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="/site/logout"><i class="fa fa-power-off"></i> Çıkış</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -367,10 +368,10 @@ $this->title = 'My Tasks';
                     
                     <div class="profile-text"> 
 
-                        <a href="#" role="button" aria-haspopup="true" aria-expanded="true"><?php echo Yii::$app->user->identity->username; ?></a>
+                        <a href="#" role="button" aria-haspopup="true" aria-expanded="true"><?php echo Yii::$app->user->identity->user_name; ?></a>
                         <div class="dropdown-menu animated flipInY"> <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
                             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                            <div class="dropdown-divider"></div> <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> </div>
+                            <div class="dropdown-divider"></div> <a href="/site/logout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> </div>
 
                     </div>
                 </div>
@@ -596,7 +597,7 @@ $this->title = 'My Tasks';
             <div class="sidebar-footer">
                 <!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
                 <!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                <!-- item--><a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> </div>
+                <!-- item--><a href="/site/logout" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> </div>
             <!-- End Bottom points-->
         </aside>
         <!-- ============================================================== -->
@@ -683,25 +684,29 @@ $this->title = 'My Tasks';
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <?php foreach ($all_proposals as $proposal) { ?>
                                                     <tr>
-                                                        <td>118K450</td>
+                                                        <td><?php echo $proposal->userproposalProposal->proposal_no; ?></td>
                                                         <td>
                                                             <!--<img src="../assets/images/gallery/chair.jpg" alt="iMac" width="80">-->
-                                                            1002
+                                                            <?php echo $proposal->userproposalProposal->proposal_type; ?>
                                                         </td>
-                                                        <td>Yükseköğretimden İstihdama Geçiş Sürecinde Yaşanan Sorunlar ve Uygulama Bazlı Çözümler</td>
-                                                        <td>10-7-2017</td>
+                                                        <td><?php echo $proposal->userproposalProposal->proposal_title; ?></td>
+                                                        <td>Diğer aşamalarda belirlenecektir!<!--<?php print_r($proposal->userproposal_available_time);?>--></span></td>
                                                         <td>
-                                                            <a href="javascript:void(0)" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Kabul"><i class="mdi mdi-checkbox-marked-circle-outline"></i></a> <a href="javascript:void(0)" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Ret"><i class="mdi mdi-close-octagon-outline"></i></a>
-                                                            <span class="label label-warning font-weight-100">Bekliyor</span>
+                                                            <a href="/site/mytasks?proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Kabul"><i class="mdi mdi-checkbox-marked-circle-outline"></i></a> <a href="/site/userproposalacceptancestatus?userproposal_acceptance_status=Ret&userproposal_proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Ret"><i class="mdi mdi-close-octagon-outline"></i></a>
+                                                            <span class="label label-<?php echo Helper::helperStatus($proposal->userproposal_acceptance_status);?>
+                                                             font-weight-100"><?php echo $proposal->userproposal_acceptance_status;?></span>
                                                         </td>
                                                         
                                                     </tr>
+                                                    <?php  } ?>
+                                                    <!--
                                                     <tr>
                                                         <td>119K450</td>
                                                         <td>
                                                             3501
-                                                            <!--<img src="../assets/images/gallery/chair2.jpg" alt="iPhone" width="80">-->
+                                                           <img src="../assets/images/gallery/chair2.jpg" alt="iPhone" width="80">
                                                         </td>
                                                         <td>Bilimsel ve Teknolojik Bilgi Üretiminin Oyun Teorisi ve Dinamik Sistemler ile Modellenmesi</td>
                                                         <td>09-7-2017</td>
@@ -714,7 +719,7 @@ $this->title = 'My Tasks';
                                                     <tr>
                                                         <td>118K430</td>
                                                         <td>
-                                                            <!--<img src="../assets/images/gallery/chair3.jpg" alt="apple_watch" width="80">-->
+                                                            <img src="../assets/images/gallery/chair3.jpg" alt="apple_watch" width="80">
                                                             1001
                                                         </td>
                                                         <td>Madde bağımlılığı İle Mücadelede Dini Lider Eğitici Eğitimi Programının Farkındalık Oluşturma Ve Öz Yeterlik Üzerine Etkisi</td>
@@ -729,7 +734,7 @@ $this->title = 'My Tasks';
                                                         <td>117K450</td>
                                                         <td>
                                                             1005
-                                                            <!--<img src="../assets/images/gallery/chair4.jpg" alt="mac_mouse" width="80">-->
+                                                            <img src="../assets/images/gallery/chair4.jpg" alt="mac_mouse" width="80">
                                                         </td>
                                                         <td>Artırılmış-Sanal Gerçeklik Uygulamaları ile Ortaöğretim Öğrencilerinin Üst Düzey Soru Çözme Becerilerinin Geliştirilmesi ve PISA Başarılarının Artırılması: Konya İli Örneği</td>
                                                         <td>02-7-2017/18:40</td>
@@ -738,7 +743,7 @@ $this->title = 'My Tasks';
                                                             <span class="label label-danger font-weight-100">Süresi Geçti</span>
                                                         </td>
                                                       
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -752,13 +757,13 @@ $this->title = 'My Tasks';
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-<?php if ($selected_proposal->proposal_id){echo "minus";}else {echo "plus";} ?>"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
                                         <h4 class="card-title m-b-0"><span class="round round-info">2</span> Görev Aşamaları</h4>
                                     </div>
-                                    <div class="card-body collapse show">
+                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id){echo "show";} ?>">
                                         <!--validation vwvizar begin-->
                 <!-- Validation wizard -->
                 <div class="row">
@@ -875,18 +880,8 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                                 <div class="ribbon-wrapper card">
                                     <div class="ribbon ribbon-info ribbon-right">Özet</div>
                                     <p class="ribbon-content">
-                                               Bu proje iki aşamadan oluşmaktadır. Birinci aşamada bilimsel ve teknolojik bilgi üretiminin arkasında yatan motivasyonları anlamak için N oyunculu iki stratejili oyun teorisi temelli bir model geliştirilecektir. Bu model bilgi üretimi ve paylaşımını etkileyen bedavacılık, pozitif dışsallıklar ve örtük bilgi faktörlerini tek bir teorik çerçeve içinde inceleme imkânı sunacaktır. Bilimsel ve teknolojik bilgiyi üreten temel aktörler olan üniversiteler, firmalar ve araştırma laboratuvarları ürettikleri bilgiyi, ya diğer aktörlerle paylaşmakta ya da alıkoymaktadır (kendilerinde saklı tutmayı tercih etmektedir). Bu tercihleri temelde yukarıda saydığımız üç faktör tarafından belirlenmektedir. Şimdiye kadar bilgi üretimi ve paylaşımına yönelik bu faktörlerden bir veya ikisini içeren iki oyunculu iki stratejili modeller geliştirilmiştir, ancak bu proje kapsamında geliştirilecek olan model, bilgi üretiminin anlaşılmasında rol oynayan bu üç faktörü, N oyunculu iki stratejili bir oyunda bir arada ele alan literatürdeki ilk çalışma olacaktır ve projenin önemi burada yatmaktadır.<br><br>
-Projenin ikinci aşamasında, bu aktörlerin yaptıkları tercihlerin üretilen bilginin niteliği üzerindeki etkileri incelenecektir. Bilginin paylaşılmasına veya alıkoyulmasına yönelik stratejiler, açık bilgi yoğun veya örtük bilgi yoğun teknolojilerin seçilmesine ve dolayısıyla teknolojinin belirli bir yönde gelişmesine neden olmaktadır. İkinci modelde, açık bilgi yoğun ve örtük bilgi yoğun teknolojilerin seçilmesinde rol oynayan etkenlerin incelendiği teorik bir çerçeve geliştirilecektir. Birinci aşamada geliştirilen modelin bir devamı niteliğinde olacak olan bu model, üretilen bilgi miktarının nasıl arttığının anlaşılmasını sağlayacaktır. Diğer bir ifade ile, bu model ile şu sonuçlara ulaşılabilir: Bazı oyuncular örtük bilgiye çok fazla önem atfedip paylaşılan bilgiden doğan pozitif dışsallıkların önemini göz ardı edebilir. Bazı oyuncular ise bedavacılık sorununu göz ardı edip açık bilgi yoğun teknolojilere yatırım yapabilir. Polya urn problemi ve dinamik sistemler kullanılarak geliştirilecek olan model hem üretilen teknolojilerin niteliği (açık veya örtük bilgi yoğun) hem de bilgi miktarının artışı hakkında çıkarımlar yapmamızı sağlayacaktır.
-Proje iki temel araştırma sorusuna cevap vermeyi amaçlamaktadır: <br><br>
-     (1) Bilgi üreten aktörler hangi şartlar altında ürettikleri yeni bilgiyi paylaşmayı veya saklamayı (alıkoymayı) tercih etmektedir?
-     (2) Bilgi üreten aktörlerin bu tercihleri ile geliştirilen teknolojilerin niteliği (açık veya örtük bilgi yoğun) arasında nasıl bir ilişki vardır?
-Projenin amacı, bu iki soruya cevap vermemize imkan sağlayacak biri oyun teorisi temelli diğeri ise dinamik sistemler temelli modeller geliştirmektir. Proje, bu amaçlar doğrultusunda iki hedefe sahiptir:
-     (1) Bilgiyi paylaşan ve alıkoyan aktörlerin neden bir arada var olduğu açıklayan N oyunculu iki stratejili bir oyun teorisi modeli geliştirmek.
-     (2) Teknolojik bilginin niteliklerinin (açık veya örtük bilgi yoğun teknolojiler) alıkoyma ve paylaşma stratejileriyle olan ilişkisini inceleyen ve üretilen bilgi miktarının artışını açıklayan dinamik sistemler temelli model geliştirmek.
-Projede geliştirilen modeller ve aralarında kurulacak olan ilişki, bilimsel ve teknolojik bilgi üretiminde rol alan aktörlerin (üniversiteler, firmalar vb.) stratejileri ile üretilen bilginin niteliği ve miktarı arasında nasıl bir ilişki olduğunun belirlenmesini sağlayacaktır. Bu ilişkilerin ortaya konması hem ileride yapılacak olan ampirik çalışmalar için teorik bir model sunacak hem de bilim ve teknoloji politikalarının anlaşılmasına yönelik çeşitli politika çıkarımları yapmamıza imkan verecektir. 
-Projede kullanılacak matematiksel modeller oyun teorisi ve dinamik sistemleri içermekedir. Geliştirilecek olan her iki model için de simülasyon teknikleri kullanılarak bilgi üretimine ilişkin stratejiler çeşitli senaryolar altında incelenecektir.
-Bu proje, proje yürütücüsünün doktora tezi araştırma sorusu olan bilimsel ve teknolojik bilgi üretiminin arkasında yatan örgütsel dinamiklerinin anlaşılması konusunda kariyerinin ilerleyen dönemlerinde yapacağı çalışmalara temel oluşturacaktır. Projenin proje yürütücüsünün kariyerine katkısı bugüne kadar inceleme konusu edindiği ekonomik aktörlerin bilgi üretiminde hangi motivasyonlara sahip olduğu sorusunun yanında bu stratejilerin teknolojinin üretilmesini nasıl etkilediği sorusunu da yürütücünün bilimsel çalışmalarının inceleme konusu yapması olacaktır. Projenin yürütücünün araştırma alanına yapacağı bu katkı, projenin disiplinlerarası niteliği ile de yakından ilişkilidir. Bu araştırma sırasında proje yürütücüsü, iktisat literatürü yanı sıra hukuk literatürüne de sıkça başvuracak ve özellikle fikri mülkiyet hakları konusunda kendini geliştirecektir. Ayrıca projede daha genel bir matematiksel modelin geliştirilmesi ve simülasyonlar yoluyla çeşitli senaryoların oluşturulması için bir matematikçi de projeye araştırmacı olarak katkı sağlayacaktır.   
-Projeden en az iki adet uluslararası yayın yapılması hedeflenmektedir. Bunlara ek olarak proje yürütücüsü bu alanda önceden yapmış olduğu çalışmaları da içeren bir kitap yazımına başlayacaktır. Projenin ara çıktıları iki uluslararası konferansta paylaşılacaktır. Bunun yanı sıra projede bir yüksek lisans öğrencisinin yetiştirilmesi hedeflenmektedir. Son olarak projenin çıktıları yürütücünün üniversitede verdiği derslerde, seminerlerde ve düzenlenecek olan bir çalıştayda paylaşılacaktır. </p>
+                                        <?php echo $selected_proposal->proposal_abstract_tr ?>
+                                                </p>
                                 </div>
                                             </div>
                                         </div>
@@ -968,13 +963,13 @@ Projeden en az iki adet uluslararası yayın yapılması hedeflenmektedir. Bunla
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-<?php if ($selected_proposal->proposal_id){echo "minus";}else {echo "plus";} ?>"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
                                         <h4 class="card-title m-b-0"><span class="round round-info">3</span> Proje Önerisi</h4>
                                     </div>
-                                    <div class="card-body collapse show">
+                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id){echo "show";} ?>">
 
                 <!-- ============================================================== -->
                 <!-- Second Card with Nested Nav -->

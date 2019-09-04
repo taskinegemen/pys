@@ -46,10 +46,10 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
-            /*if (!$user || !$user->validatePassword($this->password)) {
+            $saltypassword=hash('sha512',$this->password.Yii::$app->params['salt']);
+            if (!$user || !$user->validatePassword($saltypassword)) {
                 $this->addError($attribute, 'Incorrect username or password.');
-            }*/
+            }
         }
     }
 
@@ -75,13 +75,23 @@ class LoginForm extends Model
     public function getUser()
     {
 
+//echo print_r($this);
+//echo print_r($this->password);
+
+
+$saltypassword=hash('sha512',$this->password.Yii::$app->params['salt']);
+echo "[".$saltypassword."]";
+//Yii::$app->end();
         if ($this->_user === false) {
-            //$this->_user = User::findByUsername($this->username);
+            $this->_user =  User::find()->where(['user_email' => $this->username])->one();
+
+//User::findByUseremail($this->username);
+/*
             $this->_user=
             $test_user=new User();
             $test_user->id="100";
             $test_user->username="egemen";
-
+*/
             
         }
 
