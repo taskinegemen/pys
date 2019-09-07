@@ -11,6 +11,8 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\Userproposal;
 use app\models\Proposal;
+
+use yii\helpers\Json;
 class SiteController extends Controller
 {
     /**
@@ -118,12 +120,15 @@ class SiteController extends Controller
         }
         //echo print_r($selected_proposal);
         $all_proposals=Userproposal::find()->where(['userproposal_user_id' => Yii::$app->user->identity->user_id])->all();
+        $proposal_body=$selected_proposal->proposal_body;
+        //Yii::$app->end();
         //print_r($all_proposals);Yii::$app->end();
         //print_r(Userproposal::find()->all());Yii::$app->end();
         return $this->render('mytasks',
                 [
                     'all_proposals'=>$all_proposals,
-                    'selected_proposal'=>$selected_proposal
+                    'selected_proposal'=>$selected_proposal,
+                    'proposal_body'=>$proposal_body
                 ]);
     }
 

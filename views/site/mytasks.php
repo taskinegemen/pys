@@ -1,4 +1,3 @@
-
 <?php
 
 /* @var $this yii\web\View */
@@ -40,6 +39,10 @@ $this->title = 'My Tasks';
     <!-- You can change the theme colors from here -->
     <link href="<?php echo Yii::$app->homeUrl;?>css/colors/blue.css" id="theme" rel="stylesheet">
     <link href="<?php echo Yii::$app->homeUrl;?>assets/plugins/wizard/steps.css" rel="stylesheet" type="text/css">
+
+    <!--annotator cs-->
+    <link href="<?php echo Yii::$app->homeUrl;?>css/annotator.min.css" rel="stylesheet" type="text/css">
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,6 +50,16 @@ $this->title = 'My Tasks';
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 <![endif]-->
+<style type="text/css">
+    .resetallthem {
+        all:initial;
+        * {
+            /*all:unset;*/
+        }
+    }
+
+
+</style>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -777,23 +790,24 @@ $this->title = 'My Tasks';
 
                                      <!-- Step 4 -->
                                     <h6>Danışmanların Uyması Gereken İlke ve Etik Kurallar</h6>
-                                    <section>
+                                    <section style="white-space: pre-wrap;">
 
 Proje önerileri bilimsel kural ve kriterler çerçevesinde objektif olarak değerlendirilmeli, fırsat eşitliği, kişisel ya da kurumsal ilişkiler ve yorumlar dikkate alınmamalıdır.
-Proje ekibinde bulunan bir kişi ile çıkar çatışması varsa değerlendirme yapılmamalıdır. Bu gibi durumlarda, ilgili Araştırma Destek Grubuna ivedilikle bilgi verilmelidir. Çıkar çatışması olarak yorumlanabilecek ilişki ve durumlar aşağıda belirtilmektedir:
-a. Tez hocası veya öğrencisi olmak,
+Proje ekibinde bulunan bir kişi ile çıkar çatışması varsa değerlendirme yapılmamalıdır. Bu gibi durumlarda, ilgili Araştırma Destek Grubuna ivedilikle bilgi verilmelidir. Çıkar çatışması olarak yorumlanabilecek ilişki ve durumlar <b>aşağıda</b> belirtilmektedir:
 
-b. Son üç yıl içinde makale, tebliğ, proje ve kitap gibi ortak çalışma yapmış, yapmakta veya yakın gelecekte yapacak olmak,
+    a. Tez hocası veya öğrencisi olmak,
 
-c. Aynı kurumda çalışıyor olmak veya yakın gelecekte çalışmaları muhtemel olmak,
+    b. Son üç yıl içinde makale, tebliğ, proje ve kitap gibi ortak çalışma yapmış, yapmakta veya yakın gelecekte yapacak olmak,
 
-d. Proje önerisi hakkında görüş bildirmiş olmak ve/veya projenin hazırlanmasına herhangi bir katkıda bulunmuş olmak,
+    c. Aynı kurumda çalışıyor olmak veya yakın gelecekte çalışmaları muhtemel olmak,
 
-e. Daha önce yargıya intikal eden ihtilaflarda taraf olmak,
+    d. Proje önerisi hakkında görüş bildirmiş olmak ve/veya projenin hazırlanmasına herhangi bir katkıda bulunmuş olmak,
 
-f. Akraba olmak ya da akraba veya boşanmış olsalar bile 3.derece dahil kan bağıyla veya 2. derece dahil sıhri hısım olmak,
+    e. Daha önce yargıya intikal eden ihtilaflarda taraf olmak,
 
-g. Tarafsız davranmayı önleyecek derecede olumlu veya olumsuz düşünceye sahip olmak.
+    f. Akraba olmak ya da akraba veya boşanmış olsalar bile 3.derece dahil kan bağıyla veya 2. derece dahil sıhri hısım olmak,
+
+    g. Tarafsız davranmayı önleyecek derecede olumlu veya olumsuz düşünceye sahip olmak.
 
 Proje önerisi ile ilgili her türlü bilginin (proje danışmanının ismi, danışmanın değerlendirme veya görüşleri, vb.) ve kendileriyle TÜBİTAK arasında yapılan yazışma ve görüşmelerin gizli olduğu bilinerek bu gizliliğe uygun davranılmalıdır.
 Proje önerisinin içeriği ile ilgili bilgiler üçüncü kişilere aktarılmamalı ve başkaları tarafından kullanılma olasılığı engellenmelidir.
@@ -879,9 +893,10 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                             <div class="col-md-12">
                                                 <div class="ribbon-wrapper card">
                                     <div class="ribbon ribbon-info ribbon-right">Özet</div>
-                                    <p class="ribbon-content">
-                                        <?php echo $selected_proposal->proposal_abstract_tr ?>
-                                                </p>
+                                    <p class="ribbon-content" style="white-space: pre-wrap;">
+
+                                        <?php print_r(base64_decode($proposal_body['proposal']['project summary tr']));?>
+                                    </p>
                                 </div>
                                             </div>
                                         </div>
@@ -982,6 +997,55 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                               <nav id="navbar-example3" class="navbar navbar-light flex-column">
                                 <a class="navbar-brand text-muted" href="#">Navbar</a>
                                 <nav class="nav nav-pills flex-column">
+
+                                <?php $i=0;
+                                if($proposal_body)
+                                {
+                                foreach ($proposal_body['proposal']['titles'] as $title) 
+                                {
+                                    $i++;$j=0; 
+                                    echo '<a class="nav-link" href="#item-'.$i.'">'.$i.')'.$title['title'].'</a>';
+                                    if(is_array($title['content'])){
+                                    if(sizeof($title['content'])>0)
+                                    {   
+                                    echo '<nav class="nav nav-pills flex-column">'; 
+                                        foreach ($title['content'] as $subtitle) {
+                                            $j++;
+                                            echo '<a class="nav-link ml-3 my-1" href="#item-'.$i.'-'.$j.'">'.$i.'.'.$j.')'.$subtitle['title'].'</a>';
+                                        }
+                                        echo '</nav>';
+                                    }
+                                }
+
+                                    # code...
+                                }
+
+//addition begin
+                                foreach ($proposal_body['addition'] as $addition) 
+                                {
+                                    $i++;$j=0; 
+                                    echo '<a class="nav-link" href="#item-'.$i.'">'.$addition['title'].'</a>';
+                                    if(is_array($addition['content'])){
+                                    if(sizeof($addition['content'])>0)
+                                    {   
+                                    echo '<nav class="nav nav-pills flex-column">'; 
+                                        foreach ($addition['content'] as $subaddition) {
+                                            $j++;
+                                            echo '<a class="nav-link ml-3 my-1" href="#item-'.$i.'-'.$j.'">'.$subaddition['title'].'</a>';
+                                        }
+                                        echo '</nav>';
+                                    }
+                                }
+
+                                    # code...
+                                }
+//addition end
+
+
+
+                            }
+                                ?>
+<!--
                                   <a class="nav-link" href="#item-1">1)KONUNUN ÖNEMİ VE ÖZGÜN DEĞERİ</a>
                                   <a class="nav-link" href="#item-2">2)ARAŞTIRMA SORUSU VEYA HİPOTEZİ İLE AMACI ve HEDEFİ</a>
                                   <a class="nav-link" href="#item-3">3)YÖNTEM</a>
@@ -991,179 +1055,60 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                     <a class="nav-link ml-3 my-1" href="#item-4-2">4.2)Risk Yönetimi</a>
                                   </nav>
                                  <a class="nav-link" href="#item-5">5)YAYGIN ETKİ</a>
-
+-->
                                 </nav>
                               </nav>
                             </div>
                             <div class="col-10">
-                              <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="position-relative mt-4" style="height: 600px;overflow: auto;">
-                                <h4 id="item-1">1)KONUNUN ÖNEMİ VE ÖZGÜN DEĞERİ</h4>
-                                <p>Bu projenin konusu, Türk- İslam kültürünün baş yapıtlarından biri olan “Kutadgu Bilig’in disiplinlerarası okuması”dır. Kutadgu Bilig (1069), Karahanlı Devleti (932-1212) zamanında Balasagunlu Yusuf (Yusuf Has Hacib) tarafından ortaya konan ilk Türk-İslam eseridir (Dilaçar, 2016: 13). Balasagunlu Yusuf, Kutadgu Bilig’i yazarken eski Türk geleneklerine sıkı sıkıya bağlı kalmış, bu kitabı bir töre ve yasa kitabı olarak düzenlemiştir (Dilaçar, 2016: 28-29). Türk kültüründen unsurlar içeren, Türk atasözleri ve hikmetli sözlerle yoğrulmuş olan Kutadgu Bilig, birçok açıdan ele alınabilecek çok yönlü ve hacimli bir metindir. 
-Yusuf Has Hacib’in 1069’da Karahanlı Türkçesi ile kaleme aldığı, İslami Türk edebiyatının ilk eseri sayılan Kutadgu Bilig, bir el kitabı hüviyetinde olup ferdî hayattan aile hayatına, toplumsal hayattan devlet yönetimine kadar pek çok konuyu ihtiva etmekte ve tür olarak da Türk edebiyatında ilk siyasetnâme olarak kabul edilmektedir (Kalkışım, 2013: 93). Türk düşünce tarihinin önemli kaynaklarından biri ve Türk dilinde yazılan ilk İslami eser olan Kutadgu Bilig, her ne kadar esas itibarıyla hükümdara önerilerde bulunmak amacıyla yazılmış bir siyasetname örneği olarak telakki edilse de, Kutadgu Bilig’de hükümdara yönelik öneriler, salt devlet yönetimi ile sınırlı değildir. Toplumsal hayatın her alanına ilişkin olan öneriler, bir anlamda toplumun genelinde belirli düzenlemeler gerçekleştirilmeden devlet yapısında düzenlemelere gidilmesinin uygun olmayacağını, dolayısıyla iktidarın salt devlet ile sınırlı olmadığını ifade etmektedir (Aydemir, 2013: 805). Sembolik bir yapı üzerine inşa edilmiş olan Kutadgu Bilig’deki dört karakter temsilî  bir nitelik taşımaktadır: Kün Toğdı “adâlet”i, Ay Toldı “saâdet”i, Ögdülmiş “akl”ı, Odgurmış “âkıbet”i temsil etmektedir (Arat, 1985: 36). Ahlâk ve siyaset felsefesi açısından bir klasik olarak nitelendirilebilecek olan bu eser, ideal bir insanda bulunması gereken özellikleri manzum bir hikâye şeklinde ortaya koymaktadır. <br><br>
-Kutadgu Bilig’in üç nüshası bulunmaktadır: Bunlar Viyana, Kahire ve Fergana nüshalarıdır. Türk Dil Kurumu 1942 ve 1943 yıllarında bu nüshaların tıpkıbasımlarını yapmıştır. Reşit Rahmeti Arat, bu nüshaları karşılaştırmalı olarak ele almış ve 1947’de Kutadgu Bilig’in çeviriyazısını yayımlamıştır (Ayşegül Çakan, 2019: xi). Mesnevi nazım şekli ile yazılmış olan eser 6645 beyitten oluşmaktadır. Bununla birlıkte Yusuf Has Hacib’e ait olmayan bir mensur mukaddime ile 77 beyitlik bir manzum mukaddime bulunmaktadır. Mukaddime kısımlarında eser ve yazarı hakkındaki bilgilere değinilmektedir (Taş, 2010: 1881). “Mutluluk Veren Bilgi” anlamına gelen Kutadgu Bilig, hemen bütün tarihçilerin ittifakıyla Türk tarihinde en önemli dönüm noktası olarak nitelendirilen İslamiyet'in kabulünün, gerek şekil ve gerekse içerik bakımlarından ilk söyleyicilerinden biridir. Dolayısıyla Türk ve İslam kültürünün kaynaştığı ve bu açıdan tarihî ve sosyo-kültürel bir geçişi yansıtan kıymetli bir eserdir (Feyzioğlu, 2005: 155). Son derece zengin ve farklı okumalara elverişli olan Kutadgu Bilig din, mitoloji ve dinler tarihi, felsefe, ruhbilim, bilgi kuramı, eğitim-öğretim, aile düzeni, ahlâk, kadın, içki, atasözü bilimi, yasa ve töre bilgisi, devlet ve saray örgütü, siyaset ve diplomatlık, strateji ve taktik, tarih, coğrafya, budun bilgisi, tören ve şölen düzeni, sofra görgüsü, çocuk eğitimi, ulusal spor ve oyunlar, düş yorma, gökbilim, matematik, zooloji, edebiyat, şiir sanatı, sahne sanatı, sağlık bilgisi, aşçılık, tarım, hayvancılık ve ürünler, tecim, mal, el sanatları, maliye, para, ulaşım, halk bilimi gibi alanlarda dikkate değer veriler sunmaktadır (Dilaçar, 1988: 145).<br> <br>
-Literatür taraması yapıldığında Kutadgu Bilig’in çoğunlukla dil bilgisi yönüyle çeşitli incelemelere konu edildiği görülmektedir. Daha çok fonetik, morfoloji, sentaks, etimoloji alanlarına dair çalışmalar mevcuttur. Dönmez’in ifade ettiği gibi “Kutadgu Bilig, bir ayağı Türk dünyasına bir ayağı İslamî esaslara dayanan özgün bir eserdir. Elimizdedir. Malumumuzdur. Ancak esefle bildirmek gerekir ki, henüz farklı cephelerden ele alınmak suretiyle tatmin edici bir incelemeye tabi tutulmamıştır. Öyle ki, Müslümanlaşan Türklerin düşünce dünyasındaki değişmeler ve İslam sonrası Türk tefekkürü, İslam öncesine göre daha çok ilgi duyulan bir dönem olmasına rağmen, İslamlaşma sürecinin bir ürünü olan Kutadgu Bilig üzerine yapılan araştırmalar, maalesef, sınırlı kalmıştır. Son dönemlerde dikkat çeken birkaç sıra dışı “okuma” istisna edilirse, Türk tefekkürünün belkemiği mesabesinde olan pek çok diğer “malum eser” gibi, Kutadgu Bilig’in de payına düşen daha çok kütüphane raflarında unutulmak olmuştur” (2013: 66). Ancak Gümüş’ün de belirttiği gibi (2015: 597) bundan sonra yapılacak çalışmalar daha çok eserin mesajı, işlevi ve söylemi üzerine olmalıdır. Yapılacak bu tür incelemeler Türk kültüründeki süreklilik olgusunu açığa çıkaracak, toplumsal zihniyetin belirlenmesine yardımcı olacaktır. Böylelikle Türk kültür evreni içerisinde tarihsel metinlerimizin önemi vurgulanmış olacaktır. “Bu noktada, dilin sadece gramer incelemelerinin değil, genel olarak toplumsal bilimlerin temel faaliyet alanı olarak da değerlendirilmesi gerekmektedir.” (Aydemir 2013: 804). Dolayısıyla yapılacak çalışmalar bu eseri tanıtmanın ve önemini vurgulamanın ötesine geçerek, eseri disiplinlerarası bir bakış açısıyla derinlemesine incelemek şeklinde gerçekleşmelidir. <br> <br>
-Bunun yanında Kutadgu Bilig’i halk kültürü ve kültür tarihi bakımından bütüncül bir yaklaşımla ele alan müstakil bir çalışma bulunmamaktadır. Yapılan çalışmalarda Kutadgu Bilig sadece bir yönü ile ele alınarak değerlendirilmiştir: Ahat Üstüner “Kutadgu Bilig’de Atasözleri” başlıklı makalesinde (1991) Kutadgu Bilig’deki atasözlerini tespit ederek değerlendirmiştir. Mustafa Ünal 1998 yılında yayınladığı “Kutadgu Bilig ve Divanü Lügat-it Türk’deki Halk İnanışlarına Fenomenolojik Bir Bakış” makalesinde, dinler tarihi, inanç ve uygulamalar bağlamında Kutadgu Bilig’e temas etmiştir. Fahri Dağı “Türk Halk Anlatılarında Halk Hekimliği Üzerine Bir Araştırma” adlı doktora tezinde (2013) ve bu tezden ürettiği “İlk İslami Türk Metinlerinde (Kutadgu Bilig, Divânü Lûgati’t Türk, Atebetü’l-Hakâyık, Divân-ı Hikmet) Halk Hekimliği” makalesinde (2017) Kutadgu Bilig’deki halk hekimliği konusuna temas etmiştir. Döner Çot “Kutadgu Bilig’de Mitoloji” adlı yüksek lisans tezinde (2011) Kutadgu Bilig’deki mitolojik unsurları tespit ederek değerlendirmiştir. Zafer Önler ise “Kutadgu Bilig’de Toplumsal Kabul ve Geleneklerden Yansımalar” başlıklı makalesinde (2008)  kadına bakış, çocuklar ve çocuğun eğitimi, ziyafet ve benzeri gelenekleri ele almıştır. Süleyman Dönmez ve Şemseddin Koçak’ın birlikte hazırladıkları “Kutadgu Bilig’de Çocuk Eğitimi” başlıklı makalede (2018) çocuk eğitimi açısından Kutadgu Bilig ele alınmıştır. Nesrin Feyzioğlu, “Geçiş Döneminin Kutadgu Bilig'deki Yansımaları Üzerine Bir Değerlendirme” başlıklı makalesinde (2005) Kutadgu Bilig’in yazıldığı dönem, eski- yeni unsurlar ve özellikler, yeni bakış açsı ve yaklaşımlar bağlamında geçiş dönemini temsil eden bir eser olarak ele almış ve değerlendirmiştir. Zekiye Gizem Debreli, “Kutadgu Bilig’de Kadın” adlı makalesini 2016 yılında yayınlamış ve Yusuf Has Hacip’in “kadın” ile ilgili görüşlerini özetlemiştir. Fatih Kaya ve Erdal Akpınar’ın birlikte hazırladıkları  “Kutadgu Bilig'de Türk Yemek Adabı ve Kültürü” başlıklı makalede (2017) Türk yemek adabı ve kültürü ile ilgili Kutadgu Bilig’de var olan beyitler belirlenerek değerlendirilmiştir. Varis Çakan “Yusuf Has Hâcip’in Türk Düşünce Tarihi’ndeki Yeri” başlıklı makalesini 2017 yılında yayınlamış Kutadgu Bilig’deki kahramanların tasvirinden ve onlardan nakledilen ahlâkî ve felsefî görüşlerden hareketle değerlendirme yapmıştır. Kemal Beslen 1985 yılında “Kutadgu Bilig’de Eğitim” başlıklı tezinde Sait Başer 1990 yılında yayınladığı “Kutadgu Bilig’de Kut ve Töre” adlı kitabında, Umay Günay 1993 yılında yayınladığı “Kutadgu Bilig ve Kültür Değişmesi” başlıklı makalesinde Kutadgu Bilig’i farklı yönlerden ele almışlardır.<br> <br>
-Yapılan çalışmalar hiç şüphesiz bunlarla sınırlı değildir. Yukarıda zikredilen çalışmalardan da anlaşılacağı gibi Kutadgu Bilig’i bütüncül bir yaklaşımla kültürel açıdan ele alan müstakil bir çalışma yoktur, mevcut çalışmalar ise sınırlı ve yetersizdir. Yapılan çalışmalar Kutadgu Bilig’i sadece bir yönü ile veya tek bir motif ve unsurdan hareketle konu edinmiştir. Oysaki bu projedeki en önemli amaç, Kutadgu Bilig’i disiplinlerarası bir bakış açısıyla, bütüncül bir yaklaşımla derinlemesine incelemektir. Kutadgu Bilig, metin merkezli, yapısal ve işlevsel yöntemlerle ele alınarak Türk Kültür Tarihine katkı sunulacaktır.
-Kutadgu Bilig ile ilgili çalışmaların bilbiyografyasını hazırlayan ve bu çalışmasını düzenli aralıklarla güncelleyen Uçar’ın (2019: 140) da belirttiği gibi UNESCO’nun 2019’u Kutadgu Bilig yılı ilan etmesiyle birlikte 2019 yılında Kutadgu Bilig hakkında yeni çalışmaların artması beklenmektedir. Bilindiği gibi Kutadgu Bilig hakkındaki ilk çalışma Fransız şarkiyatçı Pierre Amédée JAUBERT tarafından 1825 yılında yapılmıştır ve 1825’ten 2018 yılına kadar Kutadgu Bilig’le ilgili yapılmış çalışmaların sayısı 1118’dir (Uçar, 2019). Sadece Türkiye’de değil Orta Asya’da, Rusya’da, Avrupa’da, Amerika’da ve Çin’de birçok araştırmaya konu olan Kutadgu Bilig (Bkz. Jamal ve Kafkasyalı: 2016) artık dünya çapında bilinen bir eser hâlini almıştır. Bu çalışmalar da göstermektedir ki, Kutadgu Bilig, asırlardır güncelliğini koruyan bir eser olmakla birlikte, eserin Yusuf Has Hacib tarafından yazılışının 950. yıl dönümü (1069) UNESCO’nun 30 Ekim-14 Kasım 2017 tarihlerinde gerçekleştirilen 39. Genel Konferansı’nda 39 C/15 sayılı belgesi çerçevesinde alınan karar gereğince “Kutadgu Bilig’in Yusuf Has Hacib tarafından Yazılışının 950. Yıl Dönümü” Azerbaycan ve Kazakistan’ın desteğiyle 2019 UNESCO Anma ve Kutlama Yıl Dönümleri arasına alınmıştır (UNESCO Türkiye Millî Komisyonu, 2019). Bu yıl içerisinde literatüre yeni bir bakış açısıyla katkı sağlayacak çalışmalar konunun güncelliğini de hem akademik alanda destekleyecek hem de kamuoyunda farkındalık yaratılmasına katkı sağlayacaktır. Bu bağlamda “Kutadgu Bilig Üzerine Disiplinlerarası Okumalar” adlı bu projenin Kutadgu Bilig araştırmalarına katkı sunacağı düşünülmektedir. Projede Kutadgu Bilig’in retorik yapısı, eserdeki karakterleştirme teknikleri, halk kültürü unsurları, alegorik yapı, anasır-ı erbaa (dört unsur) ve ruh sağlığı verileri üzerine incelemeler yapılacaktır. Kutadgu Bilig’i birey, toplum ve metin boyutlarıyla ortaya koymayı amaçlayan bu proje, eserin üç ana perspektifinin ortak olarak ele alındığı ve literatürdeki tek alana dayalı çalışmaların oluşturduğu eksikliği tamamlayacak ilk çalışma olması yönüyle özgün bir nitelik taşımaktadır. Bunun yanında proje neticesinde Kutadgu Bilig’in yapısal, söylemsel, edebî, sosyolojik, psikolojik ve folklorik boyutlarını ihtiva eden çok perspektifli disiplinlerarası bir çalışmanın ortaya konması planlanmaktadır. 
-Projede, ruh sağlığı, halk bilimi, göstergebilim ve dilbilim disiplinlerinin ortak okumasıyla elde edilen veriler Kutadgu Bilig’in birey, toplum ve metin bakımından bütüncül bir incelemesini ortaya koyacaktır. Projenin akademik alana katkısı yanında kamuoyunda konunun farkındalığını artırmak ve Kutadgu Bilig’i gelecek nesillere kültürel bir değer olarak aktarmak için proje çıktılarının orta öğretim öğrencileriyle paylaşılması hedeflenmektedir. Elde edilen veriler, birey, toplum ve metin başlıkları altında ortaöğretim öğrencilerinin dikkatini çekecek bir anlatımla yeniden düzenlenecek; metinde verilen mesajlar ve tasvir edilen sahneler, modernize edilmiş resim ve grafiklerden oluşan bir sergi vasıtasıyla görsellerle birleştirilerek interaktif bir sunumla İzmir İl Milli Eğitim Müdürlüğü’nün öngördüğü ortaöğretim okullarındaki öğrencilerle paylaşılacaktır (Sunum yapılacak okulların sayısı “beş” olarak düşünülmüş ve daha ziyade İzmir’in dezavantajlı bölgelerindeki okulların seçilmesi yönünde karar alınmıştır). Bu noktadaki amaç metnin dört ana karakterinin temsil ettikleri değerleri (Kün Toğdı “adâlet”i, Ay Toldı “saâdet”i, Ögdülmiş “akl”ı, Odgurmış “âkıbet”i temsil eder) öğrencilere görsel uyaranlarla destekleyerek sunmak, metnin içerdiği bireysel ve toplumsal bilgiyi onlara aktarmak ve Kutadgu Bilig’in genç kuşakların dikkatine sunulmasını sağlamaktır. </p>
-                                <h4 id="item-2">2)ARAŞTIRMA SORUSU VEYA HİPOTEZİ İLE AMACI ve HEDEFİ</h4>
-                                <p>Kutadgu Bilig üzerine yapılan çalışmalara bakıldığında bunların genellikle “Türk düşüncesi”, “Türklerde devlet bilgisi ve siyaset anlayışı”, “Türklerde evlenme, aile ve çocuk yetiştirme geleneği”, “Türklerin ahlâk ve felsefe dünyası” gibi Türklük bilgisine has kategoriler; Kutadgu Bilig’de yer alan hikmetli sözler; askeriye, tıp, botanik ve zooloji gibi alanlara ait terimleşmeler; Türkçenin gramerine ait unsurlar ile diğer dillerden Türkçeye geçen sözcükler üzerine yapılan araştırmalar üzerinde yoğunlaştığı görülmektedir (Uçar, 2018: 139-239).  Kısaca günümüze kadar Kutadgu Bilig üzerine yapılan çalışmalar Türkçenin gramerini çıkararak, Türk kültürüne ait birtakım motifleri ortaya koymuştur. Yapılan bu çalışmaların literatürdeki bazı eksiklikleri giderdiği yadsınamaz bir gerçektir. Kutadgu Bilig, Türk diline ve kültürüne ışık tutmasının yanında zamanın hükümdarına, insanlarına birçok konuda ders ve öğüt vermeyi amaçlayan bir metindir. Söz konusu amacın gerçekleştirilmesi için metinde temsilî dört karakter kurgulanmış, onların başından geçen olaylar alegoriye başvurularak ve “kurgunun imkânlarından faydalanılarak” aktarılmıştır. Alegori ve kurgusallığın iç içe geçtiği metinde anlatısallık, karakterleştirme, zaman, mekân, olay örgüsü, söylem unsurları, retorik özellikler vb. henüz incelemeye tabi tutulmamıştır. Diğer bir deyişle metin, kurgusal bir anlatı olarak henüz ele alınmamıştır. Bu projede Kutadgu Bilig literatüründeki söz konusu eksikliğin giderilmesi amaçlanmaktadır. <br><br>
+                              <div data-spy="scroll" id="scroll" data-target="#navbar-example3" data-offset="0" class="position-relative mt-4" style="height: 1200px;overflow: auto;">
+                                <div class="resetallthem">
+                                <?php 
+                                if($proposal_body)
+                                {    
+                                    $i=0;
+                                    foreach ($proposal_body['proposal']['titles'] as $title) {
+                                    $i++;$j=0; 
+                                    echo '<h4 id="item-'.$i.'">'.$i.')'.$title['title'].'</h4>';
 
-Metinde kurgulanan dört ana karakterden Kün Toğdı “adâlet”i, Ay Toldı “saâdet”i, Ögdülmiş “akl”ı, Odgurmış “âkıbet”i temsil eder. Bu temsilin alegorik bir görünüm sunmasının yanında metindeki karakterlerin sürekli birbiriyle diyalog hâlinde olduğu görülür. Bu yönüyle bir tiyatro metnini de andıran anlatıda, anlatıcı da diyalogların bağlanmasına, olayların aktarılmasına ve  yaşanan olaylardan çıkarılan derslerin sunulmasına hizmet eder. Burada ana hatlarıyla aktarılan özelliklerin ayrıntılı sonuçlarına ulaşabilmek, Kutadgu Bilig’in disiplinlerarası bir anlayışla okunmasını gerektirmektedir. Bilindiği gibi günümüzün bilimsel ortamında disiplinlerarası uygulamalar oldukça yaygınlaşmıştır. Disiplinlerarasılık terimi “tek bir disiplin ya da uzmanlık alanı tarafından layıkıyla ele alınamayacak kadar ka rmaşık ya da kapsamlı bir konunun ya da sorunun çözülmesine yönelik bir süreci”  ifade etmektedir (Akgül ve Akdağ, 2018: 2). Karakterlerin anlatı içindeki karakterleştirilme süreçleri ve anlatıcının bu sürece katkısı, karakterlerin psikolojileri ve esere yansıyan diğer psikolojik süreçler; alegorik unsurların kurguya hizmeti; eserdeki söyleyiş tonu, söylem tercihleri ve retorik özellikler, eserdeki olayların kurgulanışı, söz konusu olayların eserin bütününe ve vermek istediği mesaja katkısı, eserdeki anasır-ı erbaa çağrışımları, folklorik unsurlar gibi pek çok hususun bu proje kapsamında ele alınması amaçlanmaktadır. Konunun derinliği, hacmi ve karmaşıklığı düşünüldüğünde Kutadgu Bilig’in disiplinlerarası bir yaklaşımla incelenmesi elzemdir. Projede üzerinde durulması planlanan başlıklar ve içerikleri şu şekildedir:<br><br>
-
-
-Kutadgu Bilig’in Retoriği Üzerine<br><br>
-
-Karahanlı Devleti zamanında, Balasagunlu Yusuf Has Hacib tarafından Türk dilinde yazılan ilk İslami eser olan Kutadgu Bilig (1069), iletmek istediği mesajları verirken kullandığı retorik stratejiler açısından incelenmeye değer veriler sunan bir eserdir. Bir siyasetname, nasihatname veya ahlâkname olarak nitelendirilen eserde Yusuf Has Hacib’in metni cazip kılmak, okuyucuyu etkileyebilmek ve ikna edebilmek için birçok söylem ve retorik stratejisi kullandığı görülmektedir. Bu bağlamda eserde retorik başlığı altında şu konular üzerinde durulacaktır: Üslupla ilgili tercihler, biçim-içerik analizi, dil kullanımı, bakış açısı, diyalog stratejisi, akıl yürütme biçimleri, ikna stratejileri, söylem analizi, pragmatik (edimbilim) ve söz edimleri bağlamında karşılıklı konuşmaların ve kullanılan tonun analizi, dilbilimsel analiz, kelime tercihleri, sözün ve düşüncenin temsilinde kullanılan söylem çeşitleri ve hangi sıklıkta/hangi amaçla kullanıldıkları, kullanılan retorik figürleri, ideolojik söylem analizi, kimlik inşasında kullanılan retorik stratejiler, olay örgüsünün düzenlenişi, metnin altında yatan retorik yapının ortaya konması vb. Şimdiye kadar Kutadgu Bilig’in retoriğiyle ilgili kapsamlı bir çalışmanın yapılmamış olması da dikkat çekicidir. Bu bağlamda çalışmamız, bu eksikliğin fark edilmesi ve araştırmacıların bu konuya teşvik edilmesi açısından önem arz etmektedir. <br><br>       
-  
-
-Kurgusal Anlatıda Karakterleştirme ve Kutadgu Bilig Örneği 
-Karakterleştirme; anlatıda belirgin özellikleri olan bir karakter yaratmak için metindeki bir eyleyene bilgi atfetmek, bir karaktere bir özellik yüklemek olarak tarif edilebilir (Jannidis, 2013). En genel tanımıyla karakterleştirme analizi ise kurmaca eserlerdeki karakterlerin sahip oldukları kişisel özellikleri, söz konusu kişilik özelliklerinin yaratılma yollarını araştırmayı ve bulmayı amaçlar.  Bu incelemede kimin (özne), kimi (nesne) ne olarak/ ne şekilde (hangi özelliklerle) karakterleştirdiği önem kazanır (Jahn, 2012: 112). Buna göre karakterleştirme teknikleri üç temel değişken üzerine temellenir: (1) Figüral karakterleştirmeye karşı anlatıcı tarafından yapılan karakterleştirme (2) Açık karakterleştirmeye karşı kapalı karakterleştirme (kişilik özellikleri kelimelere mi yükleniyor yoksa kişinin davranışlarıyla mı ima ediliyor) (3) Kendini karakterize etmeye (oto-karakterizasyon) karşı başkasını karakterize etme (Jahn, 2012: 112). Karakterleştirmeyi analiz etmek, aynı zamanda, kendine has birtakım özelliklere sahip olan ve kurgusal karakterler oluşturmakta kullanılan anlatı araçlarını incelemek demektir. Burada şu soru ön plana çıkar: “Kim kimi hangi özellikleri kullanarak karakterleştirir?” Örneğin anlatıcıya özgü karakterleştirme ile figüral karakterleştirmeyi birbirinden ayırırken karakterleştirmenin anlatıcı tarafından mı yoksa başka karakterler tarafından mı yapıldığını belirlemek önemlidir. Figüral karakterleştirmede karakterleştiren özne yine bir karakterdir, anlatıcıya özgü karakterleştirmede karakterleştiren özne anlatıcıdır. Daha ileri ayrımlar kişisel (self) ve oto-karakterleştirmede ve diğerleri tarafından yapılan (altero-karakterleştirme) karakterleştirmeler arasında yapılabilir. Dahası bir özelliğin doğrudan belirtilmesi veya bir karakterin davranışlarından ötürü dolaylı olarak buna ulaşılmasına göre açık ve kapalı karakterleştirme ayrımına da gidilebilir (Neumann ve Nünning, 2008: 2013).<br><br>
-Kutadgu Bilig özelinde karakterleştirme analizi de yukarıda ana hatları ile belirtilen tekniklerin metne uygulanması ile yapılacaktır. Metinde yer alan Kün Toğdı, Ay Toldı, Ögdülmiş ve Odgurmış karakterlerinin metindeki işlevleri, nasıl karakterleştirildikleri, karakterlerin başlarından geçen olaylar, karakterleştirmenin dolaylı mı dolaysız mı yapıldığı, metinde uygulanan karakterleştirme tekniklerinin anlatının bütününe ve sunmak istediği mesaja katkısı üzerinde durulacaktır.<br><br>
-Kutadgu Bilig’de Dört Unsur (Anasır-ı Erbaa)
-Pek çok filozofun felsefî sisteminde yer alan anasır-ı erbaa dünyadaki varlıkların yapıtaşlarıdır. Düşünürler eski tarihlerden itibaren dünyanın yaratılışını, varlıkların ana maddesini merak etmişler ve kültür, coğrafya farklılıklarına göre bu unsurları yorumlamışlardır. Gerek sözlü gerekse yazılı ürünlerden hareketle kollektif şuuraltında kök salmış olan madde imgelemi üzerinde yapılan çalışmalar da azımsanmayacak ölçüdedir. Yusuf Has Hacib, eserine kâinatın Allah tarafından yaratılışının hikâyesiyle başlayarak hayatın temeli olan dört unsurdan söz eder. Eserde gerek kişilerden gerekse tabiat unsurlarından hareketle maddelerin Türk-Müslüman hayatında çağrışımlarını, yorumlanış şekillerini tespit etmek mümkündür. İslamiyet etkisinde yazılan Kutadgu Bilig’de Kuran’dan gelen dinî yorumlarla birlikte eski Türk kültür hayatında maddelerden doğan zengin bir imaj dünyasından söz edebiliriz. Bu tür çalışmalar şüphesiz daha sonraki dönem eserlerinde yapılacak arketip, mit, imaj çalışmalarına katkı sağlayacaktır.<br><br>
-Kutadgu Bilig’de Halk Kültürü Unsurları ve Sözlü Kültür İlişkisi 
-Türk kültürünün mirasları içinde kültürel bilgi ve birikimi öğütlerle aktaran bir hazine niteliğindeki Kutadgu Bilig’de halk kültürüyle ilgili oldukça zengin veri yer almaktadır. Kutadgu Bilig, birçok bilim ve bilgi dalında olduğu gibi halkbilimi ve halk edebiyatı bakımından da önemli bir kaynaktır. Kutadgu Bilig gibi eserler sayesinde halk kültürüne ait pek çok değer, yüzyıllar öncesinden günümüze kadar ulaşabilmektedir. Kutadgu Bilig’de  Atasözleri, deyimler, halk şiiri, doğumdan ölüme ritüeller ve halk felsefesi, halk hekimliği yanında çocuk oyunları, yemek kültürü, atla ilgili maddi ve kültürel birikime uzanan geniş bir yelpazededir. Ancak,  literatürde yer alan çalışmalar halk kültürü noktasında  makale ve bildiri gibi dar kapsamlı çalışmalar olup halk kültürü unsurları bütüncül bir bakış açısıyla incelenmemiştir. Bu projede yukarıda örnekleri verilen halk kültürü unsurları tespit edilecek ve metin merkezli halk bilimi kuramları kullanılarak yapısal ve işlevsel açıdan analiz edilecektir. Bu tespitlerin, yazılı kültüre ait Kutadgu Bilig eserinde, sözlü kültürün etkisi ve fonksiyonlarının değerlendirilmesi için önemli veriler sunacağı ön görülmektedir. <br><br>
-Türk dili, edebiyatı ve kültür tarihiyle ilgili olarak yapılan disiplinlerarası çoğu çalışmanın odak noktasının Türk halk bilimi olduğunu söylemek mümkündür.  Kutadgu Bilig’in de özünü oluşturan ana kaynak halk kültürüdür. Bu proje kapsamında Kutadgu Bilig’in titizlikle taranması sonucunda, Türk kültürüne ve Türk mitolojisine ait birçok ögenin Kutadgu Bilig’de başarılı bir şekilde kullanılmasından hareketle, eserde yer alan halk kültürü unsurları tespit ve tahlil edilecektir. Bu çalışma kültür araştırmalarına önemli bir katkı sunacaktır. <br><br>
-Kutadgu Bilig "pendname" (öğüt kitabı), "düs-turname" (kural kitabı) ve "siyasetname" (siyaset kitabı) olarak, karşılıklı diyalog yani soru cevap şeklinde yazılmıştır. Bu diyalogları, gençlerin elektronik ortamdaki güncel yazışma ve söylemlerine benzetmek mümkündür. Soru-cevap şeklindeki diyaloglar, sözlü anlatıma dayanmaktadır. Kutadgu Bilig’in bu özelliğine gençlerin dikkatini çekmek ve bakış açısı ortaklığını vurgulamak önemlidir. Farklı disiplindeki gençlerle ortak bir çizgide yani güncel bir söylemle günümüzde buluşmak için Kutadgu Bilig’i disiplinlerarası bakış açısıyla senkronize eden bir çalışma yapılacaktır. Ruh sağlığı, Dilbilim, Edebiyat, Göstergebilim ve Halk bilimi bakış açısıyla Kutadgu Bilig’in söylem ve içerik boyutu, güncel yöntemlerle incelenecek, yeni bir anlatımla bir paket halinde gençlere sunulacaktır. Kutadgu Bilig’in ideal insan-ideal toplum ve milli kimlik inşasındaki rolü, halk kültürü unsurları ve sözlü kültür ilişkisi bağlamında değerlendirilecektir.<br><br>
-Kutadgu Bilig’de Ruh Sağlığı
-İslâmî Türk Edebiyatı sahasında, eseri günümüze ulaşan ilk Türk yazarı Yusuf Has Hacip eserinde; siyaset ve dini halk yönetimini biçimlemede yansıtırken, aslında ruh hali iyi olan birey aile ve toplum yapılanmasını inşa etmiştir. Özellikle yaşamın doğum ve ölüm arasında geçtiği, bu sürede yaşama dair iletişim, beslenme, liderlik, örf adet, öfke, kaygı, çatışma, uyku, rüya, astronomi gibi kavramları ruh sağlığı iyi olan bireyler geliştirmede öğütleri ile tasvir etmiştir. Özellikle hükümdarın gizli baba, vezirin gizli anne, halkın ise gizli çocuk imgelemesi ödipal bir ortam sunmaktadır. Tüm bu yaşama dair kavramlar ölüm  gerçekliği ile yeni bir nesle devredilmektedir. Aslında Kutadgu Bilig ruhsal yapının sağlıklı halini öğütlerle bireye ve topluma öğretmiştir. Bu projede tüm bu kavramlar yukarıda belirtildiği çerçevede analiz edilecektir. Ruh sağlığı hizmetlerinin modern yapıda sunulmadığı Kutadgu Bilig’in yazıldığı 11. yüzyılda, aslında topluma önemli tedavi edici, iyileştirici mesajlar verdiği ve günümüz insanının bu gözle eseri değerlendirmesi için bu projenin fırsat sunacağı öngürülmektedir. <br><br>
-
-Projenin araştırma soruları şunlardır:<br><br>
-
-    1. Kurgusal bir metin olan Kutadgu Bilig’de nasıl bir retorik yapı vardır?<br>
-    2. Kutadgu Bilig’de hangi karakterleştirme teknikleri kullanılmıştır?<br>
-    3. Kutadgu Bilig’de anlatıcının kurguya katkısı ne şekildedir?<br>
-    4. Kutadgu Bilig bir edebî metin olarak hangi türün kapsamına girer?<br>
-    5. Kutadgu Bilig’de başvurulan alegorinin kurguya katkısı nedir? <br>
-    6. Kutadgu Bilig’de karakterlerin psikolojileri nasıl ele alınmıştır ve psikolojik süreçler metne nasıl yansıtılmıştır?<br>
-    7. Kutadgu Bilig’de ruh sağlığı açısından ne gibi veriler tespit edilebilir ve bunlar nasıl yorumlanabilir? <br>
-    8. Kutadgu Bilig’de anasır-ı erbaa nasıl işlenmiştir ve Türk-Müslüman hayatındaki çağrışımları nelerdir?<br>  
-    9. Kutadgu Bilig’deki halk kültürüne ilişkin unsurlar nelerdir ve bunlar nasıl yorumlanabilir?<br>
-    10. Kutadgu Bilig’de yazılı ve  sözlü kültür ilişkisi nasıl kurulmuştur?<br>
-    11. Kutadgu Bilig’de ne gibi söylem stratejileri kullanılmıştır?<br>
-    12. Kutadgu Bilig’deki karakterler görsel olarak nasıl ifade edilir?<br>
-
-<br><br>
-Amaç ve Hedefler
-<br><br>
-Projenin temel amacı Türk-İslam kültürünün baş yapıtlarından biri olan Kutadgu Bilig’in disiplinlerarası yaklaşımlar (edebiyat, retorik, dilbilim, pragmatik, anlatıbilim, gösterge bilim, psikoloji ve halk bilimi) ışığında kurgusal anlatıya has kategoriler açısından (anlatıcı, olay örgüsü, karakterler, zaman, mekân, üslup, söylem, retorik yapı vb.) ele alınarak disiplinler arası bir ekip çalışmasıyla analiz edilerek sonuçların kitap olarak yayınlanması ve elde edilen bulguların interaktif bir sunumla genç kuşaklarla paylaşılmasıdır.  Z kuşağı olarak tanımlanan kuşağın iletişim ortamını ağırlıklı olarak internet ve sosyal medya oluşturmaktadır. Dolayısıyla söz konusu kuşağın ilgisini çekmek ve iletişim kurabilmek için söz konusu bilgiyi görsellerle desteklemek gerekmektedir ve bu nedenle projenin sunum kısmında Kutadgu Bilig’de yer alan adalet, doğruluk, akıl vb. değerler ve bu değerleri temsil eden karakterle ilgili anlatmalar seçilerek resimlendirilecektir.
- <br><br>
-Araştırmanın bu temel amaç doğrultusunda hedefleri analiz ve sunum şeklinde birbiriyle ilişkili iki hedefi vardır. 
-Projenin analize ilişkin hedefleri şunlardır:
-<br>
-    1. Türkçenin başvuru kaynaklarından biri olan Kutadgu Bilig’in aynı zamanda kurgusal bir metin olduğu gerçeğinden hareketle, metnin kurgulanma sürecinin analiz edilmesi <br>
-    2. Kutadgu Bilig’de anlatılan olayların kurgunun imkânları açısından ele alınması<br>
-    3. Kutadgu Bilig’de başvurulan karakterleştirme tekniklerinin belirlenerek bunların kurguya katkısının tespit edilmesi<br>
-    4. Metinde anlatıcının işlevinin ve karakterleştirmeye katkısının belirlenmesi<br>
-    5. Metinde zaman ve mekân unsurlarının kullanımı ve bunların kurguya katkısının incelenmesi<br>
-    6. Kutadgu Bilig’de benimsenen üslup ve söylem tercihlerinin belirlenmesi<br>
-    7. Kutadgu Bilig’de yer alan alegorik unsurların ve metindeki alegorinin anlatı kategorileri ile ilişkisinin tespiti<br>
-    8. Metindeki karakterlerin psikolojik süreçleri ve bunların kurguya yansıma biçimlerinın belirlenmesi<br>
-    9. Kutadgu Bilig’de benimsenen anlatısal tercihler ile anlatının okuyucuya sunmak istediği mesajlar arasındaki ilişkinin tespiti<br>
-    10. Kutadgu Bilig’de anasır-ı erbaanın Türk-Müslüman hayatındaki yansımalarının tespiti<br>
-    11. Proje kapsamındaki çalışmaların kitap olarak yayınlanması. <br>
-
-Projenin sunuma ilişkin hedefleri ise şunlardır:<br><br>
- 
-    1. Kutadgu Bilig’le ilgili disiplinlerarası analize dayalı bulguların genç kuşaklarla paylaşılarak hem konunun hem de çalışmanın güncelliğinin sağlanarak genç kuşaklarca farkındalığının artırılmasıdır.  <br>
-    2. Metinde yer alan dört ana karakter ile bireysel ve toplumsal değer ve mesajların resimleri/grafikleri hazırlanmak suretiyle oluşturulacak sunum, öğrencilerin görsel olarak da iletişim sağlayacağı bir yapıda kazandırılacaktır.  <br>
-    3. Yazılı ve sözlü sunumun yanında görsel ögelerin de yer alacağı interaktif bir sunum olarak planlanan bu aşamanın hedef kitlesi İzmir İl Milli Eğitim Müdürlüğü’nün yönlendireceği ortaöğretim düzeyindeki okullardaki öğrencilerdir. </p>
-                                <h4 id="item-3">3)YÖNTEM</h4>
-                                <p>Proje kapsamında yürütülecek olacak araştırmanın mahiyetine uygun olarak nitel yaklaşım kullanılacak ve metin analizi, söylem analizi, retorik analiz, dilbilimsel analiz temelli incelemeler yapılacaktır. Disiplinlerarası bir hüviyete sahip olan projemiz, bu nedenle, farklı araştırma/inceleme yöntemlerini bir arada kullanmayı gerekli kılmaktadır. Aşağıda ayrıntılı olarak yer vereceğimiz bu yöntemlerin tamamının ortak noktası ise yapısalcı bakış açısıdır. Edebiyatta yapısalcılık bir metnin incelemesinde, belli bir bölge veya anlatı grubundaki ortak yapıları belirleyerek, bunların bir formül haline getirilmesi ve bu formülün evrensel seviyede uygulanabilir olmasını bekler (Ekici 2013: 119). Ancak, projemizi tek bir metin etrafında şekillendirdiğimiz için, yapısalcı bakış açısının “karşılaştırarak genelleme yapma” prensibinden ziyade, metni belirli ölçütlere göre parçalara ayırma ve bu parçaların bütün içerisindeki rolünü belirleme prensibinden faydalanacağız. Bunun için ilk olarak klasik yapısalcı yöntemin uygulanması; yani metnin epizot esaslı olarak bölümlenmesi gerekmektedir; çünkü Kutadgu Bilig’in sözlü edebiyat ürünleriyle ilişkisi bu klasik yapısalcı inceleme yönteminin uygulanmasını gerekli kılar. Sonrasında ise özellikle Roland Barthes’ın öncülüğünü yaptığı, epizot esaslı değil “göstergeler” esaslı bir bölümleme yapılması gerekmektedir (Barthes 2016). Bu yöntem ile metin, farklı disiplinlerin incelemesi için gerekli olan parçalara ayrılmış bir hale getirilecektir. Halk bilimi alanında ise metin merkezli inceleme yöntemleri (Oğuz, Ekici vd. 2010; Çobanoğlu 2002) kullanılarak yapısal çözümleme yapılacak ve elde edilen veriler işlevsel olarak analiz edilecektir. Yapısal olarak halk kültürüne ait yukarıda örneklerine yer verilen başlıklardaki unsurların tespit edilmesinin ardından halk kültürü unsurlarının işlevleri değerlendirilecektir. 
-Böylesi bir yöntemsel eğilime sahip olan projemizde, bu aşamadan sonra takip edeceğimiz yol “yapısal içerik analizi”dir. Bir metnin içerik unsurlarından hareketle genel sosyal/gerçek hayat hakkında tutarlı bilgi sunmayı vadeden bu yöntem, sosyal bilimlerin farklı alanlarındaki araştırmacılar tarafından tercih edilmiştir. Hüseyin Aksoy (2019), bu yöntemi takip ettiği çalışmasında, içerik analizi hakkındaki görüşleri kısaca şöyle sunmuştur: Klaus Krippendorff’a göre içerik analizi; “İletişimin yazılı/açık (manifest) özelliklerinden yazılı/açık (manifest) olmayan içerik özelliklerine yönelik çıkarımlar yapmayı” amaçlamaktadır (Gökçe, 1995: 24). Krippendorff’tan hareketle Merten’in geliştirdiği tanım ise şöyledir: “İçerik çözümlemesi, sosyal gerçeğin yazılı/açık (manifest) içeriklerinin özelliklerinden, içeriğin yazılı/açık olmayan özellikleri hakkında çıkarımlar yapmak yoluyla sosyal gerçeği araştıran bir yöntemdir” (Gökçe, 1995: 24). George Gerbner de içerik analizinin amacını şu şekilde ifade etmiştir: “Herhangi bir içerik analizinin amacı görünürde açık olmayan bir şey hakkında olanaklı, görünür çıkarımlar yapmaktır” (Güngör ve Binark, 1993: 126). İçerik analizi, Duverger’e göre bir metnin öğelerinin önceden saptanmış bulunan kategorilere göre sınıflandırılmasına dayanmaktadır (Duvarger, 1989: 144). Cartwright tarafından, “Her türlü sembolik davranışın betimlenmesinde ve içeriğinin analizinde kullanılan sistematik, nicel ve nesnel bir yöntem” olarak tanımlamaktadır (Bilgin, 2000: 1). “Sözel veya yazılı verilerin belirli bir problem veya amaç bakımından sınıflandırılması, özetlenmesi, belirli değişken veya kavramların ölçülmesi ve bunlardan belirli bir anlam çıkarılması için taranarak kategorilere ayrılması” (Tavşancıl-Aslan, 2001: 20) olarak da tanımlanan bu yöntem; “Araştırma Sorusu veya Hipotezi ile Amacı ve Hedefi” başlığı altında belirttiğimiz gibi Kutadgu Bilig’in çok yönlü analizi amacına sahip olan projemizin yapılabilirliğini destekleyici mahiyettedir.<br><br>
-Yapısal içerik analizi ile ortaya koyacağımız Kutadgu Bilig’deki anlam dünyasına dair bilgi birikimi, “Projeden Beklenen Yaygın Etki Tablosu”nda belirttiğimiz “Kutadgu Bilig’in lise öğrencilerine yeniden sunumu” için gerekli veriyi bize sunacaktır. Metindeki anlamları doğuran gösterge ve gösterenler arasındaki ilişkiyi doğru bir şekilde belirleyebilmek ve metni hedef kitlemizin dikkatine sunmak için, öncülüğünü Jacques Derrida’nın yaptığı “yapısöküm (deconstruction) yöntemi”nden faydalanmamız gerekmektedir. Yapısökümü, bir cümlede yer alan sözcüklerin dizilişini bozmak, bir bütünün parçalarını ayırmak, bir başka yere taşımak maksadıyla dizelerin yapısını çözmek ve ölçüyü bozmak ve bu dizeleri nesire benzetmek manalarında kullanmıştır. Bununla birlikte Derrida ise bu kavramı olumsuz manada kullanmadığını da açıklamaya çalışmıştır. “Bu manada Derrida’ya göre yapısökümü yıkmaktan çok bir bütünlüğün nasıl inşa edildiğini anlamaya ve onu yeniden inşa etmeye yani yapmaya çalışmaktır.” (Yanık, 2016, 93-94). Post-modernist bakış açısıyla, Kutadgu Bilig’in sınırsız bir anlamlar bütününü içeren bir metin olduğunu ifade edebiliriz. Nitekim projemiz bu sınırsız anlamlar bütününü, sınırlı bir okuma ve hedef kitle için yeniden kurgulamayı esas almaktadır. 
-Araştırmanın tasarımında 3 aşama yer almaktadır: <br><br>
-Ön Araştırma: Bu noktada ortak terim ve kavramlar tespit edilecek ve projenin akademik çıktıları başta olmak üzere uygulama aşamasında yer alan interaktif sunumda da farklı disiplinlerin birlikte çalışmasına rağmen terminoloji ortaklığı sağlanacaktır. <br>
-İnceleme: Projede yer alan araştırmacıların çalıştıkları disiplinin araştırma ve inceleme yöntemlerine bağlı olarak Kutadgu Bilig metnini analiz edecekleri bu aşamanın akademik çıktılarının bir kitap bütünlüğünde yayınlanarak akademik dünyayla projenin sonuçlarının paylaşılması bu aşamanın öncelikli hedefidir. Projenin inceleme kısmı iki ana aşamada tamamlanacaktır:<br><br>
-İnceleme 1. Aşama- Metinlerin Analizi: Disiplinlerin araştırma ve inceleme yöntemleri uyarınca  Kutadgu Bilig’in analizini içeren bu aşamada gerçekleştirimesi planlanan çalışma yöntemi aşağıdadır:<br><br>
-Kutadgu Bilig metninin, “karakterlerin eylem alanları” odaklı epizotlarına ayrılması (klasik yapısalcı analiz): Bu yolla, Kutadgu Bilig’in “geleneksel anlatı kalıpları” ile ilişkisi ortaya koyulacaktır. Dünyada var olan bir olguyu yansıtmak için oluşturulan bir metnin manası metnin yapı ve içerik unsurları ve o olgu arasındaki ilişkide saklıdır; çünkü okuyucu/dinleyici aktarılan olayla doğrudan muhatap olmamıştır ve metnin kendisine sunduğu anlam dünyasıyla yetinmek durumundadır. Bu nedenle, belirli bir kompozisyona sahip bir metinde anlamın veya gerçeğin ortaya çıkmasında etkin olan unsurun onun sunuş şekli; yani yapı ve türe dair özellikleri olduğu görülmektedir. Dolayısıyla, dağınık haldeki bilgi yığınının daha önceden toplum tarafından belirlenmiş kalıplarla sunulmasının, onun genel kabul görmesinde etkili olduğunu iddia edebiliriz. Çünkü bilindik bir kalıpla sunulan bilgi, geleneksel bir hüviyete sahip olur. Gelenek ise, genel kabul gören üretim tarzıdır.<br><br>
-Kutadgu Bilig metninin, “gösteren ile gösterge” odaklı incelenmesi (göstergebilimsel analiz): Karakterlerin eylem alanları odaklı epizotlarından faydalanarak ve aynı zamanda bundan bağımsız olarak, Kutadgu Bilig metnindeki en küçük anlamlı yapısal birimlerin yorumlaması yapılacak. Nitekim Saussure ile başlayan yapısalcı dilbilim çalışmalarında gönderim ile mana arasındaki ilişki üzerine çeşitli tartışmalar yürütülmüştür. Bu tartışmalarda gösteren ile gösterge arasındaki ilişkinin manayı ortaya çıkaran temel unsur olduğu genel kabul görmüştür. Mana, her insana göre küçük değişiklikler gösterse de, bizim “gerçek” olarak kabul ettiğimiz şeydir. Dilbilimci Frege, mananın bir nesneyi işaret eden ifadenin (bir kelime veya bir metin) gönderimde bulunduğu nesneyi sunuş biçimi olduğunu iddia eder (Akşehirli, 2004: 162; Barut ve Odacıoğlu, 2018, 932).<br><br>
-İnceleme 2. Aşama- Görseller İçin Veri Tespiti: Projenin uygulama aşamasında yer alması planlanan Z kuşağı olarak tanımlanan ortaöğretim öğrencileriyle Kutadgu Bilig’de yer alan kültürel miras birikiminin buluşturulması için bu aşamada görsellerle desteklenecek veriler tespit edilecektir. Söz konusu verilerin tespiti için yapısökümsel analiz yöntemi kullanılacaktır:<br><br>
-Kutadgu Bilig metninin, “parçalara ayrılarak yeniden inşası” odaklı incelenmesi (yapısökümsel analiz): Bu aşamada, Kutadgu Bilig’in “Z Kuşağı” olarak adlandırılan internet ve elektronik kültür ortamında yetişen nesil için yeniden sunumu söz konusu olacaktır. Bunun için, yukarıda belirttiğimiz yöntemler dahilinde Kutadgu Bilig’in incelenmesi neticesinde elde edeceğimiz farklı okumalara ihtiyaç duyulmaktadır. Çünkü farklı okumalar neticesinde ortaya çıkan bakış açıları içerisinden genç kuşağın ihtiyaç duyduğu kültürel gönderimler seçilecek ve bunların görsel tasarımları gerçekleştirilecektir. Özgün görsel tasarımlar (çizimler, illüstrasyonlar, “caps” olarak nitelendirilebilecek resim altı yazıları vb.) Kutadgu Bilig ışığında yeniden kurgulanan metinlerle desteklenecektir. Belirli zamanlarda ilgili okullarda gerçekleştirilecek sunumlarla; Kutadgu Bilig’deki kültürel değerler, özgün bakış açıları, insan ilişkileri, insan ve aile-toplum arasındaki ilişki, bireyin ve kendini gerçekleştirmesi hususları aktarılacaktır.<br><br>
-Uygulama: Projenin son aşamasında görselleri oluşturulan veri ve metinlerin büyük boy poster baskılar ve sözlü sunumlara eşlik edecek görsellerde kullanılması sağlanacaktır. Hazırlanan görseller, interaktif sunumların yapılacağı okullarda sergi şeklinde de sunulacaktır. Projenin İnceleme kısmında yer alan “Kutadgu Bilig metninin, ‘parçalara ayrılarak yeniden inşası’ odaklı incelenmesi (yapısökümsel analiz)” sürecinde elde edilecek veriler özellikle Z kuşağını hedef alan sunumlarla paylaşılarak Kutadgu Bilig’deki kültürel miras unsurlarının gençlerle buluşması sağlanacaktır. </p>
-                                <h5 id="item-4">4)PROJE YÖNETİMİ</h5>
-                                <p>
-                                    <h5 id="item-4-1">4.1)IYönetim Düzeni: İş Paketleri (İP), Görev Dağılımı ve Süreleri</h5>
-                                    <p>İP No
-
-İş Paketlerinin
- Adı ve Hedefleri
+                                    if(is_array($title['content'])){
+                                    foreach ($title['content'] as $subtitle) {
+                                        $j++;
+                                        echo '<h5 id="item-'.$i.'-'.$j.'">'.$i.'.'.$j.')'.$subtitle['title'].'</h5>';# code...
+                                        echo '<p>'.base64_decode($subtitle['content']).'</p>';
+                                    }
+                                }
+                                    else
+                                        {
+                                            echo '<p>'.base64_decode($title['content']).'</p>';
+                                        }
+                                }
 
 
-Kim(ler) Tarafından Gerçekleştirileceği
+//addition begin
+                                    foreach ($proposal_body['addition'] as $addition) {
+                                    $i++;$j=0; 
+                                    echo '<h4 id="item-'.$i.'">'.$i.')'.$addition['title'].'</h4>';
 
-Zaman Aralığı
-(12 Ay)
-Başarı Ölçütü ve Projenin Başarısına Katkısı 
-1
-Ön Araştırma-Terminoloji Ortaklığı: 
-Metin analizleri ve interaktif sunumlarda ortak terminolojinin kullanılması için hazırlık yapılması. Projede yer alan dilbilim, göstergebilim, halk bilimi ve ruh sağlığı disiplinlerinde temel terim ve kavramlarda terminoloji birliği sağlanması gerekmektedir. Örneğin anlatı/anlatma, sözlü kültür/sözel kültür, imge/simge/sembol gibi terimler ile bu projenin üç temel perspektifini oluşturan birey, toplum ve metin kavramları da her alanda farklı kullanımlara sahiptir ancak disiplinlerarası çalışmanın ön koşulu olarak terim ve kavramlarda ortak bir zemini paylaşmak gerekliliği projenin ön araştırma safhasında terim ve kavramlarda uzlaşılmasını gerektirmektedir. 
-Dr. Mustafa Duman, Dr. Ebru Özlem Yılmaz, Doç. Dr. Pınar Fedakar, Prof. Dr. Ayşegül Bilge
-1-2. aylar
-İki araştırmacı vasıtasıyla Kutadgu Bilig’le ilgili çalışmalar taranarak temel terim ve kavramlar tespit edilecek ve proje çalışanlarının ortak görüşlerine sunularak çalışmada terim ve kavram birliği sağlanacaktır.  Farklı disiplinlerin Kutadgu Bilig’i farklı perspektiflerden ele alacağı bu projenin terim ve kavramlarında ortak bir dil kullanılması çalışmanın bütünlüğünü sağlamada önemli ve öncelikli bir aşamadır. 
-2
-İnceleme 1. Aşama- Metinlerin analizi:  disiplinlerin araştırma ve inceleme yöntemleri uyarınca  Kutadgu Bilig’in incelenerek analiz edilmesi. 
-Doç. Dr. Bahar Dervişcemaloğlu, Prof. Dr. Ayşegül Bilge, Doç. Dr. Şerife Çağın, Doç. Dr. Pınar Fedakar, Dr. Öğr. Üyesi Rabia Uçkun, Dr. Ebru Özlem Yılmaz, Dr. Mustafa Duman 
-2-9. aylar
-Bu projede yer alan araştırmacılar, birey, toplum ve metin eksenindeki ortak bakış açısına bağlı olmak kaydıyla ruh sağlığı, göstergebilim, dilbilim ve halk bilimi disiplinleri çerçevesinde Kutadgu Bilig’deki verileri tespit edip analiz edeceklerdir. Projenin akademik kısmındaki araştırma sonuçları kitap olarak da yayınlanacaktır. 
-3
-İnceleme 2. Aşama- Görseller İçin Veri Tespiti: 
-Görseller ve sunumda kullanılacak metin ve verilerin tespit edilmesi
- Dr. Mustafa Duman,  Dr. Öğr. Üyesi Rabia Uçkun,  Doç. Dr. Şerife Çağın, Doç. Dr. Ekin Boztaş
+                                    if(is_array($addition['content'])){
+                                    foreach ($addition['content'] as $subaddition) {
+                                        $j++;
+                                        echo '<h5 id="item-'.$i.'-'.$j.'">'.$i.'.'.$j.')'.$subaddition['title'].'</h5>';# code...
+                                        echo '<p>'.base64_decode($subaddition['content']).'</p>';
+                                    }
+                                }
+                                    else
+                                        {
+                                            echo '<p>'.base64_decode($addition['content']).'</p>';
+                                        }
+                                }                                
+//addition end
 
-9-10. aylar
-Projenin Uygulama Aşamasında yer alan interaktif sergide kullanılacak metinler ve veriler görseller için sınıflandırılacak ve resimleri çizecek araştırmacıyla paylaşılacaktır. Bu aşamanın gerçekleştirilmesiyle birlikte  resimler ve sunularda yer alacak veriler ve metinlerin uyumlu ve bütüncül olması sağlanacaktır. 
-4
-Uygulama 1 Aşama – Görsellerin Hazırlanması: 
-Sergi ve sunum aşamasında kullanılmak üzere tespit edilen metin ve verilerin görsellerinin hazırlanması
-Doç. Dr. Ekin Boztaş
+                            }
+                                    # code...
+                                ?>
+                                <?php //print_r(base64_decode($proposal_body['proposal']['titles'][0]['content'][0]['content']));?>
 
-10-11. aylar
-Proje araştırmacıları tarafından tespit edilen verilerin görsellerinin oluşturulması ilgili araştırmacı tarafından gerçekleştirilecek ve projenin diğer araştırmacıları tarafından da değerlendirilerek yönlendirilecektir. 
-5
-Uygulama 2. Aşama-Sunum: 
-Serginin ve interaktif sunumların seçilen okullarda gerçekleştirilmesi
-Doç. Dr. Bahar Dervişcemaloğlu, Prof. Dr. Ayşegül Bilge, Doç. Dr. Şerife Çağın, Doç. Dr. Pınar Fedakar, Dr. Öğr. Üyesi Rabia Uçkun,  Dr. Ebru Özlem Yılmaz, Dr. Mustafa Duman, Doç. Dr. Ekin Boztaş
-
-11-12. aylar 
-Projenin verilerinin genç kuşaklarla buluşmasında, yazılı ve sözlü kültürün birlikteliğinin kullanılması ve görsel ifadenin gücünün sunumlara taşınması hedefi bu aşamada gerçekleştirilecektir.
-</p>
-                                    <h5 id="item-4-2">4.2)Risk Yönetimi</h5>
-                                    <p>
-                                        Projenin başarısını olumsuz yönde etkileyebilecek riskler ve bu risklerle karşılaşıldığında projenin başarıyla yürütülmesini sağlamak için alınacak tedbirler (B Planı) ilgili iş paketleri belirtilerek ana hatlarıyla aşağıdaki Risk Yönetimi Tablosu’nda ifade edilir. B planlarının uygulanması projenin temel hedeflerinden sapmaya yol açmamalıdır.
-
-                                                       RİSK YÖNETİMİ TABLOSU (*)
-İP No
-En Önemli Riskler
-Risk Yönetimi (B Planı)
-
-Bu projenin en önemli riski iş takvimine uygun olarak çalışmaların sürdürülmesi noktasında görülmektedir. Her araştırmacının kişisel programının uygunluğu teyit edilerek projede görev almasına rağmen hastalık vb. gibi öngörülemeyecek durumlarda iş takvimi aksayabilir. 
-Öngörülemeyecek durumlarda iş takviminin aksatılmaması için iş takviminin üç ana aşamasına da birden fazla ve mümkün olduğunca her disiplinden bir araştırmacı görevlendirilmiştir. Dolayısıyla her aşamayı gerçekleştirecek araştırmacıların ortak çalışması gerekmekte ve bu ortaklık da hastalık vb. nedenlerle oluşabilecek öngöürlemeyen risklerin iş takvimini etkilememesi sonucunu doğuracaktır. 
-
-Projenin uygulama aşaması, interaktif sunumların okullarda gerçekleştirilmesini gerektirmektedir. Bu noktada okulların sunumları kabuluyle ilgili riskler söz konusu olabilir. 
-İnteraktif sunumların okullarda gerçekleştirilmesi noktasında İzmir İl Milli Eğitim Müdürlüğü’nün desteği alınmış ve bu destek ek belge olarak sunulmuştur. Söz konusu destekle sunumların gerçekleştirilmesi mümkün olan okulların sayısı ve isimleri net olarak belirtilmemiş, böylece olası risklerde farklı okullarla iletişime geçilmesi mümkün kılınmış,  dolayısıyla bu noktadaki riskler de ortadan kaldırılmıştır.
-    (*) Tablodaki satırlar gerektiği kadar genişletilebilir ve çoğaltılabilir.
-                                    </p>
-
-<h5 id="item-5">5)YAYGIN ETKİ</h5>
-                                    <p>Proje başarıyla gerçekleştirildiği takdirde projeden elde edilmesi öngörülen ve beklenen yaygın etkilerin neler olabileceği, diğer bir ifadeyle projeden ne gibi çıktı, sonuç ve etkilerin elde edileceği aşağıdaki tabloda verilir.
-
-PROJEDEN BEKLENEN YAYGIN ETKİ TABLOSU
-Yaygın Etki Türleri
-Projede Öngörülen ve Beklenen Çıktı, Sonuç ve Etkiler
-Bilimsel/Akademik 
-(Makale, Bildiri, Kitap Bölümü, Kitap) 
-Projenin çıktılarının kitap olarak yayınlanması planlanmaktadır. Başta kitap yayını olmak üzere proje süresinde ve sonrasında yayınlanacak makale ve bildirilerle de projenin sonuçları akademik alanla paylaşılacaktır. 
-Ekonomik/Ticari/Sosyal
-(Ürün, Prototip, Patent, Faydalı Model, Üretim İzni, Çeşit Tescili, Spin-off/Start- up Şirket, Görsel/İşitsel Arşiv, Envanter/Veri Tabanı/Belgeleme Üretimi, Telife Konu Olan Eser, Medyada Yer Alma, Fuar, Proje Pazarı, Çalıştay, Eğitim vb. Bilimsel Etkinlik, Proje Sonuçlarını Kullanacak Kurum/Kuruluş, vb. diğer yaygın etkiler)
-Projenin Uygulama aşamasındaki sergi ve interaktif sunumlar proje verilerinin kamuoyuyla paylaşılmasını sağlamaya yöneliktir. Projenin etki alanının genişlemesini sağlayacak olan bu uygulamayla Z kuşağı olarak tanımlanan hedef kitleye Kutadgu Bilig aracılığıyla Tük kültürünün yazılı ve sözlü mirasının aktarımı gerçekleştirilecektir. Sergi ve sunum yapılacak okulların daha ziyade İzmir’in dezavantajlı bölgelerindeki okullardan seçilecek olması da önemlidir. 
-Araştırmacı Yetiştirilmesi ve Yeni Proje(ler) Oluşturma 
-(Yüksek Lisans/Doktora Tezi, Ulusal/Uluslararası Yeni Proje)
-İzmir İl Milli Eğitim Müdürlüğü’nün desteğiyle özellikle ortaöğretim düzeyindeki genç kuşağa yönelik interaktif sunumların yaygınlaştırılarak diğer kurum ve kuruluşlarla yapılacak protokoller neticesinde farklı bölgelerdeki okullar gibi daha farklı alanlarda kamuoyuyla paylaşılması hedefini gerçekleştirmek üzere örnek gösterilerek farklı kurum ve kuruluşların ortaklığında benzer uygulamların arttırılması mümkündür. 
-</p>
-
-                                </p>
+                                    </div>
                               </div>
                             </div>
                         </div>
@@ -1193,7 +1138,7 @@ Araştırmacı Yetiştirilmesi ve Yeni Proje(ler) Oluşturma
                 <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
-                <!-- ============================================================== -->>
+                <!-- ============================================================== --> 
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -1273,6 +1218,7 @@ Araştırmacı Yetiştirilmesi ve Yeni Proje(ler) Oluşturma
                 </div>
                 <!-- END MODAL -->
 
+ <?//php print_r(base64_decode($proposal_body['proposal']['project summary tr']));?>
 
 
     <!-- ============================================================== -->
@@ -1293,6 +1239,9 @@ Araştırmacı Yetiştirilmesi ve Yeni Proje(ler) Oluşturma
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="<?php echo Yii::$app->homeUrl;?>js/custom.min.js"></script>
+
+    <!--annotator js ve css-->
+    <script src="<?php echo Yii::$app->homeUrl;?>js/annotator-full.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
@@ -1329,6 +1278,44 @@ Araştırmacı Yetiştirilmesi ve Yeni Proje(ler) Oluşturma
         <script>
 
 $( document ).ready(function() {
+
+
+//$('body').annotator().annotator('setupPlugins');
+
+//$('body').annotator().annotator('addPlugin', 'Store');
+//var ann = new Annotator(document.body); 
+
+
+/*$('body').annotator('addPlugin', 'Store', {
+  urls: {
+    // These are the default URLs.
+    create:  '/annotations',
+    update:  '/annotations/:id',
+    destroy: '/annotations/:id',
+    search:  '/search'
+  }
+});*/
+
+
+var annotation = $('#scroll').annotator();
+ //var id=12345
+  annotation.annotator('addPlugin', 'Store', {
+    prefix: '/annotation',
+    loadFromSearch : {
+        page_id : '<?php echo $selected_proposal->proposal_id;?>'
+    },
+    annotationData : {
+        page_id : '<?php echo $selected_proposal->proposal_id;?>'
+    },
+    urls: {
+        create:  '/store',
+        update:  '/update?id=:id',
+        destroy: '/delete?id=:id',
+        search:  '/search'
+    }
+  });
+
+//ann.setupPlugins()
 
         //Custom design form example
         /*$(".tab-wizard").steps({
