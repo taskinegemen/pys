@@ -132,6 +132,7 @@ print_r($data);
     $annotator= new Annotator();
     $annotator->annotator_page_id=$postPayload->page_id;
     $annotator->annotator_body=$postPayload;
+    $annotator->annotator_user_user_id=Yii::$app->user->identity->user_id;
     if($annotator->save())
     {
 

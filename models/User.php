@@ -37,8 +37,8 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     public function rules()
     {
         return [
-            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile'], 'required'],
-            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile', 'user_yok_researcher_id'], 'string'],
+            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile','user_color'], 'required'],
+            [['user_name', 'user_surname', 'user_email', 'user_password', 'user_iban', 'user_instution', 'user_mobile', 'user_yok_researcher_id','user_color'], 'string'],
         ];
     }
 
@@ -57,6 +57,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             'user_instution' => 'User Instution',
             'user_mobile' => 'User Mobile',
             'user_yok_researcher_id' => 'User Yok Researcher ID',
+            'user_color'=>'User Color',
         ];
     }
 

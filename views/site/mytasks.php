@@ -12,7 +12,7 @@ $this->title = 'My Tasks';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="utf-8">
@@ -374,20 +374,23 @@ $this->title = 'My Tasks';
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- User profile -->
-                <div class="user-profile" style="background: url(../assets/images/background/user-info.jpg) no-repeat;">
+
+                <!--<div class="user-profile" style="background: url(../assets/images/background/user-info.jpg) no-repeat;">-->
                     <!-- User profile image -->
-                    <div class="profile-img"> <img src="../assets/images/users/profile.png" alt="user" /> </div>
+                    <!--<div class="profile-img"> <img src="../assets/images/users/profile.png" alt="user" /> </div>-->
                     <!-- User profile text-->
                     
-                    <div class="profile-text"> 
+                    <!--<div class="profile-text">-->
 
-                        <a href="#" role="button" aria-haspopup="true" aria-expanded="true"><?php echo Yii::$app->user->identity->user_name; ?></a>
+                        <!--<a href="#" role="button" aria-haspopup="true" aria-expanded="true"><?php echo Yii::$app->user->identity->user_name; ?></a>-->
+                        <!--
                         <div class="dropdown-menu animated flipInY"> <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
                             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                            <div class="dropdown-divider"></div> <a href="/site/logout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> </div>
-
-                    </div>
-                </div>
+                            <div class="dropdown-divider"></div> <a href="/site/logout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> 
+                        </div>
+                        -->
+                    <!--</div>-->
+                <!--</div>-->
                 <!-- End User profile text-->
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
@@ -1241,6 +1244,8 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <script src="<?php echo Yii::$app->homeUrl;?>js/custom.min.js"></script>
 
     <!--annotator js ve css-->
+    <link rel="gettext" type="application/x-po" href="<?php echo Yii::$app->homeUrl;?>locale/tr/annotator.po">
+    <script src="<?php echo Yii::$app->homeUrl;?>js/Gettext.js"></script>
     <script src="<?php echo Yii::$app->homeUrl;?>js/annotator-full.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
@@ -1297,15 +1302,28 @@ $( document ).ready(function() {
 });*/
 
 
-var annotation = $('#scroll').annotator();
+window.annotation = $('#scroll').annotator();
+/*window.user_colors = [
+  "red",
+  "blue",
+  "green"
+];*/
+
+window.user_colors=[];
+ <?php if($userproposal_colors)foreach ($userproposal_colors as $userproposal_color) {
+
+    echo "window.user_colors['".$userproposal_color->userproposalUser->user_id."']='".$userproposal_color->userproposalUser->user_color."';";
+     }?>
+
  //var id=12345
-  annotation.annotator('addPlugin', 'Store', {
+ window.annotationParameters={
     prefix: '/annotation',
     loadFromSearch : {
         page_id : '<?php echo $selected_proposal->proposal_id;?>'
     },
     annotationData : {
-        page_id : '<?php echo $selected_proposal->proposal_id;?>'
+        page_id : '<?php echo $selected_proposal->proposal_id;?>',
+        user_id :'<?php echo Yii::$app->user->identity->user_id;?>'
     },
     urls: {
         create:  '/store',
@@ -1313,7 +1331,8 @@ var annotation = $('#scroll').annotator();
         destroy: '/delete?id=:id',
         search:  '/search'
     }
-  });
+  }
+  annotation.annotator('addPlugin', 'Store', window.annotationParameters);
 
 //ann.setupPlugins()
 
@@ -1396,6 +1415,14 @@ $("#calendar .fc-agendaWeek-button").click();
             }
         })*/
     </script>
+
+    <style type="text/css">
+        .annotator-hl {
+    background: <?php echo Yii::$app->user->identity->user_color;?>
+    /*#48e245;*/
+}
+        
+    </style>
 
 </body>
 
