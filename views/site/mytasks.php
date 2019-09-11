@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use app\helpers\Helper;
 $this->title = 'My Tasks';
 //echo print_r(Yii::$app->user);
+
 ?>
 
 <!DOCTYPE html>
@@ -779,7 +780,11 @@ $this->title = 'My Tasks';
                                         </div>
                                         <h4 class="card-title m-b-0"><span class="round round-info">2</span> Görev Aşamaları</h4>
                                     </div>
-                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id){echo "show";} ?>">
+                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                        if($selected_userproposal->userproposal_step<=1)
+                                        echo "show";
+
+                                    } ?>">
                                         <!--validation vwvizar begin-->
                 <!-- Validation wizard -->
                 <div class="row">
@@ -839,46 +844,65 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="active">
+                                            <!--<tr class="active">
                                                 <td><span class="round"><img src="../assets/images/users/2.jpg" alt="user" width="50" /></span></td>
                                                 <td>
                                                     <h6>Selda Çayırlıbelek</h6><small class="text-muted">Prof. Dr.</small></td>
                                                 <td>Bilkent Üniversitesi</td>
                                                 <td><span class="label label-danger">Project Yürütücüsü</span></td>
                                                 <td>%100</td>
-                                            </tr>                                            
-                                            <tr>
-                                                <td><span class="round round-primary">A</span></td>
+                                            </tr>-->
+
+
+                                            <?php if($selected_userproposal){
+                                                    $proposal_team=$selected_proposal->proposal_team;
+                                                    
+                                                       foreach ($proposal_team["projects"] as $project) {?>
+
+                                                <tr class="active">
+                                                <td><span class="round">Y</span></td>
                                                 <td>
-                                                    <h6>Egemen Taşkın</h6><small class="text-muted">Dr. Öğr. Üyesi</small></td>
-                                                <td>Gazi Üniversitesi</td>
-                                                <td><span class="label label-success">Araştırmacı</span></td>
-                                                <td>%40</td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="round round-primary">A</span></td>
-                                                <td>
-                                                    <h6>Mahzun Demirlibahçe</h6><small class="text-muted">Doç. Dr.</small></td>
-                                                <td>ODTÜ</td>
-                                                <td><span class="label label-success">Araştırmacı</span></td>
-                                                <td>%40</td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="round round-primary">A</span></td>
-                                                <td>
-                                                    <h6>Serkan Fatih Orakçı</h6><small class="text-muted">Doç. Dr.</small></td>
-                                                <td>YTÜ</td>
-                                                <td><span class="label label-success">Araştırmacı</span></td>
-                                                <td>%20</td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="round round-warning">D</span></td>
-                                                <td>
-                                                    <h6>Nevzat Yavuz</h6><small class="text-muted">Dr.</small></td>
-                                                <td>Ankara Üniversitesi</td>
-                                                <td><span class="label label-warning">Danışman</span></td>
-                                                <td></td>
-                                            </tr>
+                                                    <h6><?php echo $project["manager"];?></h6><small class="text-muted"><?php echo $project["title"]; ?></small></td>
+                                                <td><?php echo $project["instution"];?></td>
+                                                <td><span class="label label-danger">Project Yürütücüsü</span></td>
+                                                <td>%100</td>
+                                                <?php
+                                                         foreach ($project["researchers"] as $researcher) {?>
+
+                                                <tr>
+                                                    <td><span class="round round-primary">A</span></td>
+                                                    <td>
+                                                        <h6><?php echo $researcher["name"];?></h6><small class="text-muted"><?php echo $researcher["title"]; ?></small></td>
+                                                    <td><?php echo $researcher["instution"];?></td>
+                                                    <td><span class="label label-success">Araştırmacı</span></td>
+                                                    <td><?php echo $researcher["margin"];?></td>
+                                                </tr>
+
+                                                                                                   
+                                                                                                
+
+
+                                                                                                
+                                                <?php }
+
+                                                    foreach ($project["consultants"] as $consultant) {?>
+
+                                                <tr>
+                                                    <td><span class="round round-warning">D</span></td>
+                                                    <td>
+                                                        <h6><?php echo $consultant["name"];?></h6><small class="text-muted"><?php echo $consultant["title"]; ?></small></td>
+                                                    <td><?php echo $consultant["instution"];?></td>
+                                                    <td><span class="label label-warning">Danışman</span></td>
+                                                    <td></td>
+                                                </tr>
+
+                                            <?php } } ?>
+
+
+
+                                                    
+
+                                           <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -947,9 +971,11 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                         <div class="card">
                             <div class="card-body">
                                 <div id="calendar"></div>
+
                             </div>
                         </div>
                     </div>
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -964,7 +990,36 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                     </div>
                 </div>
 <!--validation wizard end-->
+                                <form action="" name="calendar_form" id="calendar_form" method="post">
+                                    <input type="hidden" id="proposal_id" name="proposal_id" value="<?php if($selected_proposal){echo $selected_proposal->proposal_id;}?>" >
+                                    <input type="hidden" id="userproposal_available_time" name="userproposal_available_time" value="">
+                                     
+                                    <button type="submit">Cancel changes</button>
 
+                                </form>
+
+
+
+<form action="/my-handling-form-page" method="post">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="user_name">
+  </div>
+
+  <div>
+    <label for="mail">E-mail:</label>
+    <input type="email" id="mail" name="user_email">
+  </div>
+
+  <div>
+    <label for="msg">Message:</label>
+    <textarea id="msg" name="user_message"></textarea>
+  </div>
+ 
+  <div class="button">
+    <button type="submit">Send your message</button>
+  </div>
+</form>
 
 
 
@@ -1301,6 +1356,21 @@ $( document ).ready(function() {
   }
 });*/
 
+Annotator.Plugin.StoreLogger = function (element) {
+  return {
+    pluginInit: function () {
+      this.annotator
+          .subscribe("annotationCreated", function (annotation) {
+            console.info("The annotation: %o has just been created!", annotation)
+          })
+          .subscribe("annotationUpdated", function (annotation) {
+            console.info("The annotation: %o has just been updated!", annotation)
+          })
+          .subscribe("annotationDeleted", function (annotation) {
+            console.info("The annotation: %o has just been deleted!", annotation)
+          });
+    }
+  }};
 
 window.annotation = $('#scroll').annotator();
 /*window.user_colors = [
@@ -1332,8 +1402,60 @@ window.user_colors=[];
         search:  '/search'
     }
   }
-  annotation.annotator('addPlugin', 'Store', window.annotationParameters);
+window.userIdGlobal='<?php echo Yii::$app->user->identity->user_id;?>';
+annotation.annotator('addPlugin', 'Store', window.annotationParameters);
 
+//setInterval(function(){console.log("every 5 seconds repeated!");window.storeController._getAnnotations();},5000);
+
+function arrayDiffByKey(key, ...arrays) {
+    return [].concat(...arrays.map( (arr, i) => {
+        const others = arrays.slice(0);
+        others.splice(i, 1);
+        const unique = [...new Set([].concat(...others))];
+        return arr.filter( x =>
+            !unique.some(y => x[key] === y[key])
+        );
+    }));
+}
+
+
+setInterval(function(){
+        var index;
+        jQuery.ajaxSetup({async:false});
+        console.log("every 5 seconds repeated!");
+        var updatedAnnotations=window.storeController._getAnnotations();
+        updatedAnnotations=updatedAnnotations.responseJSON.rows;
+        var oldAnnoatations=window.storeController.dumpAnnotations();
+        var diffResult=arrayDiffByKey('id', updatedAnnotations, oldAnnoatations);
+        if(diffResult.length>0 && oldAnnoatations.length>updatedAnnotations.length)
+        {
+
+
+                    for (index = 0; index < diffResult.length; ++index) {
+                        var particule=$("#scroll").find("[data-annotation-id='"+(diffResult[index].id)+"']");
+                        particule.removeClass("annotator-hl").removeAttr("style");
+                        window.storeController.unregisterAnnotation(diffResult[index]);
+
+                    }
+
+        }
+        jQuery.ajaxSetup({async:true});
+
+    },5000);
+
+
+annotation.annotator('addPlugin','StoreLogger',function () {
+      this.annotator
+          .subscribe("annotationCreated", function (annotation) {
+            console.info("The annotation: %o has just been created!.....", annotation);
+          })
+          .subscribe("annotationUpdated", function (annotation) {
+            console.info("The annotation: %o has just been updated!", annotation);
+          })
+          .subscribe("annotationDeleted", function (annotation) {
+            console.info("The annotation: %o has just been deleted!", annotation);
+          });
+    });
 //ann.setupPlugins()
 
         //Custom design form example
@@ -1374,10 +1496,22 @@ $("#validation-wizard").show();
                 return 1;
             },
             onFinishing: function (event, currentIndex) {
-                return form.validate().settings.ignore = ":disabled", form.valid()
+                return true;
+                //return form.validate().settings.ignore = ":disabled", form.valid()
             },
             onFinished: function (event, currentIndex) {
-                swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+                var calendarJSON = JSON.stringify($("#calendar").fullCalendar("clientEvents").map(function(e) {
+                    return {
+                        start: e.start,
+                        end: e.end,
+                        title: e.title
+                    };
+                }));
+                $('#userproposal_available_time').val(calendarJSON);
+                $('#calendar_form').submit();
+
+
+
             }
 
 
@@ -1385,11 +1519,13 @@ $("#validation-wizard").show();
         
 
 
-//$.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/moment/moment.js");
+jQuery.ajaxSetup({async:false});
 $.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/jquery-ui.min.js");
-//$.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/fullcalendar.min.js");
 $.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/cal-init.js");
-$("#calendar .fc-agendaWeek-button").click();
+//$('#calendar').fullCalendar('clientEvents'); //retrieve whole data
+jQuery.ajaxSetup({async:true});
+
+//$("#calendar .fc-agendaWeek-button").click();
 
         });
 

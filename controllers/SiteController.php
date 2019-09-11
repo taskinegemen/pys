@@ -114,10 +114,17 @@ class SiteController extends Controller
             $proposal_id=$request->get('proposal_id');
             $selected_proposal=Proposal::find()->where(['proposal_id'=>$proposal_id])->one();
             $userproposal_colors=Userproposal::find()->where(['userproposal_proposal_id' => $selected_proposal->proposal_id])->all();
+            $selected_userproposal=Userproposal::find()->where(
+                [
+                    'userproposal_proposal_id' => $proposal_id,
+                    'userproposal_user_id' => Yii::$app->user->identity->user_id
+            ])->one();
+        //print_r($selected_userproposal);Yii::$app->end();
         }
         else
         {
             $selected_proposal=new Proposal();
+            $selected_userproposal=new Userproposal();
             $userproposal_colors='';
         }
         //echo print_r($selected_proposal);
@@ -131,6 +138,7 @@ class SiteController extends Controller
                     'all_proposals'=>$all_proposals,
                     'selected_proposal'=>$selected_proposal,
                     'proposal_body'=>$proposal_body,
+                    'selected_userproposal'=>$selected_userproposal,
                     'userproposal_colors'=>$userproposal_colors
                 ]);
     }
