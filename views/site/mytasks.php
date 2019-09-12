@@ -769,12 +769,27 @@ $this->title = 'My Tasks';
                             </div>
                             <!-- Column -->
                             <!-- Column -->
-                            <div class="col-md-12">
+                            <div class="col-md-12" id="tasksteps">
                             <!--<div class="">-->
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-<?php if ($selected_proposal->proposal_id){echo "minus";}else {echo "plus";} ?>"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-<?php 
+                                             if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                                if($selected_userproposal->userproposal_step>1)
+                                                {
+                                                    echo "plus";
+                                                }
+                                                else if ($selected_proposal->proposal_id)
+                                                {
+                                                    echo "minus";
+                                                }
+                                                else 
+                                                {
+                                                    echo "plus";
+                                                }
+                                            }
+                                            ?>"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
@@ -854,9 +869,9 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                             </tr>-->
 
 
-                                            <?php if($selected_userproposal){
+                                            <?php if(isset($selected_userproposal)){
                                                     $proposal_team=$selected_proposal->proposal_team;
-                                                    
+                                                    if($proposal_team)
                                                        foreach ($proposal_team["projects"] as $project) {?>
 
                                                 <tr class="active">
@@ -993,33 +1008,9 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                 <form action="" name="calendar_form" id="calendar_form" method="post">
                                     <input type="hidden" id="proposal_id" name="proposal_id" value="<?php if($selected_proposal){echo $selected_proposal->proposal_id;}?>" >
                                     <input type="hidden" id="userproposal_available_time" name="userproposal_available_time" value="">
-                                     
-                                    <button type="submit">Cancel changes</button>
+                                     <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
 
                                 </form>
-
-
-
-<form action="/my-handling-form-page" method="post">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="user_name">
-  </div>
-
-  <div>
-    <label for="mail">E-mail:</label>
-    <input type="email" id="mail" name="user_email">
-  </div>
-
-  <div>
-    <label for="msg">Message:</label>
-    <textarea id="msg" name="user_message"></textarea>
-  </div>
- 
-  <div class="button">
-    <button type="submit">Send your message</button>
-  </div>
-</form>
 
 
 
@@ -1036,13 +1027,28 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-<?php if ($selected_proposal->proposal_id){echo "minus";}else {echo "plus";} ?>"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-<?php 
+                                             if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                                if($selected_userproposal->userproposal_step>=2)
+                                                {
+                                                    echo "plus";
+                                                }
+                                                else 
+                                                {
+                                                    echo "";
+                                                }
+                                            }
+                                            ?>"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
                                         <h4 class="card-title m-b-0"><span class="round round-info">3</span> Proje Önerisi</h4>
                                     </div>
-                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id){echo "show";} ?>">
+                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                        if((int)$selected_userproposal->userproposal_step>=2)
+                                                echo "show";
+
+                                    } ?>">
 
                 <!-- ============================================================== -->
                 <!-- Second Card with Nested Nav -->
@@ -1184,6 +1190,108 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
 
 
 <!--column ends-->
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-actions">
+                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                                            <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
+                                        </div>
+                                        <h4 class="card-title m-b-0"><span class="round round-info">4</span> Bilimsel Değerlendirme</h4>
+                                    </div>
+                                    <div class="card-body collapse show">
+                            <!-- .chat-row -->
+                            <div class="chat-main-box">
+                                <!-- .chat-left-panel -->
+                                <div class="chat-left-aside">
+                                    <div class="open-panel"><i class="ti-angle-right"></i></div>
+                                    <div class="chat-left-inner">
+                                        <div class="form-material">
+                                            <input id="searchAnnotation" class="form-control p-20" type="text" placeholder="Bul">
+                                        </div>
+                                        <ul id="chatonline" class="chatonline style-none ">
+                                            <!--
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" class="active"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                            </li>
+                                        -->
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- .chat-left-panel -->
+                                <!-- .chat-right-panel -->
+                                <div class="chat-right-aside">
+                                    <!--<div class="chat-main-header">
+                                        <div class="p-20 b-b">
+                                            <h3 class="box-title">Chat Message</h3>
+                                        </div>
+                                    </div>-->
+                                    <div class="chat-rbox">
+                                        <ul class="chat-list p-20" id="chat_correspondence" >
+                                            <!--chat Row -->
+                                            <li>
+                                            <!--chat Row -->
+                                            <li>
+                                                <div class="chat-img"><img src="../assets/images/users/2.jpg" alt="user" /></div>
+                                                <div class="chat-content">
+                                                    <h5>Bianca Doe</h5>
+                                                    <div class="box bg-light-success">It’s Great opportunity to work.</div>
+                                                </div>
+                                                <div class="chat-time">10:57 am</div>
+                                            </li>
+                                            <!--chat Row -->
+                                            <li class="reverse">
+                                                <div class="chat-time">10:57 am</div>
+                                                <div class="chat-content">
+                                                    <h5>Steave Doe</h5>
+                                                    <div class="box bg-light-inverse">It’s Great opportunity to work.</div>
+                                                </div>
+                                                <div class="chat-img"><img src="../assets/images/users/5.jpg" alt="user" /></div>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                    <div class="card-body b-t">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <textarea id="input_message" placeholder="Type your message here" class="form-control b-0"></textarea>
+                                            </div>
+                                            <div class="col-4 text-right">
+                                                <button type="button" id="send_message" class="btn btn-info btn-circle btn-lg"><i class="fas fa-paper-plane"></i> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- .chat-right-panel -->
+                            </div>
+                            <!-- /.chat-row -->
+                                    </div>
+                                </div>
+                             </div>
+
 
 
 
@@ -1333,7 +1441,11 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/jquery-ui.min.js"></script>
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/fullcalendar.min.js"></script>
     <!--<script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/cal-init.js"></script>-->
+    <script src="<?php echo Yii::$app->homeUrl;?>js/chat.js"></script>
+    
 
+    <script src="http://167.71.254.111:3000/socket.io/socket.io.js"></script>
+    
 
         <script>
 
@@ -1516,8 +1628,26 @@ $("#validation-wizard").show();
 
 
         });
-        
+ 
 
+ //go to calendar 
+ var userproposal_step="";
+ <?php
+if ($selected_proposal->proposal_id && isset($selected_userproposal))
+{
+            echo "var userproposal_step=".$selected_userproposal->userproposal_step.";";
+}?>
+
+if (userproposal_step>=2)
+{
+ $('#validation-wizard').steps('next'); $('#validation-wizard').steps('next'); $('#validation-wizard').steps('next');
+}
+$("#tasksteps .ti-plus").click(function(){
+$(".fc-month-button").click();
+       setTimeout(function() {
+         $(".fc-month-button").click();
+  }, 2000);
+});
 
 jQuery.ajaxSetup({async:false});
 $.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/jquery-ui.min.js");
@@ -1526,6 +1656,82 @@ $.getScript("<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/cal-in
 jQuery.ajaxSetup({async:true});
 
 //$("#calendar .fc-agendaWeek-button").click();
+
+ Window.socket = io.connect('http://167.71.254.111:3000/');
+   Window.socket.on('chat message', function(msg){
+    console.log("retrieved msg",msg);
+
+
+
+    var message='<li class="reverse"><div class="chat-time">10:57 am</div><div class="chat-content"><h5>Steave Doe</h5><div class="box bg-light-inverse">'+msg+'</div></div><div class="chat-img"><img src="../assets/images/users/5.jpg" alt="user" /></div></li>';
+      $('#chat_correspondence').append(message);
+
+            if(Window.scroll_status==0)
+            {
+                 $('.chat-list').slimScroll({scrollTo: $('.chat-list')[0].scrollHeight});
+            }
+
+
+    });
+
+
+$('#send_message').click(function(event){
+    event.preventDefault();
+    console.log("sending...");
+    Window.socket.emit('chat message', $('#input_message').val());
+    $('#input_message').val('');
+    $('#input_message').focus().click();
+     Window.scroll_status=0;
+
+});
+
+    $("#input_message").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        //alert(code);
+        if (code == 13) {
+                Window.socket.emit('chat message', $('#input_message').val());
+                $('#input_message').focus().click();
+                $('#input_message').val('');
+                Window.scroll_status=0;
+            return true;
+        }
+    });
+
+
+
+$.ajax({
+    type: 'get',
+    url: '/annotation/searchbyids',
+    data: 'page_id=<?php echo $selected_proposal->proposal_id;?>'+'&'+'user_id=<?php echo Yii::$app->user->identity->user_id;?>',
+    success: function(data) {
+        var retrieved_annotations=JSON.parse(data);
+        var i;
+        for(i=0;i< retrieved_annotations.length;i++)
+        {
+                             var annotation_append_item='<li data-id="'+retrieved_annotations[i].id+'"><a><span>'+retrieved_annotations[i].text+' <small class="text-danger">'+retrieved_annotations[i].quote+'</small></span><a></li>';
+            //console.log(retrieved_annotations[i].text,retrieved_annotations[i].quote);
+            $('#chatonline').append(annotation_append_item);
+        }
+        $('#chatonline').append('<li class="p-20"></li>');
+        $("#chatonline li").click(function(event){
+            event.preventDefault();
+            $.find("[data-annotation-id=" + $(this).data("id") + "]")[0].scrollIntoView();
+        });
+        //console.log(data);
+
+    }
+});
+
+
+  $("#searchAnnotation").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#chatonline li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+
+
 
         });
 
@@ -1550,6 +1756,9 @@ jQuery.ajaxSetup({async:true});
                 }
             }
         })*/
+
+
+
     </script>
 
     <style type="text/css">

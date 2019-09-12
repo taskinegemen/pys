@@ -92,6 +92,29 @@ public function actionSearch()
                     );
 
 }
+public function actionSearchbyids()
+{
+    //echo Yii::$app->request->post('page_id');
+     $this->layout = false;
+    $annotations = Annotator::find()->where(
+        [
+            'annotator_page_id'=>Yii::$app->request->get('page_id'),
+            'annotator_user_user_id'=>Yii::$app->request->get('user_id')
+        ]
+    )->asArray()->all();
+    $array_annotators= array();
+    foreach ($annotations as $annotation) {
+    array_push($array_annotators,json_decode($annotation['annotator_body']));
+    }
+    Yii::$app->response->data =json_encode($array_annotators
+
+                        //array(
+                        //                json_decode($annotations[0]['annotator_body'])
+                        //               )
+                    );
+
+}
+
 public function actionUpdate()
 {
     $this->layout = false;

@@ -108,6 +108,24 @@ class SiteController extends Controller
     public function actionMytasks()
     {
         $this->layout = false;
+        if(Yii::$app->request->post('proposal_id') && Yii::$app->request->post('userproposal_available_time'))
+        {
+            $proposal_id=Yii::$app->request->post('proposal_id');
+            $userproposal_available_time=Yii::$app->request->post('userproposal_available_time');
+            $step2Accept=Userproposal::find()->where(
+                [
+                    'userproposal_proposal_id' => $proposal_id,
+                    'userproposal_user_id' => Yii::$app->user->identity->user_id
+            ])->one();
+            $step2Accept->userproposal_available_time=$userproposal_available_time;
+            $step2Accept->userproposal_step="2";
+            $step2Accept->userproposal_acceptance_status="Kabül";
+            if(!$step2Accept->update())
+            {
+                print_r($step2Accept->getErrors());
+            }
+            Yii::$app->response->redirect(['site/mytasks','proposal_id' => $proposal_id]);
+        }
         if(Yii::$app->request->get('proposal_id'))
         {
             $request=Yii::$app->request;

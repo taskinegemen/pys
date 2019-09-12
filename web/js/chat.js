@@ -12,13 +12,49 @@ $(function () {
         color: '#dcdcdc'
 
     });
+                Window.scroll_status=0;
     $('.chat-list').slimScroll({
         position: 'right'
         , size: "5px"
         , height: '100%'
         , color: '#dcdcdc'
+        , start:'bottom'
+
      });
+        $('.chat-list').slimScroll().
+        bind('slimscroll', function(e, pos)
+        {
+           console.log("REACHED",pos);
+           if(pos=='bottom')
+           {
+            Window.scroll_status=0;
+           }
+
+        });
+        var state = {
+    pos: {
+      lowest: 0,
+      current: 0
+    },
+    offset: {
+      top: [0, 0], //Old Offset, New Offset
+    }
+  }
+  $('.chat-list').slimScroll().bind('slimscrolling', function (e, pos) {
+        // Highest Position
+    state.pos.highest = pos !== state.pos.highest ?
+      pos > state.pos.highest ? pos : state.pos.highest
+    : state.pos.highest;
     
+    // Update Offset State
+    state.offset.top.push(pos - state.pos.lowest);
+    state.offset.top.shift();
+    if (state.offset.top[1] < state.offset.top[0]) {
+      Window.scroll_status=1;
+
+console.log("SCOLL EVENT",e);
+}
+  });  
     var cht = function () {
             var topOffset = 445;
             var height = ((window.innerHeight > 0) ? window.innerHeight : this.screen.height) - 1;
