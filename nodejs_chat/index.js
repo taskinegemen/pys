@@ -111,8 +111,20 @@ io.on('connection', function(socket){
 	  	}
   	}
   	console.log("LAST MESSAGE",msg_processed);
+  	//{"agreed": [1, 2, 3]}
+  	var status_object='{"agreed":[]}';
+  	var sql = "INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES ("+msg_processed.user_id+","+msg_processed.proposal_id+",'"+msg_processed.message+"','"+status_object+"');";
+  	console.log("SQL",sql);
+  	con.query(sql, function (err, result) {
+    	if (err) throw err;
+    	msg_processed["conversation_id"]=result.insertId;
+    	console.log("1 record inserted",result,result.affectedRows);
+    	io.emit('chat message', msg_processed);
 
-    io.emit('chat message', msg_processed);
+
+  	});
+
+
   });
 });
 

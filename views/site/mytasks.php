@@ -1683,10 +1683,21 @@ if ($selected_proposal->proposal_id && isset($selected_userproposal))
             echo "var userproposal_step=".$selected_userproposal->userproposal_step.";";
 }?>
 
+ window.proposal_id="";
+ <?php
+if ($selected_proposal->proposal_id && isset($selected_userproposal))
+{
+            echo "window.proposal_id='".$selected_proposal->proposal_id."';";
+}?>
+
 if (userproposal_step>=2)
 {
  $('#validation-wizard').steps('next'); $('#validation-wizard').steps('next'); $('#validation-wizard').steps('next');
 }
+
+
+//$('#inputSchedule').prop('checked',false);
+
 $("#tasksteps .ti-plus").click(function(){
 $(".fc-month-button").click();
        setTimeout(function() {
@@ -1717,7 +1728,7 @@ var moderator=msg.moderator;
 var message;
 var message_mod='';
 var msg_raw=msg.message;
-
+var conversation_id=msg.conversation_id;
 /*
 var moderator=JSON.parse(moderator.reply);
 var moderator_type=moderator.type;
@@ -1737,7 +1748,7 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
     else
     {
 
-        message='<li><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'<div class="checkbox checkbox-info"><input type="checkbox" id="inputSchedule" name="inputCheckboxesSchedule"><label for="inputSchedule" class=""><span style="font-size:small">aynı fikirdeyim</span></label></div> </div></div><div class="chat-time">'+_time+'</div></li>';
+        message='<li><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'<div class="checkbox checkbox-info"><input data-conversationid="'+conversation_id+'" type="checkbox" id="inputSchedule_'+conversation_id+'" name="inputCheckboxesSchedule"><label for="inputSchedule_'+conversation_id+'" class=""><span style="font-size:small">aynı fikirdeyim</span></label></div> </div></div><div class="chat-time">'+_time+'</div></li>';
 
         //message='<li><div class="chat-time">10:57 am</div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'</div></div><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div></li>';     
     }
@@ -1753,6 +1764,15 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
         
     }
       $('#chat_correspondence').append(message+message_mod);
+      $('#inputSchedule_'+conversation_id).change(function() {  
+            if (this.checked) {
+                // the checkbox is now checked 
+                console.log(this,"checked",$(this).data("conversationid"));
+            } else {
+                // the checkbox is now no longer checked
+                console.log(this,"unchecked",$(this).data("conversationid"));
+            }
+        });
 
             if(Window.scroll_status==0)
             {
@@ -1766,7 +1786,7 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
 $('#send_message').click(function(event){
     event.preventDefault();
     console.log("sending...");
-    var message={user_id:window.userIdGlobal,message:$('#input_message').val()};
+    var message={proposal_id:window.proposal_id,user_id:window.userIdGlobal,message:$('#input_message').val()};
     Window.socket.emit('chat message', message);
     $('#input_message').val('');
     $('#input_message').focus().click();
@@ -1778,7 +1798,7 @@ $('#send_message').click(function(event){
         var code = (e.keyCode ? e.keyCode : e.which);
         //alert(code);
         if (code == 13) {
-                var message={user_id:window.userIdGlobal,message:$('#input_message').val()};
+                var message={proposal_id:window.proposal_id,user_id:window.userIdGlobal,message:$('#input_message').val()};
                 Window.socket.emit('chat message', message);
                 $('#input_message').focus().click();
                 $('#input_message').val('');
