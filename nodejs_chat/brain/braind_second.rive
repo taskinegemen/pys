@@ -1,0 +1,61 @@
+! version = 2.0
+
++ [*|][ben|ismim|adım](@isimler)*
+- {"type":"error_mask","message":"Sayın panelist, lütfen kimliğinizi açık etmeyiniz!","mask":["<star1>","<star2>","<star3>"]}
+
++ [*|][ben|ismim|adım](@isimler)
+- {"type":"error_mask","message":"Sayın panelist, lütfen kimliğinizi açık etmeyiniz!","mask":["<star1>","<star2>","<star3>"]}
+
++ *(gmail|hotmail|yahoo)*
+- {"type":"error_mask","message":"Sayın panelist, lütfen e-posta paylaşmayınız","mask":["<star1>","<star2>","<star3>"]}
+
++ çıkar (çakışması|çatışması)[*](mıdır|mı|mi|mu|nedir)?
+-Paneller özen kurulmakta olup çıkar çatışması olması sözkonusu değildir!
+
++ [*]çıkar (çakışması|çatışması)[*](mıdır|mı|mu)?
+-Çıkar çatışmasının olması mümkün değildir.
+
++ emin (mi|misin|misiniz)?
+* <get sure_q> == undefined => Elbette bu bizim işimiz.<set sure_q=1>
+* <get sure_q> == 1 => Emin olduğumu daha önce de belirtmiştim...Lütfen tekrarlamayınız<set sure_q=2>
+* <get sure_q> == 2 => Artık bu sorunuza cevap vermek istemiyorum
+
++ (merhaba|merhabalar|selam|selamlar|selamün aleyküm|selamünaleyküm)
+- Sayın panelist, bilimsel değerlendirme ortamına hoşgeldin...Tüm panelistler gelene kadar bekleyeceğiz...
+- bilimsel değerlendirme ortamına hoşgeldin...Lütfen diğer panelistlerin gelmesini bekleyelim...
+
++ (bilimsel değerlendirme|panel) hakkında bilgi alabilir mi(yim|yiz)?
+- Her bir proje önerisi için oylama, gizli oy ve açık sayım\n
+^ şeklinde yapılır. Oylama tekrarlanamaz. Panel Puanı Ortalaması\n
+^ hesaplanırken her bir kriter için en yüksek ve en düşük oylardan\n
+^ tek kalanlar dikkate alınmaz. Proje önerisinin oylama sonucu\n
+^ aldığı panel puanı moderatör tarafından açıklanır. Panelistlerin\n
+^ ortak görüşleri doğrultusunda, panel puanını da yansıtacak\n
+^ şekilde “Panel Raporu” hazırlanır. Raporda her bir kriter için eksik\n
+^ görülen ya da yeterli bulunmayan hususların neler olduğunun\n
+^ gerekçeli olarak belirtilmesine dikkat edilir. Panel raporu,\n
+^ panelistler ve moderatör tarafından imzalanır ve o proje önerisi\n
+^ için panel değerlendirmesi tamamlanmış olur.\n
+
++ çıkar (çakışması|çatışması) (nedir|ne demek)?
+- Başkaları tarafından çıkar çatışması/çakışması olarak yorumlanabilecek ilişki ve durumlar:\n
+^ a) Tez hocası/öğrencisi olmak,\n
+^ b) Son üç yıl içinde makale/tebliğ/proje/kitap gibi ortak çalışma yapmış,\n
+^ yapmakta veya yakın gelecekte yapacak olmak,\n
+^ c) Aynı kurumda çalışıyor/görevli olmak veya yakın gelecekte\n
+^ görevlendirilmeleri/ çalışmaları muhtemel olmak,\n
+^ d) Proje hakkında görüş bildirmiş olmak ve/veya projenin hazırlanmasına\n
+^ herhangi bir katkıda bulunmuş olmak,\n
+^ e) Daha önce yargıya intikal eden ihtilafların tarafları (hasım) olmak,\n
+^ f) Akraba olmak ya da akraba veya boşanmış olsalar bile 3.derece dahil kan\n
+^ bağıyla veya 2. derece dahil sıhri hısım olmak,\n
+^ g) Tarafsız davranmayı önleyecek derecede olumlu/olumsuz düşünce/önyargı\n
+^ sahibi olmak.\n
+^ h) Herhangi bir ticaret ilişkisi içerisinde bulunmak veya böyle bir konuda çıkar\n
+^ çatışması/çakışması bulunmak\n
+
++ *
+- NULL
+
+
+

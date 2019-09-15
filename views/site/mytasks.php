@@ -59,6 +59,43 @@ $this->title = 'My Tasks';
         }
     }
 
+.block {
+    position: relative;
+    margin: 300px auto 0;
+    width: 500px;
+    height: 250px;
+    background: linear-gradient(0deg, #000, #272727);
+}
+
+.block:before, .block:after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
+        #0000ff, #00ff00,#ffff00, #ff0000);
+    background-size: 400%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1;
+    animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.block:after {
+    filter: blur(50px);
+}
 
 </style>
 </head>
@@ -1194,13 +1231,28 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-<?php 
+                                             if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                                if($selected_userproposal->userproposal_step>=2)
+                                                {
+                                                    echo "plus";
+                                                }
+                                                else 
+                                                {
+                                                    echo "";
+                                                }
+                                            }
+                                            ?>"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
-                                        <h4 class="card-title m-b-0"><span class="round round-info">4</span> Bilimsel Değerlendirme</h4>
+                                        <h4 class="card-title m-b-0"><span class="round round-info">4</span> Bilimsel Değerlendirme </h4>
                                     </div>
-                                    <div class="card-body collapse show">
+                                    <div class="card-body collapse <?php if ($selected_proposal->proposal_id && isset($selected_userproposal)){
+                                        if((int)$selected_userproposal->userproposal_step>=2)
+                                                echo "show";
+
+                                    } ?>">
                             <!-- .chat-row -->
                             <div class="chat-main-box">
                                 <!-- .chat-left-panel -->
@@ -1252,32 +1304,13 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                     <div class="chat-rbox">
                                         <ul class="chat-list p-20" id="chat_correspondence" >
                                             <!--chat Row -->
-                                            <li>
-                                            <!--chat Row -->
-                                            <li>
-                                                <div class="chat-img"><img src="../assets/images/users/2.jpg" alt="user" /></div>
-                                                <div class="chat-content">
-                                                    <h5>Bianca Doe</h5>
-                                                    <div class="box bg-light-success">It’s Great opportunity to work.</div>
-                                                </div>
-                                                <div class="chat-time">10:57 am</div>
-                                            </li>
-                                            <!--chat Row -->
-                                            <li class="reverse">
-                                                <div class="chat-time">10:57 am</div>
-                                                <div class="chat-content">
-                                                    <h5>Steave Doe</h5>
-                                                    <div class="box bg-light-inverse">It’s Great opportunity to work.</div>
-                                                </div>
-                                                <div class="chat-img"><img src="../assets/images/users/5.jpg" alt="user" /></div>
-                                            </li>
                                            
                                         </ul>
                                     </div>
                                     <div class="card-body b-t">
                                         <div class="row">
                                             <div class="col-8">
-                                                <textarea id="input_message" placeholder="Type your message here" class="form-control b-0"></textarea>
+                                                <textarea id="input_message" placeholder="Buraya yazınız" class="form-control b-0"></textarea>
                                             </div>
                                             <div class="col-4 text-right">
                                                 <button type="button" id="send_message" class="btn btn-info btn-circle btn-lg"><i class="fas fa-paper-plane"></i> </button>
@@ -1391,6 +1424,9 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/jquery/jquery.min.js"></script>
+    
+ <!--    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.1.0.js"></script>-->
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/popper/popper.min.js"></script>
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -1492,11 +1528,20 @@ window.annotation = $('#scroll').annotator();
 ];*/
 
 window.user_colors=[];
- <?php if($userproposal_colors)foreach ($userproposal_colors as $userproposal_color) {
+window.user_id_array=[];
+window.user_gradients='';
+ <?php if(sizeof($userproposal_colors)>0)
+$index_user=1;
+ foreach ($userproposal_colors as $userproposal_color) {
 
     echo "window.user_colors['".$userproposal_color->userproposalUser->user_id."']='".$userproposal_color->userproposalUser->user_color."';";
-     }?>
+    echo "window.user_id_array['".$userproposal_color->userproposalUser->user_id."']='".$index_user."';";
 
+    echo "window.user_gradients+='".$userproposal_color->userproposalUser->user_color.",';";
+
+    $index_user++;
+     }?>
+window.user_gradients='background-image: linear-gradient(to right,'+window.user_gradients.slice(0,-1)+')';
  //var id=12345
  window.annotationParameters={
     prefix: '/annotation',
@@ -1662,9 +1707,52 @@ jQuery.ajaxSetup({async:true});
     console.log("retrieved msg",msg);
 
 
+    var dt = new Date();
+    var h =  dt.getHours(), m = dt.getMinutes();
+    var _time = (h > 12) ? (h-12 + ':' + m +' pm') : (h + ':' + m +' am');
 
-    var message='<li class="reverse"><div class="chat-time">10:57 am</div><div class="chat-content"><h5>Steave Doe</h5><div class="box bg-light-inverse">'+msg+'</div></div><div class="chat-img"><img src="../assets/images/users/5.jpg" alt="user" /></div></li>';
-      $('#chat_correspondence').append(message);
+
+var user_id=msg.user_id;
+var moderator=msg.moderator;
+var message;
+var message_mod='';
+var msg_raw=msg.message;
+
+/*
+var moderator=JSON.parse(moderator.reply);
+var moderator_type=moderator.type;
+var msg_raw_message=msg_raw.message;
+if(msg_raw_type=='error_mask')
+{
+var msg_raw_message_mask=msg_raw.mask;
+console.log("MESSAGE TYPE=>",msg_raw_type,msg_raw_message,msg_raw_message_mask);
+}
+*/
+console.log("USER ID issue=>",user_id,window.userIdGlobal);
+    if(user_id==window.userIdGlobal)
+    {
+        message='<li class="reverse"><div class="chat-time">'+_time+'</div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'</div></div><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div></li>';
+
+    }
+    else
+    {
+
+        message='<li><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'<div class="checkbox checkbox-info"><input type="checkbox" id="inputSchedule" name="inputCheckboxesSchedule"><label for="inputSchedule" class=""><span style="font-size:small">aynı fikirdeyim</span></label></div> </div></div><div class="chat-time">'+_time+'</div></li>';
+
+        //message='<li><div class="chat-time">10:57 am</div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'</div></div><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div></li>';     
+    }
+
+    if(typeof moderator === "undefined")
+    {
+        //no moderator message available
+    }
+    else
+    {
+        var moderator_reply=moderator.reply;
+        message_mod='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+moderator_reply+'</div></div><div class="chat-time">'+_time+'</div></li>';
+        
+    }
+      $('#chat_correspondence').append(message+message_mod);
 
             if(Window.scroll_status==0)
             {
@@ -1678,7 +1766,8 @@ jQuery.ajaxSetup({async:true});
 $('#send_message').click(function(event){
     event.preventDefault();
     console.log("sending...");
-    Window.socket.emit('chat message', $('#input_message').val());
+    var message={user_id:window.userIdGlobal,message:$('#input_message').val()};
+    Window.socket.emit('chat message', message);
     $('#input_message').val('');
     $('#input_message').focus().click();
      Window.scroll_status=0;
@@ -1689,7 +1778,8 @@ $('#send_message').click(function(event){
         var code = (e.keyCode ? e.keyCode : e.which);
         //alert(code);
         if (code == 13) {
-                Window.socket.emit('chat message', $('#input_message').val());
+                var message={user_id:window.userIdGlobal,message:$('#input_message').val()};
+                Window.socket.emit('chat message', message);
                 $('#input_message').focus().click();
                 $('#input_message').val('');
                 Window.scroll_status=0;
@@ -1708,7 +1798,7 @@ $.ajax({
         var i;
         for(i=0;i< retrieved_annotations.length;i++)
         {
-                             var annotation_append_item='<li data-id="'+retrieved_annotations[i].id+'"><a><span>'+retrieved_annotations[i].text+' <small class="text-danger">'+retrieved_annotations[i].quote+'</small></span><a></li>';
+                             var annotation_append_item='<li data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right"  data-id="'+retrieved_annotations[i].id+'"><a><span>'+retrieved_annotations[i].text+' <small class="text-danger">'+retrieved_annotations[i].quote+'</small></span><a></li>';
             //console.log(retrieved_annotations[i].text,retrieved_annotations[i].quote);
             $('#chatonline').append(annotation_append_item);
         }

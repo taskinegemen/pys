@@ -143,7 +143,7 @@ class SiteController extends Controller
         {
             $selected_proposal=new Proposal();
             $selected_userproposal=new Userproposal();
-            $userproposal_colors='';
+            $userproposal_colors=[];
         }
         //echo print_r($selected_proposal);
         $all_proposals=Userproposal::find()->where(['userproposal_user_id' => Yii::$app->user->identity->user_id])->all();
