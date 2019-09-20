@@ -11,6 +11,8 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\Userproposal;
 use app\models\Proposal;
+use app\models\Conversationuser;
+use app\models\Conversation;
 
 use yii\helpers\Json;
 class SiteController extends Controller
@@ -37,7 +39,7 @@ class SiteController extends Controller
                 'actions' => [
                     //'logout' => ['post'],
                 ],
-            ],
+            ]
         ];
     }
 
@@ -104,7 +106,88 @@ class SiteController extends Controller
 
         return $this->render('register');
     }
+    public function beforeAction($action)
+    {            
+        if ($action->id == 'setconversation' || $action->id == 'unsetconversation') {
+            $this->enableCsrfValidation = false;
+        }
 
+        return parent::beforeAction($action);
+    }
+    public function actionSetconversation()
+    {
+
+        $this->layout = false;
+        if(Yii::$app->request->post('conversation_user_user_id') && Yii::$app->request->post('conversation_user_conversation_id'))
+        {
+            $conversation_user_user_id=Yii::$app->request->post('conversation_user_user_id');
+            $conversation_user_conversation_id=Yii::$app->request->post('conversation_user_conversation_id');
+            $conversation_user=new Conversationuser();
+            $conversation_user->conversation_user_user_id=$conversation_user_user_id;
+            $conversation_user->conversation_user_conversation_id=$conversation_user_conversation_id;
+            if($conversation_user->save())
+            {
+                    Yii::$app->response->data =json_encode([
+                        'status' => 1
+                    ]);
+            }
+            else
+            {
+                     Yii::$app->response->data =json_encode([
+                        'status' => 0,
+                        'error'=>$conversation_user->getErrors()
+                    ]);               
+            }
+
+        }
+        else
+        {
+                     Yii::$app->response->data =json_encode([
+                        'status' => 0,
+                        'error'=>["id"=>Yii::$app->request->post('conversation_user_user_id'),"cid"=>Yii::$app->request->post('conversation_user_conversation_id')]
+                    ]);             
+        }        
+    }
+    public function actionUnsetconversation()
+    {
+        $this->layout = false;
+        if(Yii::$app->request->post('conversation_user_user_id') && Yii::$app->request->post('conversation_user_conversation_id'))
+        {
+            $conversation_user_conversation_id=Yii::$app->request->post('conversation_user_conversation_id');
+            $conversation_user_user_id=Yii::$app->request->post('conversation_user_user_id');
+            $conversation_user=Conversationuser::find()->where(
+                [
+                    'conversation_user_conversation_id' => $conversation_user_conversation_id,
+                    'conversation_user_user_id' => $conversation_user_user_id
+            ])->one();
+            if($conversation_user){
+            if($conversation_user->delete())
+            
+                {
+                        Yii::$app->response->data =json_encode([
+                            'status' => 1
+                        ]);
+                }
+                else
+                {
+                         Yii::$app->response->data =json_encode([
+                            'status' => 0,
+                            'error'=>$conversation_user->getErrors()
+                        ]);               
+                }
+            }
+            else
+            {
+                                       Yii::$app->response->data =json_encode([
+                            'status' => 0,
+                            'error'=>[$conversation_user_user_id,$conversation_user_user_id]
+                        ]);  
+            }
+
+            //
+
+        }         
+    }
     public function actionMytasks()
     {
         $this->layout = false;

@@ -1,172 +1,473 @@
 listening on *:3000
+Connected!
+Bot has finished loading!
+Result:  [ RowDataPacket {
+    conversation_id: 2,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsfsd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:29:11.000Z },
+  RowDataPacket {
+    conversation_id: 3,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:31:03.000Z },
+  RowDataPacket {
+    conversation_id: 4,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasdfasdfasf sdf sdf sdf sdfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:31:45.000Z },
+  RowDataPacket {
+    conversation_id: 5,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasasfsdfsdfsd sdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:34:25.000Z },
+  RowDataPacket {
+    conversation_id: 6,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'hasda sdglfgjhl dfghfghfh',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:41:09.000Z },
+  RowDataPacket {
+    conversation_id: 7,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'egemen burada',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:41:57.000Z },
+  RowDataPacket {
+    conversation_id: 8,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'dfgdfgdfgdfg',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:49:33.000Z },
+  RowDataPacket {
+    conversation_id: 9,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'merhaba dayı',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:10.000Z },
+  RowDataPacket {
+    conversation_id: 10,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nben ******',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:14.000Z },
+  RowDataPacket {
+    conversation_id: 11,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'ben ************\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:30.000Z },
+  RowDataPacket {
+    conversation_id: 12,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nemin misiniz?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:38.000Z },
+  RowDataPacket {
+    conversation_id: 13,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\neminsin yani?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:44.000Z },
+  RowDataPacket {
+    conversation_id: 14,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nemin misin?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:47.000Z },
+  RowDataPacket {
+    conversation_id: 15,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nemin misin?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:56.000Z },
+  RowDataPacket {
+    conversation_id: 16,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nemin misin?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:51:59.000Z },
+  RowDataPacket {
+    conversation_id: 17,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'efsfsdf sdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-15T02:56:50.000Z },
+  RowDataPacket {
+    conversation_id: 18,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T21:43:58.000Z },
+  RowDataPacket {
+    conversation_id: 19,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'işte bu çok önemli ve tarihi bir gün',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:06:24.000Z },
+  RowDataPacket {
+    conversation_id: 20,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwefwfew',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:07:34.000Z },
+  RowDataPacket {
+    conversation_id: 21,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'efefeeer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:16:48.000Z },
+  RowDataPacket {
+    conversation_id: 22,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdfsfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:17:32.000Z },
+  RowDataPacket {
+    conversation_id: 23,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'fdfvgdgdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:21:28.000Z },
+  RowDataPacket {
+    conversation_id: 24,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'dfvdfvdfv',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:23:34.000Z },
+  RowDataPacket {
+    conversation_id: 25,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'hay aq',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:24:32.000Z },
+  RowDataPacket {
+    conversation_id: 26,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdfsfs',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:26:51.000Z },
+  RowDataPacket {
+    conversation_id: 27,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdfs',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:32:06.000Z },
+  RowDataPacket {
+    conversation_id: 28,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'fsfsdsfsd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:35:05.000Z },
+  RowDataPacket {
+    conversation_id: 29,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'rfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:37:55.000Z },
+  RowDataPacket {
+    conversation_id: 30,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'sfsdfsd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:39:46.000Z },
+  RowDataPacket {
+    conversation_id: 31,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'dfvdfdff',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:42:05.000Z },
+  RowDataPacket {
+    conversation_id: 32,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'egemen taşkın işte buradadır efendim',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:50:57.000Z },
+  RowDataPacket {
+    conversation_id: 33,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdsdfsdfsd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:52:11.000Z },
+  RowDataPacket {
+    conversation_id: 34,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'egemen babaaa',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T22:53:32.000Z },
+  RowDataPacket {
+    conversation_id: 35,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'dfvdfvdvdfv',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-16T23:06:45.000Z },
+  RowDataPacket {
+    conversation_id: 36,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'dfdfg',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T22:38:48.000Z },
+  RowDataPacket {
+    conversation_id: 37,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdvsvsdvsd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:16:22.000Z },
+  RowDataPacket {
+    conversation_id: 38,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:16:30.000Z },
+  RowDataPacket {
+    conversation_id: 39,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:16:46.000Z },
+  RowDataPacket {
+    conversation_id: 40,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nhej son',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:16:54.000Z },
+  RowDataPacket {
+    conversation_id: 41,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdsdfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:17:02.000Z },
+  RowDataPacket {
+    conversation_id: 42,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\ndenene',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:21:53.000Z },
+  RowDataPacket {
+    conversation_id: 43,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:21:55.000Z },
+  RowDataPacket {
+    conversation_id: 44,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'loo loo\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:22:04.000Z },
+  RowDataPacket {
+    conversation_id: 45,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nişte burda bir ev var',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:22:10.000Z },
+  RowDataPacket {
+    conversation_id: 46,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nçıkar çatışması var mı?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:22:17.000Z },
+  RowDataPacket {
+    conversation_id: 47,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'denenme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:23:00.000Z },
+  RowDataPacket {
+    conversation_id: 48,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nbu bir deneme çalışmadır',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:23:15.000Z },
+  RowDataPacket {
+    conversation_id: 49,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: 'dneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:24:36.000Z },
+  RowDataPacket {
+    conversation_id: 50,
+    conversation_user_id: 3,
+    conversation_proposal_id: 1,
+    conversation_message: '\nbu bir deneme  çalışmasıdır anladın mı seni lanet olası',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:25:02.000Z },
+  RowDataPacket {
+    conversation_id: 51,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\ndsdfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:25:27.000Z },
+  RowDataPacket {
+    conversation_id: 52,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:29:46.000Z },
+  RowDataPacket {
+    conversation_id: 53,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-18T23:29:50.000Z },
+  RowDataPacket {
+    conversation_id: 54,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:19:46.000Z },
+  RowDataPacket {
+    conversation_id: 55,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nmerhaqbalar bu bir deneme uygulamasıdır',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:19:55.000Z },
+  RowDataPacket {
+    conversation_id: 56,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nfrewrwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:02.000Z },
+  RowDataPacket {
+    conversation_id: 57,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:03.000Z },
+  RowDataPacket {
+    conversation_id: 58,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:03.000Z },
+  RowDataPacket {
+    conversation_id: 59,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:03.000Z },
+  RowDataPacket {
+    conversation_id: 60,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:04.000Z },
+  RowDataPacket {
+    conversation_id: 61,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:04.000Z },
+  RowDataPacket {
+    conversation_id: 62,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:04.000Z },
+  RowDataPacket {
+    conversation_id: 63,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:05.000Z },
+  RowDataPacket {
+    conversation_id: 64,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:05.000Z },
+  RowDataPacket {
+    conversation_id: 65,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwerwer',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:06.000Z },
+  RowDataPacket {
+    conversation_id: 66,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nwerw',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:06.000Z },
+  RowDataPacket {
+    conversation_id: 67,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nerw',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:06.000Z },
+  RowDataPacket {
+    conversation_id: 68,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nerwe',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-19T07:20:07.000Z } ]
 a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-message dfgfsdf
-a user connected
-message sfsdf
-message 
-dfgdfg
-a user connected
-message sdfsdf
-message { user_id: '1', message: 'dfgdfgdfg' }
-a user connected
-a user connected
-message { user_id: '1', message: 'sdfsdf' }
-message { user_id: '1', message: '\ndfgdfgdfgdfgdfg' }
-message { user_id: '1', message: '\n\'xvxcvc_"\'\'' }
-a user connected
-message { user_id: '1', message: 'dfgdfg' }
-message { user_id: '1', message: '\ndrgdgdfg' }
-a user connected
-message { user_id: '1', message: 'dfgdfgdf' }
-a user connected
-message { user_id: '1', message: 'sdfsdf' }
-message { user_id: '1', message: 'asdasdas\n' }
-a user connected
-message { user_id: '1', message: 'xcvxcvxcvxcv' }
-message { user_id: '1', message: 'zxdsdfsdf\n' }
-message { user_id: '1', message: '\nsdfsdf' }
-a user connected
-message { user_id: '1', message: 'werwerwerw' }
-a user connected
-message { user_id: '1', message: 'sfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-a user connected
-message { user_id: '1', message: 'dfdfsdfsdf' }
-a user connected
-message { user_id: '1', message: 'dgdfgdfg' }
-message { user_id: '1', message: '\ndgdfgdfgdfg' }
-a user connected
-message { user_id: '1', message: 'dgdfgdfg' }
-message { user_id: '1', message: '\ndfgdfgdfg' }
-a user connected
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-a user connected
-message { user_id: '1', message: 'dfsfsdfsdf' }
-message { user_id: '1', message: '\ndfdfsdfsdf' }
-a user connected
-message { user_id: '1', message: 'dfsdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdfsdf' }
-a user connected
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdfsdfsd' }
-a user connected
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdfs' }
-message { user_id: '1', message: 'Egemen' }
-a user connected
-message { user_id: '1', message: 'sdfsfsdf' }
-a user connected
-message { user_id: '1', message: '\nasdasdasd' }
-a user connected
-a user connected
-message sdfsdf
-message sdfsdfsdf
-a user connected
-a user connected
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message asdasdad
-message { user_id: '3', message: 'eretertert' }
-message { user_id: '3', message: 'dgdfgdfgdf\n' }
-a user connected
-a user connected
-message { user_id: '1', message: 'deneme' }
-message { user_id: '3', message: 'egemen' }
-message { user_id: '3', message: 'sfsdf sfsdfsd sdfsdfsd sfsdfsdf\n' }
-a user connected
-a user connected
-message { user_id: '1', message: 'fsdfsdf' }
-message { user_id: '3', message: 'asdasdassd' }
-message { user_id: '3', message: '\nasdasd' }
-message { user_id: '3', message: '\nasdasd' }
-message { user_id: '1', message: '\nasdadad' }
-message { user_id: '1', message: '\ngdfgdfg' }
-message { user_id: '1', message: '\ndfgdfg' }
-a user connected
-message { user_id: '3', message: 'rtertert' }
-message { user_id: '3', message: '\nsdfsdfsdf' }
-a user connected
-message { user_id: '1', message: 'fsdfsdfsdfsd' }
-message { user_id: '3', message: 'sdfsdfsdf\n' }
-message { user_id: '3', message: '\nsfsdfsdf' }
-message { user_id: '1', message: 'asdasdasd\n' }
-a user connected
-a user connected
-a user connected
-a user connected
-a user connected
-message { user_id: '1', message: 'sdfsdf' }
-a user connected
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message https://i.ytimg.com/vi/_H7nkgMHANk/maxresdefault.jpg
-message { user_id: '1', message: 'deneme' }
-message { user_id: '1', message: '\nsdfsdfs' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1', message: '\nsdfs' }
-message { user_id: '1', message: '\ndf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1', message: '\nsdf' }
-message { user_id: '1',
-  message:
-   'işte bu çok önemli bir hususun açığa çıkmasını sağlamaktadır' }
-a user connected
-message dsfsdfsdfsd
-message sdasdas
-a user connected
-message sdfsdfd
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message 
-sdfsdf
-message sdfsdf
-a user connected
-message { user_id: '1', message: 'fsdfsdf' }
-message { user_id: '1', message: 'sdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdfsdfsdf' }
-message { user_id: '1', message: '\nsdfsdf' }
-message { user_id: '1',
-  message:
-   '\nsdfsdfsdf sdfsdf sdfsdf sdfsdf sdfsdfsdfsdf sdfsdf ösdföksdfmösdf sdfksdfksdfksdf sdfsdfsd sfsfsf sdfsdfsdf sdfsfsf sdfsdfsdf' }
-message { user_id: '1',
-  message:
-   'sdfsdfsdf sdfsdf sdfsdf sdfsdf sdfsdfsdfsdf sdfsdf ösdföksdfmösdf sdfksdfksdfksdf sdfsdfsd sfsfsf sdfsdfsdf sdfsfsf sdfsdfsdf' }
-message { user_id: '1',
-  message:
-   '\nsdfsdfsdf sdfsdf sdfsdf sdfsdf sdfsdfsdfsdf sdfsdf ösdföksdfmösdf sdfksdfksdfksdf sdfsdfsd sfsfsf sdfsdfsdf sdfsfsf sdfsdfsdf' }
-message { user_id: '1',
-  message:
-   '\nAçıklamaYaşam ya da hayat; biyolojik açıdan, kimyasal reaksiyonlar veya bir dönüşümle sonuçlanan başka olaylar gibi bazı biyolojik süreçler gösteren organizmaların bir özelliğidir. Organik maddeler gelişme ve üreme yeteneklerine sahiptir. Vikipedi\n' }

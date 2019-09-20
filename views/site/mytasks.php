@@ -1480,7 +1480,7 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <script src="<?php echo Yii::$app->homeUrl;?>js/chat.js"></script>
     
 
-    <script src="http://167.71.254.111:3000/socket.io/socket.io.js"></script>
+    <script src="http://167.71.254.111/socket.io/socket.io.js"></script>
     
 
         <script>
@@ -1713,7 +1713,7 @@ jQuery.ajaxSetup({async:true});
 
 //$("#calendar .fc-agendaWeek-button").click();
 
- Window.socket = io.connect('http://167.71.254.111:3000/');
+ Window.socket = io.connect('http://167.71.254.111');
    Window.socket.on('chat message', function(msg){
     console.log("retrieved msg",msg);
 
@@ -1768,9 +1768,26 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
             if (this.checked) {
                 // the checkbox is now checked 
                 console.log(this,"checked",$(this).data("conversationid"));
+                $.post( "/site/setconversation", 
+                    {
+                        conversation_user_conversation_id: conversation_id, 
+                        conversation_user_user_id: window.userIdGlobal 
+                    })
+                  .done(function( data ) {
+                    console.log( "İssue Accepted!: " + data );
+                  });
+
             } else {
                 // the checkbox is now no longer checked
                 console.log(this,"unchecked",$(this).data("conversationid"));
+                                $.post( "/site/unsetconversation", 
+                    {
+                        conversation_user_conversation_id: conversation_id, 
+                        conversation_user_user_id: window.userIdGlobal 
+                    })
+                  .done(function( data ) {
+                    console.log( "İssue Removed!: " + data );
+                  });
             }
         });
 

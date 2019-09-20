@@ -37,6 +37,10 @@ class AnnotationController extends Controller
                     //'logout' => ['post'],
                 ],
             ],
+
+
+
+
         ];
     }
 

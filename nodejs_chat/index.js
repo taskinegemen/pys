@@ -118,7 +118,10 @@ io.on('connection', function(socket){
   	con.query(sql, function (err, result) {
     	if (err) throw err;
     	msg_processed["conversation_id"]=result.insertId;
-    	console.log("1 record inserted",result,result.affectedRows);
+    	console.log("before:1 record inserted",result,result.affectedRows);
+    	//var sql="INSERT INTO conversation_status(conversation_user_conversation_id,conversation_user_user_id) VALUES ("+msg_processed.conversation_id+","+msg_processed.user_id+");";
+    	//con.query(sql,function(err,result){});
+    	console.log("after:1 record inserted",result,result.affectedRows);
     	io.emit('chat message', msg_processed);
 
 
