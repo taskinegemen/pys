@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Egemen Taşkın <egementaskin@gmail.com>, 2019
+
 msgid ""
 msgstr ""
 "Project-Id-Version: Annotator\n"
@@ -54,11 +55,11 @@ msgstr ""
 
 #: lib/annotator.js:114
 msgid "No Comment"
-msgstr "Kommentaare pole"
+msgstr "Boş yorum..."
 
 #: lib/annotator.js:129
 msgid "Comments"
-msgstr "Kommentaarid"
+msgstr "Yazmaya başlayabilirsiniz..."
 
 #: lib/annotator.js:265
 msgid "Can't dump annotations without Store plugin."

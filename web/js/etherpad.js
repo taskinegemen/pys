@@ -3,7 +3,7 @@
   $.fn.pad = function( options ) {
     var settings = {
       'host'              : 'http://167.71.254.111',
-      'baseUrl'           : '/pys/',
+      'baseUrl'           : '/p/',
       'showControls'      : false,
       'showChat'          : false,
       'showLineNumbers'   : false,

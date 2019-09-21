@@ -469,5 +469,440 @@ Result:  [ RowDataPacket {
     conversation_proposal_id: 1,
     conversation_message: '\nerwe',
     conversation_status: '{"agreed": []}',
-    conversation_timestamp: 2019-09-19T07:20:07.000Z } ]
+    conversation_timestamp: 2019-09-19T07:20:07.000Z },
+  RowDataPacket {
+    conversation_id: 69,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'wefwefwef',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:05:29.000Z },
+  RowDataPacket {
+    conversation_id: 70,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'deneme',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:05:46.000Z },
+  RowDataPacket {
+    conversation_id: 71,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'hello\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:05:57.000Z },
+  RowDataPacket {
+    conversation_id: 72,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'merhaba dostum',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:06:02.000Z },
+  RowDataPacket {
+    conversation_id: 73,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:25.000Z },
+  RowDataPacket {
+    conversation_id: 74,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\ndenem',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:29.000Z },
+  RowDataPacket {
+    conversation_id: 75,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdfsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:30.000Z },
+  RowDataPacket {
+    conversation_id: 76,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdfs',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:30.000Z },
+  RowDataPacket {
+    conversation_id: 77,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\ndf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:30.000Z },
+  RowDataPacket {
+    conversation_id: 78,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:31.000Z },
+  RowDataPacket {
+    conversation_id: 79,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdfs',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:31.000Z },
+  RowDataPacket {
+    conversation_id: 80,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\ndfsgsf',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:34.000Z },
+  RowDataPacket {
+    conversation_id: 81,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'sdfsdf\n',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:07:40.000Z },
+  RowDataPacket {
+    conversation_id: 82,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nsdasdasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:08:33.000Z },
+  RowDataPacket {
+    conversation_id: 83,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'neredeee',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:08:41.000Z },
+  RowDataPacket {
+    conversation_id: 84,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'çıkar çatışması',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:08:47.000Z },
+  RowDataPacket {
+    conversation_id: 85,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'çıkar çatışması nedir?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:08:56.000Z },
+  RowDataPacket {
+    conversation_id: 86,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasdasdasdasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:30.000Z },
+  RowDataPacket {
+    conversation_id: 87,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasdasdasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:32.000Z },
+  RowDataPacket {
+    conversation_id: 88,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasdasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:33.000Z },
+  RowDataPacket {
+    conversation_id: 89,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasdasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:33.000Z },
+  RowDataPacket {
+    conversation_id: 90,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:35.000Z },
+  RowDataPacket {
+    conversation_id: 91,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nasd',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:10:35.000Z },
+  RowDataPacket {
+    conversation_id: 92,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: 'SDFSDFSD',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:32:23.000Z },
+  RowDataPacket {
+    conversation_id: 93,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nSEFSD',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:32:27.000Z },
+  RowDataPacket {
+    conversation_id: 94,
+    conversation_user_id: 1,
+    conversation_proposal_id: 1,
+    conversation_message: '\nçıkar çatışması var mı?',
+    conversation_status: '{"agreed": []}',
+    conversation_timestamp: 2019-09-20T14:32:36.000Z } ]
+a user connected
+a user connected
+a user connected
+a user connected
+message { proposal_id: '1', user_id: '1', message: 'sdfsdfsd' }
+moderator reply { proposal_id: '1', user_id: '1', message: 'sdfsdfsd' } NULL
+moderator reply cont.=> { proposal_id: '1', user_id: '1', message: 'sdfsdfsd' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1', user_id: '1', message: 'sdfsdfsd' }
+LAST MESSAGE { proposal_id: '1', user_id: '1', message: 'sdfsdfsd' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'sdfsdfsd','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 95,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 95,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+moderator reply { proposal_id: '1', user_id: '1', message: '\nsdfsdf' } NULL
+moderator reply cont.=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+LAST MESSAGE { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+sdfsdf','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 96,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 96,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+moderator reply { proposal_id: '1', user_id: '1', message: '\nsdfsdf' } NULL
+moderator reply cont.=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+LAST MESSAGE { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+sdfsdf','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 97,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 97,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+moderator reply { proposal_id: '1', user_id: '1', message: '\nsdfsdf' } NULL
+moderator reply cont.=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+LAST MESSAGE { proposal_id: '1', user_id: '1', message: '\nsdfsdf' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+sdfsdf','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 98,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 98,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1',
+  user_id: '1',
+  message: 'rwerwerwer\nsdfsdfsd' }
+moderator reply { proposal_id: '1',
+  user_id: '1',
+  message: 'rwerwerwer\nsdfsdfsd' } NULL
+moderator reply cont.=> { proposal_id: '1',
+  user_id: '1',
+  message: 'rwerwerwer\nsdfsdfsd' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1',
+  user_id: '1',
+  message: 'rwerwerwer\nsdfsdfsd' }
+LAST MESSAGE { proposal_id: '1',
+  user_id: '1',
+  message: 'rwerwerwer\nsdfsdfsd' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'rwerwerwer
+sdfsdfsd','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 99,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 99,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1', user_id: '1', message: '\nözgün değer' }
+moderator reply { proposal_id: '1', user_id: '1', message: '\nözgün değer' } NULL
+moderator reply cont.=> { proposal_id: '1', user_id: '1', message: '\nözgün değer' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1', user_id: '1', message: '\nözgün değer' }
+LAST MESSAGE { proposal_id: '1', user_id: '1', message: '\nözgün değer' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+özgün değer','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 100,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 100,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+message { proposal_id: '1',
+  user_id: '1',
+  message: '\nçıkar çatışması var mı?' }
+moderator reply { proposal_id: '1',
+  user_id: '1',
+  message: '\nçıkar çatışması var mı?' } Paneller özen kurulmakta olup çıkar çatışması olması sözkonusu değildir!
+moderator reply cont.=> { proposal_id: '1',
+  user_id: '1',
+  message: '\nçıkar çatışması var mı?',
+  moderator:
+   { reply:
+      'Paneller özen kurulmakta olup çıkar çatışması olması sözkonusu değildir!' } }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1',
+  user_id: '1',
+  message: '\nçıkar çatışması var mı?',
+  moderator:
+   { reply:
+      'Paneller özen kurulmakta olup çıkar çatışması olması sözkonusu değildir!' } }
+LAST MESSAGE { proposal_id: '1',
+  user_id: '1',
+  message: '\nçıkar çatışması var mı?',
+  moderator:
+   { reply:
+      'Paneller özen kurulmakta olup çıkar çatışması olması sözkonusu değildir!' } }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+çıkar çatışması var mı?','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 101,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 101,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+a user connected
+message { proposal_id: '1',
+  user_id: '1',
+  message: '\nözgün değer xxxxx sebeplerden dolayı düşükktür' }
+moderator reply { proposal_id: '1',
+  user_id: '1',
+  message: '\nözgün değer xxxxx sebeplerden dolayı düşükktür' } NULL
+moderator reply cont.=> { proposal_id: '1',
+  user_id: '1',
+  message: '\nözgün değer xxxxx sebeplerden dolayı düşükktür' }
+İŞTE JSON=>
+msg_processed=> { proposal_id: '1',
+  user_id: '1',
+  message: '\nözgün değer xxxxx sebeplerden dolayı düşükktür' }
+LAST MESSAGE { proposal_id: '1',
+  user_id: '1',
+  message: '\nözgün değer xxxxx sebeplerden dolayı düşükktür' }
+SQL INSERT INTO conversation (conversation_user_id, conversation_proposal_id,conversation_message,conversation_status) VALUES (1,1,'
+özgün değer xxxxx sebeplerden dolayı düşükktür','{"agreed":[]}');
+before:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 102,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+after:1 record inserted OkPacket {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 102,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0 } 1
+a user connected
+a user connected
 a user connected

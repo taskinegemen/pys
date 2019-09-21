@@ -1324,10 +1324,24 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                     </div>
                                 </div>
                              </div>
+                            <!--panel raporu begin-->
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-actions">
+                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                                            <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
+                                        </div>
+                                        <h4 class="card-title m-b-0"><span class="round round-info">5</span>Panel Raporu</h4>
+                                    </div>
+                                    <div class="card-body collapse show">
+                                        <div id="panel_raporu"></div>
+                                    </div>
+                                </div>
+                             </div>
 
-
-
-
+                            <!--panel raporu ends-->
 
 
 
@@ -1480,12 +1494,14 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <script src="<?php echo Yii::$app->homeUrl;?>js/chat.js"></script>
     
 
-    <script src="http://167.71.254.111/socket.io/socket.io.js"></script>
-    
-
+    <!--<script src="http://167.71.254.111/socket.io/socket.io.js"></script>-->
+        <script src="http://167.71.254.111/js/socket.io.js"></script>
+        <script src="<?php echo Yii::$app->homeUrl;?>js/etherpad.js"></script>
         <script>
 
 $( document ).ready(function() {
+
+
 
 
 //$('body').annotator().annotator('setupPlugins');
@@ -1562,6 +1578,40 @@ window.user_gradients='background-image: linear-gradient(to right,'+window.user_
 window.userIdGlobal='<?php echo Yii::$app->user->identity->user_id;?>';
 annotation.annotator('addPlugin', 'Store', window.annotationParameters);
 
+/*
+'host'             : 'http://beta.etherpad.org', // the host and port of the Etherpad instance, by default the foundation will host your pads for you
+'baseUrl'          : '/p/', // The base URL of the pads
+'showControls'     : false, // If you want to show controls IE bold, italic, etc.
+'showChat'         : false, // If you want to show the chat button or not
+'showLineNumbers'  : false, // If you want to show the line numbers or not
+'userName'         : 'unnamed', // The username you want to pass to the pad
+'useMonospaceFont' : false, // Use monospaced fonts
+'noColors'         : false, // Disable background colors on author text
+'userColor'        : false, // The background color of this authors text in hex format IE #000
+'hideQRCode'       : false, // Hide QR code
+'alwaysShowChat'   : false, // Always show the chat on the UI
+'width'            : 100, // The width of the embedded IFrame
+'height'           : 100,  // The height of the embedded IFrame
+'border'           : 0,    // The width of the border (make sure to append px to a numerical value)
+'borderStyle'      : 'solid', // The CSS style of the border    [none, dotted, dashed, solid, double, groove, ridge, inset, outset]
+'plugins'          : {}, // The options related to the plugins, not to the basic Etherpad configuration
+'rtl'              : false // Show text from right to left
+*/
+var pad={'padId':'1',
+                        'height':'768px',
+                        'userName':'Panelist_'+window.user_id_array[window.userIdGlobal],
+                        //'plugins':{'pageview':'true'},
+                        'userColor'         : encodeURIComponent(window.user_colors[window.userIdGlobal]),
+                        'alwaysShowChat':true,
+                        'showControls':true,
+                        'showLineNumbers':true,
+                        'showChat':true,
+                        'lang':'tr',
+                        
+
+                    };
+                    console.log('PAD=>',pad);
+$('#panel_raporu').pad(pad);
 //setInterval(function(){console.log("every 5 seconds repeated!");window.storeController._getAnnotations();},5000);
 
 function arrayDiffByKey(key, ...arrays) {
@@ -1713,7 +1763,8 @@ jQuery.ajaxSetup({async:true});
 
 //$("#calendar .fc-agendaWeek-button").click();
 
- Window.socket = io.connect('http://167.71.254.111');
+ Window.socket = io.connect('http://167.71.254.111',{path: '/octagon/socket.io'});
+  //Window.socket = io.connect('http://167.71.254.111',{path: '/nodejs/socket.io'});
    Window.socket.on('chat message', function(msg){
     console.log("retrieved msg",msg);
 
