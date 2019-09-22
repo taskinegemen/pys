@@ -1606,9 +1606,7 @@ var pad={'padId':'1',
                         'showControls':true,
                         'showLineNumbers':true,
                         'showChat':true,
-                        'lang':'tr',
-                        
-
+                        'lang':'tr'
                     };
                     console.log('PAD=>',pad);
 $('#panel_raporu').pad(pad);

@@ -21,7 +21,8 @@
       'toggleTextOn'      : 'Disable Rich-text',
       'toggleTextOff'     : 'Enable Rich-text',
       'plugins'           : {},
-      'rtl'               : false
+      'rtl'               : false,
+      'template_type_id'  :0,
     };
     
     var $self = this;
@@ -49,6 +50,7 @@
           iFrameLink = iFrameLink + '&showChat=' + settings.showChat;
           iFrameLink = iFrameLink + '&showLineNumbers=' + settings.showLineNumbers;
           iFrameLink = iFrameLink + '&useMonospaceFont=' + settings.useMonospaceFont;
+          iFrameLink = iFrameLink + '&template_type_id=' + settings.template_type_id;
           iFrameLink = iFrameLink + '&userName=' + settings.userName;
           if (settings.lang) {
             iFrameLink = iFrameLink + '&lang=' + settings.lang;
