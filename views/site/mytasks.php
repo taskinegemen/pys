@@ -7,6 +7,10 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\helpers\Helper;
+
+
+use app\models\Evaluation;
+use app\models\Evaluationtemplate;
 $this->title = 'My Tasks';
 //echo print_r(Yii::$app->user);
 
@@ -1736,6 +1740,9 @@ if ($selected_proposal->proposal_id && isset($selected_userproposal))
 if ($selected_proposal->proposal_id && isset($selected_userproposal))
 {
             echo "window.proposal_id='".$selected_proposal->proposal_id."';";
+            $evaluation=Evaluation::find()->where(['evaluation_proposal_id'=>$selected_proposal->proposal_id])->one();
+            echo "window.evaluation_criteria=JSON.parse('".json_encode($evaluation->evaluationEvaluationtemplate->evaluation_template_criteria)."');";
+
 }?>
 
 if (userproposal_step>=2)
@@ -1761,7 +1768,7 @@ jQuery.ajaxSetup({async:true});
 
 //$("#calendar .fc-agendaWeek-button").click();
 
- Window.socket = io.connect('http://167.71.254.111',{path: '/octagon/socket.io'});
+ Window.socket = io.connect('http://167.71.254.111',{path: '/octagon/socket.io', query: "room_id="+window.proposal_id});
   //Window.socket = io.connect('http://167.71.254.111',{path: '/nodejs/socket.io'});
    Window.socket.on('chat message', function(msg){
     console.log("retrieved msg",msg);
@@ -1792,12 +1799,18 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
     if(user_id==window.userIdGlobal)
     {
         message='<li class="reverse"><div class="chat-time">'+_time+'</div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'</div></div><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div></li>';
+        $('#chat_correspondence').append(message);
 
+    }
+    else if(typeof user_id ==="undefined")
+    {
+        //pass through!
     }
     else
     {
 
         message='<li><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'<div class="checkbox checkbox-info"><input data-conversationid="'+conversation_id+'" type="checkbox" id="inputSchedule_'+conversation_id+'" name="inputCheckboxesSchedule"><label for="inputSchedule_'+conversation_id+'" class=""><span style="font-size:small">aynı fikirdeyim</span></label></div> </div></div><div class="chat-time">'+_time+'</div></li>';
+        $('#chat_correspondence').append(message);
 
         //message='<li><div class="chat-time">10:57 am</div><div class="chat-content"><h5>Panelist '+window.user_id_array[user_id]+'</h5><div class="box bg-light-inverse" style="background-color:'+window.user_colors[user_id]+'">'+msg_raw+'</div></div><div class="chat-img"><span class="round" style="background-color:'+window.user_colors[user_id]+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div></li>';     
     }
@@ -1809,10 +1822,53 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
     else
     {
         var moderator_reply=moderator.reply;
+        var moderator_proposal_id=moderator.proposal_id;
+        var grading='';
+        var root_grading='';
         message_mod='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+moderator_reply+'</div></div><div class="chat-time">'+_time+'</div></li>';
+        if(typeof moderator_proposal_id !== "undefined")//eğer, son aşamaya geçildiyse oylama ekranı belirmelidir...
+        {
+            console.log("Son aşama=>",moderator_proposal_id);
+            var criteria=window.evaluation_criteria.criteria;
+            var criteria_overall=window.evaluation_criteria.criteria_overall;
+            console.log('criteria=>',criteria);
+            var grading="";
+            for(var j=0;j<criteria.length;j++)
+            {
+                var criteria_item=criteria[j];
+                root_grading+='<div class="btn-group" style="display:block;" data-toggle="buttons"><h4>'+criteria_item.criteria_name+'</h4>';
+                
+                for(var k=criteria_item.criteria_value_min;k<=criteria_item.criterai_value_max;k++)
+                {
+                    console.log("J,K=>",j,k);
+                    grading+='<label class="btn btn-info"><div class="custom-control custom-radio"><input type="radio" class="grades_radios" value="'+k+'" id="'+j+'_'+k+'" name="'+criteria_item.criteria_name+'" class="custom-control-input"><label class="custom-control-label" for="'+j+'_'+k+'">'+k+'</label></div></label>';
+                }
+                root_grading=root_grading+grading+'</div><br>';
+                grading='';
+            }
+            root_grading+='<button type="button" id="send_grades" class="btn btn-block btn-lg btn-info">Oylamayı Bitir</button>';
+            message_mod+='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+root_grading+'</div></div><div class="chat-time">'+_time+'</div></li>';
+        }
+
+        $('#chat_correspondence').append(message_mod);
+        $('#send_grades').click(function(event) {
+              var grades=[];
+              $('.grades_radios:checked').each(function(){
+                grades.push(parseInt($(this).val()));
+            });
+            var message={
+            proposal_id:window.proposal_id,
+            user_id:window.userIdGlobal,
+            grades:grades};
+            Window.socket.emit('chat message', message);
+            console.log("message sent!");
+                
+            
+
+        });
         
     }
-      $('#chat_correspondence').append(message+message_mod);
+      
       $('#inputSchedule_'+conversation_id).change(function() {  
             if (this.checked) {
                 // the checkbox is now checked 
