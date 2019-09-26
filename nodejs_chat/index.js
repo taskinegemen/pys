@@ -149,9 +149,36 @@ const intervalObj = setInterval(() => {
 
                     }
                   }
-                  
-                  
+
                   console.log("TOPLAM PUAN=>",total_grades);
+                  var l=0;
+                  total_grades_total=0;
+                  for(var eval_criteria in total_grades)
+                  {
+                    //console.log("1.EVAL CRITERIA",eval_criteria);
+                    for(var m=0; m<criteria.criteria.length;m++)
+                    {
+                      //console.log("2. EVAL CRITERIA",criteria.criteria[m].criteria_name,eval_criteria);
+                      if(criteria.criteria[m].criteria_name==eval_criteria)
+                      {
+                        console.log("whole criteria",criteria.criteria[m]);
+                        var eval_op=criteria.criteria[m].criteria_op;
+                        var eval_val=criteria.criteria[m].criteria_value;
+                        console.log("EVAL",eval_val,eval_op,total_grades[eval_criteria]);
+                        if(typeof eval_op !=="undefined" && typeof eval_val!=="undefined")
+                        {
+                          if(eval(total_grades[eval_criteria]+eval_op+eval_val))
+                          {
+                            console.log(eval_criteria+" kriteri için belirlenen "+eval_val+" puanı üstünde bir puan("+total_grades[eval_criteria]+") almıştır");
+
+                          }
+                        }
+                      }
+                    }
+                    total_grades_total+=total_grades[eval_criteria];
+                  }
+
+
                 }
                 else
                 {
@@ -161,10 +188,10 @@ const intervalObj = setInterval(() => {
             else if(io.sockets.adapter.rooms[room].step>0 && (Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)//30 seconds
             {
               var criteria_sub=criteria.criteria[io.sockets.adapter.rooms[room].step-1];
-              var criteria_op=criteria_sub.critera_op;
+              var criteria_op=criteria_sub.criteria_op;
               var criteria_name=criteria_sub.criteria_name;
               var criteria_value=criteria_sub.criteria_value;
-              var criterai_value_max=criteria_sub.criterai_value_max;
+              var criteria_value_max=criteria_sub.criteria_value_max;
               var criteria_value_min=criteria_sub.criteria_value_min;
               var msg={};
                if(io.sockets.adapter.rooms[room].step<criteria.criteria.length)
