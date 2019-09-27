@@ -1838,7 +1838,7 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
                 var criteria_item=criteria[j];
                 root_grading+='<div class="btn-group" style="display:block;" data-toggle="buttons"><h4>'+criteria_item.criteria_name+'</h4>';
                 
-                for(var k=criteria_item.criteria_value_min;k<=criteria_item.criterai_value_max;k++)
+                for(var k=criteria_item.criteria_value_min;k<=criteria_item.criteria_value_max;k++)
                 {
                     console.log("J,K=>",j,k);
                     grading+='<label class="btn btn-info"><div class="custom-control custom-radio"><input type="radio" class="grades_radios" value="'+k+'" id="'+j+'_'+k+'" name="'+criteria_item.criteria_name+'" class="custom-control-input"><label class="custom-control-label" for="'+j+'_'+k+'">'+k+'</label></div></label>';

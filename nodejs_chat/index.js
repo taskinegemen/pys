@@ -104,6 +104,15 @@ app.get('/', function(req, res){
   //res.sendFile(__dirname + '/index.html');
 });
 
+function getTotalGrades(ArrayValue)
+{
+  var totalGrades=0;
+  for(var i=0;i<ArrayValue.length;i++)
+  {
+    totalGrades+=ArrayValue[i];
+  }
+  return totalGrades;
+}
 const intervalObj = setInterval(() => {
     var rooms=io.sockets.adapter.rooms;
     for (var room in rooms) 
@@ -114,6 +123,7 @@ const intervalObj = setInterval(() => {
           if(typeof criteria !== "undefined")
           {
             var criteria=JSON.parse(criteria);
+            var non_criteria=criteria.non_criteria;
             //console.log("CRITERIA INT=>",criteria);
             if(io.sockets.adapter.rooms[room].length>=criteria.others.total_panelist && typeof io.sockets.adapter.rooms[room].step ==="undefined")
               {
@@ -124,59 +134,101 @@ const intervalObj = setInterval(() => {
                 io.sockets.in(room).emit('chat message', msg);
                 io.sockets.adapter.rooms[room].step=1;//pass to next step;
                 io.sockets.adapter.rooms[room].timestamp=Math.floor(Date.now() / 1000);
-
-
               }
-              else if(io.sockets.adapter.rooms[room].grades.length>0)
+              else if(io.sockets.adapter.rooms[room].grades.length>0 && typeof io.sockets.adapter.rooms[room].non_criteria_progress==="undefined")
               {
                 var grades=io.sockets.adapter.rooms[room].grades;
                 var total_grades=[];
                 console.log("COMPARISON=>",grades,grades.length,criteria.others.total_panelist);
                 if(grades.length>=criteria.others.total_panelist)
                 {
-                  for(var grade in grades)
-                  {
-                    for (var grade_sub in grades[grade])
-                    {
-                      var new_grade=grades[grade];
-                      console.log("GRADE SUB=>",grade,grade_sub,new_grade[grade_sub]);
-                      var grade_sub_criteria=criteria.criteria[grade_sub].criteria_name;
-                      if(typeof total_grades[grade_sub_criteria] === "undefined")
-                      {
-                        total_grades[grade_sub_criteria]=0; 
-                      }
-                      total_grades[grade_sub_criteria]+=new_grade[grade_sub]/criteria.others.total_panelist;
+                            for(var grade in grades)
+                            {
+                              for (var grade_sub in grades[grade])
+                              {
+                                var new_grade=grades[grade];
+                                console.log("GRADE SUB=>",grade,grade_sub,new_grade[grade_sub]);
+                                var grade_sub_criteria=criteria.criteria[grade_sub].criteria_name;
+                                if(typeof total_grades[grade_sub_criteria] === "undefined")
+                                {
+                                  total_grades[grade_sub_criteria]=0; 
+                                }
+                                total_grades[grade_sub_criteria]+=new_grade[grade_sub]/criteria.others.total_panelist;
 
-                    }
-                  }
+                              }
+                            }
 
-                  console.log("TOPLAM PUAN=>",total_grades);
-                  var l=0;
-                  total_grades_total=0;
-                  for(var eval_criteria in total_grades)
-                  {
-                    //console.log("1.EVAL CRITERIA",eval_criteria);
-                    for(var m=0; m<criteria.criteria.length;m++)
-                    {
-                      //console.log("2. EVAL CRITERIA",criteria.criteria[m].criteria_name,eval_criteria);
-                      if(criteria.criteria[m].criteria_name==eval_criteria)
-                      {
-                        console.log("whole criteria",criteria.criteria[m]);
-                        var eval_op=criteria.criteria[m].criteria_op;
-                        var eval_val=criteria.criteria[m].criteria_value;
-                        console.log("EVAL",eval_val,eval_op,total_grades[eval_criteria]);
-                        if(typeof eval_op !=="undefined" && typeof eval_val!=="undefined")
-                        {
-                          if(eval(total_grades[eval_criteria]+eval_op+eval_val))
-                          {
-                            console.log(eval_criteria+" kriteri için belirlenen "+eval_val+" puanı üstünde bir puan("+total_grades[eval_criteria]+") almıştır");
+                            console.log("TOPLAM PUAN=>",total_grades);
+                            var l=0;
+                            var total_grades_total=0;
+                            var total_msg="";
+                            var passquestion_criteria=0;
+                            var passquestion_total=0;
+                            for(var eval_criteria in total_grades)
+                            {
+                              //console.log("1.EVAL CRITERIA",eval_criteria);
+                              for(var m=0; m<criteria.criteria.length;m++)
+                              {
+                                //console.log("2. EVAL CRITERIA",criteria.criteria[m].criteria_name,eval_criteria);
+                                if(criteria.criteria[m].criteria_name==eval_criteria)
+                                {
+                                  console.log("whole criteria",criteria.criteria[m]);
+                                  var eval_op=criteria.criteria[m].criteria_op;
+                                  var eval_val=criteria.criteria[m].criteria_value;
+                                  console.log("EVAL",eval_val,eval_op,total_grades[eval_criteria]);
+                                  if(typeof eval_op !=="undefined" && typeof eval_val!=="undefined")
+                                  {
+                                    if(eval(total_grades[eval_criteria]+eval_op+eval_val))
+                                    {
+                                      total_msg+=eval_criteria+" kriteri için belirlenen "+eval_val+" puanı üstünde bir puan("+total_grades[eval_criteria]+") almıştır<br><br>";
+                                      console.log(eval_criteria+" kriteri için belirlenen "+eval_val+" puanı üstünde bir puan("+total_grades[eval_criteria]+") almıştır.");
+                                      passquestion_criteria=1;
 
-                          }
-                        }
-                      }
-                    }
-                    total_grades_total+=total_grades[eval_criteria];
-                  }
+                                    }
+                                    else
+                                    {
+                                      total_msg+=eval_criteria+" kriteri için belirlenen "+eval_val+" puanı altında bir puan("+total_grades[eval_criteria]+") almıştır<br><br>";
+                                      console.log(eval_criteria+" kriteri için belirlenen "+eval_val+" puanı altında bir puan("+total_grades[eval_criteria]+") almıştır.");                            
+                                      passquestion_criteria=0;
+                                    }
+                                  }
+                                }
+                              }
+                              total_grades_total+=total_grades[eval_criteria];
+                            }
+                            //total grade check begin
+                            var criteria_overall=criteria.criteria_overall;
+                            var overall_op=criteria_overall.criteria_op;
+                            var overall_value=criteria_overall.criteria_value;
+                            if(eval(total_grades_total+overall_op+overall_value))
+                            {
+                              total_msg+="Toplam puan için belirlenen <b>"+overall_value+"</b> puanı üstünde bir puan("+total_grades_total+") almıştır.<br><br>";
+                              console.log("Toplam puan için belirlenen "+overall_value+" puanı üstünde bir puan("+total_grades_total+") almıştır.");
+                              passquestion_total=1
+                            }
+                            else
+                            {
+                              total_msg+="Toplam puan için belirlenen <b>"+overall_value+"</b> puanı altında bir puan("+total_grades_total+") almıştır.<br><br>";
+                              console.log("Toplam puan için belirlenen "+overall_value+" puanı altında bir puan("+total_grades_total+") almıştır.");                            
+                              passquestion_total=0;
+                            }
+                            var msg={};
+                            if(passquestion_total==1 && passquestion_criteria==1)
+                            {
+
+                              total_msg+="Destek çıtasının üzerinde bir puan almasından dolayı projenin diğer kriterleri hakkında yorum yapmaya devam edeceğiz.<br>";
+                              io.sockets.adapter.rooms[room].non_criteria_progress=1;
+                              msg["moderator"]={'reply':total_msg};
+                            }
+                            else
+                            {
+                              total_msg+="Destek çıtasının altında bir puan almıştır. Bilimsel değerlendirme sona ermiştir. Şimdi panel raporu yazmaya başlayalım...Panel raporu yazma penceresi açılacaktır. Lütfen bekleyiniz...";
+                              io.sockets.adapter.rooms[room].non_criteria_progress=0;
+                              msg["moderator"]={'reply':total_msg, 'panel_finished':1};
+                            }
+                            io.sockets.in(room).emit('chat message', msg);
+
+                  //total grade check end
 
 
                 }
@@ -185,7 +237,34 @@ const intervalObj = setInterval(() => {
                   //oy verenlerin toplanmasını bekliyoruz...
                 }
               }
-            else if(io.sockets.adapter.rooms[room].step>0 && (Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)//30 seconds
+            else if(io.sockets.adapter.rooms[room].non_criteria_progress==1 && (Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)
+            {
+              if(typeof io.sockets.adapter.rooms[room].step_non_criteria==="undefined")
+              {
+                io.sockets.adapter.rooms[room].step_non_criteria=1;
+              }
+              if(non_criteria.length>=io.sockets.adapter.rooms[room].step_non_criteria)
+              {
+                var non_criteria_name=non_criteria[io.sockets.adapter.rooms[room].step_non_criteria];
+                var msg={};
+                msg["moderator"]={'reply':'Şimdi '+non_criteria_name+' bölümüne geçiyoruz! Bu bölümle alakalı yorum yaparken her bir yorumunuzu lütfen bir cümlede ifade ediniz!'};
+                io.sockets.in(room).emit('chat message', msg);
+                io.sockets.adapter.rooms[room].step_non_criteria++;            
+              }
+              else
+              {
+                var msg={};
+                msg["moderator"]={'reply':'Bilimsel değerlendirme sona ermiştir. Şimdi panel raporu yazmaya başlayalım...Panel raporu yazma penceresi açılacaktır. Lütfen bekleyiniz...','panel_finished':1};
+                io.sockets.in(room).emit('chat message', msg);
+              }
+            }
+            else if(io.sockets.adapter.rooms[room].step==criteria.criteria.length+1)//last message
+            {
+                var msg={};
+                msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
+                io.sockets.in(room).emit('chat message', msg);
+            }
+            else if(io.sockets.adapter.rooms[room].step>0 && io.sockets.adapter.rooms[room].step<=criteria.criteria.length && (Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)//30 seconds
             {
               var criteria_sub=criteria.criteria[io.sockets.adapter.rooms[room].step-1];
               var criteria_op=criteria_sub.criteria_op;
@@ -194,17 +273,17 @@ const intervalObj = setInterval(() => {
               var criteria_value_max=criteria_sub.criteria_value_max;
               var criteria_value_min=criteria_sub.criteria_value_min;
               var msg={};
-               if(io.sockets.adapter.rooms[room].step<criteria.criteria.length)
-               {
-                  msg["moderator"]={'reply':'Şimdi '+criteria_name+' bölümüne geçiyoruz! Bu bölümle alakalı yorum yaparken her bir yorumunuzu lütfen yorumlarınızı bir cümlede ifade ediniz!'};
+               /*if(io.sockets.adapter.rooms[room].step<=criteria.criteria.length)
+               {*/
+                  msg["moderator"]={'reply':'Şimdi '+criteria_name+' bölümüne geçiyoruz! Bu bölümle alakalı yorum yaparken her bir yorumunuzu lütfen bir cümlede ifade ediniz!'};
                   io.sockets.in(room).emit('chat message', msg);
                   io.sockets.adapter.rooms[room].step++;
-               }
+               /*}
                else
                {
                   msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
                   io.sockets.in(room).emit('chat message', msg);
-               }
+               }*/
               io.sockets.adapter.rooms[room].timestamp=Math.floor(Date.now() / 1000);
 
             }
