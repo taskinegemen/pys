@@ -7,6 +7,9 @@ const RiveScript = require('rivescript');
 
 
 Promise.prototype.isPending = function(){ return util.inspect(this).indexOf("<pending>")>-1; }
+/*Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};*/
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -125,17 +128,22 @@ const intervalObj = setInterval(() => {
             var criteria=JSON.parse(criteria);
             var non_criteria=criteria.non_criteria;
             //console.log("CRITERIA INT=>",criteria);
-            if(io.sockets.adapter.rooms[room].length>=criteria.others.total_panelist && typeof io.sockets.adapter.rooms[room].step ==="undefined")
+            if(io.sockets.adapter.rooms[room].panel_finished==1)
+            {
+            console.log("Bu odadaki["+room+"] panel son ermiştir");
+            }
+            else if(io.sockets.adapter.rooms[room].length>=criteria.others.total_panelist && typeof io.sockets.adapter.rooms[room].step ==="undefined")
               {
                 console.log("oda doldu ya la! ilk mesajı yolla");
                 var msg={};
                 io.sockets.adapter.rooms[room].grades=[];
+                io.sockets.adapter.rooms[room].grades_who=[];
                 msg["moderator"]={'reply':'Sayın panelistler, bahsi geçen proje önerisinin bilimsel değerlendirmesine başlıyoruz...Hoşgeldiniz!'};
                 io.sockets.in(room).emit('chat message', msg);
                 io.sockets.adapter.rooms[room].step=1;//pass to next step;
                 io.sockets.adapter.rooms[room].timestamp=Math.floor(Date.now() / 1000);
               }
-              else if(io.sockets.adapter.rooms[room].grades.length>0 && typeof io.sockets.adapter.rooms[room].non_criteria_progress==="undefined")
+              else if(io.sockets.adapter.rooms[room].grades.length>0 && (typeof io.sockets.adapter.rooms[room].non_criteria_progress==="undefined"))
               {
                 var grades=io.sockets.adapter.rooms[room].grades;
                 var total_grades=[];
@@ -164,6 +172,7 @@ const intervalObj = setInterval(() => {
                             var total_msg="";
                             var passquestion_criteria=0;
                             var passquestion_total=0;
+                            var table="";
                             for(var eval_criteria in total_grades)
                             {
                               //console.log("1.EVAL CRITERIA",eval_criteria);
@@ -175,6 +184,7 @@ const intervalObj = setInterval(() => {
                                   console.log("whole criteria",criteria.criteria[m]);
                                   var eval_op=criteria.criteria[m].criteria_op;
                                   var eval_val=criteria.criteria[m].criteria_value;
+                                  table+="<tr><td>"+criteria.criteria[m].criteria_name+"</td><td>"+total_grades[eval_criteria]+"</td></tr>";
                                   console.log("EVAL",eval_val,eval_op,total_grades[eval_criteria]);
                                   if(typeof eval_op !=="undefined" && typeof eval_val!=="undefined")
                                   {
@@ -200,6 +210,7 @@ const intervalObj = setInterval(() => {
                             var criteria_overall=criteria.criteria_overall;
                             var overall_op=criteria_overall.criteria_op;
                             var overall_value=criteria_overall.criteria_value;
+                            table+="<tr><td>Toplam Puan:</td><td>"+total_grades_total+"</td></tr>";
                             if(eval(total_grades_total+overall_op+overall_value))
                             {
                               total_msg+="Toplam puan için belirlenen <b>"+overall_value+"</b> puanı üstünde bir puan("+total_grades_total+") almıştır.<br><br>";
@@ -218,14 +229,18 @@ const intervalObj = setInterval(() => {
 
                               total_msg+="Destek çıtasının üzerinde bir puan almasından dolayı projenin diğer kriterleri hakkında yorum yapmaya devam edeceğiz.<br>";
                               io.sockets.adapter.rooms[room].non_criteria_progress=1;
+                              total_msg+="<br><table border='1'>"+table+"</table>";
                               msg["moderator"]={'reply':total_msg};
                             }
                             else
                             {
                               total_msg+="Destek çıtasının altında bir puan almıştır. Bilimsel değerlendirme sona ermiştir. Şimdi panel raporu yazmaya başlayalım...Panel raporu yazma penceresi açılacaktır. Lütfen bekleyiniz...";
                               io.sockets.adapter.rooms[room].non_criteria_progress=0;
+                              total_msg+="<br><table border='1'>"+table+"</table>";
                               msg["moderator"]={'reply':total_msg, 'panel_finished':1};
+                              io.sockets.adapter.rooms[room].panel_finished=1;  
                             }
+                            io.sockets.adapter.rooms[room].timestamp=Math.floor(Date.now() / 1000); 
                             io.sockets.in(room).emit('chat message', msg);
 
                   //total grade check end
@@ -235,32 +250,71 @@ const intervalObj = setInterval(() => {
                 else
                 {
                   //oy verenlerin toplanmasını bekliyoruz...
+                var msg={};
+                /*var sockets_in_room=[];
+                for(var socket_in_room in io.sockets.adapter.rooms[room].sockets)
+                {
+                  sockets_in_room.push(socket_in_room);
+                }
+                console.log("SOCKETS IN ROOMS",sockets_in_room);
+                var not_yet_received_grades=sockets_in_room.diff(io.sockets.adapter.rooms[room].grades_who);
+                var not_yet_received_grades_reverse=io.sockets.adapter.rooms[room].grades_who.diff(sockets_in_room);
+                not_yet_received_grades=not_yet_received_grades.concat(not_yet_received_grades_reverse);
+                for(var not_yet=0; not_yet<not_yet_received_grades.length;not_yet++)
+                {
+                  msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
+                  io.to(not_yet_received_grades[not_yet]).emit('chat message', msg);
+                }*/
+                msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
+                io.sockets.in(room).emit('chat message', msg);
+
                 }
               }
-            else if(io.sockets.adapter.rooms[room].non_criteria_progress==1 && (Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)
+            else if(io.sockets.adapter.rooms[room].non_criteria_progress==1)
             {
-              if(typeof io.sockets.adapter.rooms[room].step_non_criteria==="undefined")
+              if(Math.floor(Date.now() / 1000)-(io.sockets.adapter.rooms[room].timestamp>30))
               {
-                io.sockets.adapter.rooms[room].step_non_criteria=1;
-              }
-              if(non_criteria.length>=io.sockets.adapter.rooms[room].step_non_criteria)
-              {
-                var non_criteria_name=non_criteria[io.sockets.adapter.rooms[room].step_non_criteria];
-                var msg={};
-                msg["moderator"]={'reply':'Şimdi '+non_criteria_name+' bölümüne geçiyoruz! Bu bölümle alakalı yorum yaparken her bir yorumunuzu lütfen bir cümlede ifade ediniz!'};
-                io.sockets.in(room).emit('chat message', msg);
-                io.sockets.adapter.rooms[room].step_non_criteria++;            
-              }
-              else
-              {
-                var msg={};
-                msg["moderator"]={'reply':'Bilimsel değerlendirme sona ermiştir. Şimdi panel raporu yazmaya başlayalım...Panel raporu yazma penceresi açılacaktır. Lütfen bekleyiniz...','panel_finished':1};
-                io.sockets.in(room).emit('chat message', msg);
+
+              
+                if(typeof io.sockets.adapter.rooms[room].step_non_criteria==="undefined")
+                {
+                  io.sockets.adapter.rooms[room].step_non_criteria=1;
+                }
+                if(non_criteria.length>=io.sockets.adapter.rooms[room].step_non_criteria)
+                {
+                  var non_criteria_name=non_criteria[io.sockets.adapter.rooms[room].step_non_criteria-1].non_criteria_name;
+                  var msg={};
+                  msg["moderator"]={'reply':'Şimdi '+non_criteria_name+' bölümüne geçiyoruz! Bu bölümle alakalı yorum yaparken her bir yorumunuzu lütfen bir cümlede ifade ediniz!'};
+                  io.sockets.in(room).emit('chat message', msg);
+                  io.sockets.adapter.rooms[room].step_non_criteria++; 
+                  io.sockets.adapter.rooms[room].timestamp=Math.floor(Date.now() / 1000); 
+                }
+                else
+                {
+                  var msg={};
+                  msg["moderator"]={'reply':'Bilimsel değerlendirme sona ermiştir. Şimdi panel raporu yazmaya başlayalım...Panel raporu yazma penceresi açılacaktır. Lütfen bekleyiniz...','panel_finished':1};
+                  io.sockets.in(room).emit('chat message', msg);
+                  io.sockets.adapter.rooms[room].panel_finished=1; 
+                }
               }
             }
             else if(io.sockets.adapter.rooms[room].step==criteria.criteria.length+1)//last message
             {
                 var msg={};
+                /*var sockets_in_room=[];
+                for(var socket_in_room in io.sockets.adapter.rooms[room].sockets)
+                {
+                  sockets_in_room.push(socket_in_room);
+                }
+                console.log("SOCKETS IN ROOMS",sockets_in_room);
+                var not_yet_received_grades=sockets_in_room.diff(io.sockets.adapter.rooms[room].grades_who);
+                var not_yet_received_grades_reverse=io.sockets.adapter.rooms[room].grades_who.diff(sockets_in_room);
+                not_yet_received_grades=not_yet_received_grades.concat(not_yet_received_grades_reverse);
+                for(var not_yet=0; not_yet<not_yet_received_grades.length;not_yet++)
+                {
+                  msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
+                  io.to(not_yet_received_grades[not_yet]).emit('chat message', msg);
+                }*/
                 msg["moderator"]={'reply':'Tüm bölümlerin değerlendirmesini tamamlamış bulunuyoruz. Aşağıda verilen oy pusulalarını işaretleyiniz!','proposal_id':room.replace("form_","")};
                 io.sockets.in(room).emit('chat message', msg);
             }
@@ -343,6 +397,7 @@ io.on('connection', function(socket){
   	con.query(sql, function (err, result) {
     	if (err) throw err;
     	msg_processed["conversation_id"]=result.insertId;
+      msg_processed["socket_id"]=socket.id;
     	//console.log("before:1 record inserted",result,result.affectedRows);
     	//var sql="INSERT INTO conversation_status(conversation_user_conversation_id,conversation_user_user_id) VALUES ("+msg_processed.conversation_id+","+msg_processed.user_id+");";
     	//con.query(sql,function(err,result){});
@@ -352,6 +407,7 @@ io.on('connection', function(socket){
       {
         console.log("GRADES=>",msg_processed,msg_processed.grades);
         io.sockets.adapter.rooms["room_"+msg_processed["proposal_id"]].grades.push(msg_processed.grades);
+        io.sockets.adapter.rooms["room_"+msg_processed["proposal_id"]].grades_who.push(msg_processed.socket_id);
       }
       else
       {

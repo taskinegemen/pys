@@ -1826,8 +1826,9 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
         var grading='';
         var root_grading='';
         message_mod='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+moderator_reply+'</div></div><div class="chat-time">'+_time+'</div></li>';
-        if(typeof moderator_proposal_id !== "undefined")//eğer, son aşamaya geçildiyse oylama ekranı belirmelidir...
+        if(typeof moderator_proposal_id !== "undefined" && $("#chat_correspondence").find("#"+Window.socket.id).length==0)//eğer, son aşamaya geçildiyse oylama ekranı belirmelidir...
         {
+            message_mod='<li id="li_'+Window.socket.id+'"><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+moderator_reply+'</div></div><div class="chat-time">'+_time+'</div></li>';
             console.log("Son aşama=>",moderator_proposal_id);
             var criteria=window.evaluation_criteria.criteria;
             var criteria_overall=window.evaluation_criteria.criteria_overall;
@@ -1847,11 +1848,9 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
                 grading='';
             }
             root_grading+='<button type="button" id="send_grades" class="btn btn-block btn-lg btn-info">Oylamayı Bitir</button>';
-            message_mod+='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+root_grading+'</div></div><div class="chat-time">'+_time+'</div></li>';
-        }
-
-        $('#chat_correspondence').append(message_mod);
-        $('#send_grades').click(function(event) {
+            message_mod+='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div id="'+Window.socket.id+'" class="box bg-light-inverse" style="'+window.user_gradients+'">'+root_grading+'</div></div><div class="chat-time">'+_time+'</div></li>';
+            $('#chat_correspondence').append(message_mod);
+                    $('#send_grades').click(function(event) {
               var grades=[];
               $('.grades_radios:checked').each(function(){
                 grades.push(parseInt($(this).val()));
@@ -1862,10 +1861,19 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
             grades:grades};
             Window.socket.emit('chat message', message);
             console.log("message sent!");
-                
-            
+            });
+        }
+        else if(typeof moderator_proposal_id !== "undefined" && $("#chat_correspondence").find("#li_"+Window.socket.id).length>0)
+        {
+            //do nothing...
+        }
+        else
+        {
+            $('#chat_correspondence').append(message_mod);
+        }
 
-        });
+
+
         
     }
       
