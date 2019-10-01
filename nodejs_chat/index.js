@@ -128,6 +128,9 @@ const intervalObj = setInterval(() => {
             var criteria=JSON.parse(criteria);
             var non_criteria=criteria.non_criteria;
             //console.log("CRITERIA INT=>",criteria);
+
+            try{
+
             if(io.sockets.adapter.rooms[room].panel_finished==1)
             {
             console.log("Bu odadaki["+room+"] panel son ermiştir");
@@ -272,7 +275,7 @@ const intervalObj = setInterval(() => {
               }
             else if(io.sockets.adapter.rooms[room].non_criteria_progress==1)
             {
-              if(Math.floor(Date.now() / 1000)-(io.sockets.adapter.rooms[room].timestamp>30))
+              if((Math.floor(Date.now() / 1000)-io.sockets.adapter.rooms[room].timestamp)>30)
               {
 
               
@@ -343,7 +346,18 @@ const intervalObj = setInterval(() => {
             }
             console.log(room,"room=>",rooms[room]);
             console.log("clients=>",io.sockets.adapter.rooms[room]);
+            }//try ends
+            catch(err){
+              console.log("ERROR|TRY|CATCH=>",err.message);
+            }
+            //initial if statement ends
+
+
+
           }
+
+
+
         }
     } 
 

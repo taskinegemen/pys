@@ -202,10 +202,29 @@ class SiteController extends Controller
             ])->one();
             $step2Accept->userproposal_available_time=$userproposal_available_time;
             $step2Accept->userproposal_step="2";
-            $step2Accept->userproposal_acceptance_status="Kabül";
+            $step2Accept->userproposal_acceptance_status="Kabul";
             if(!$step2Accept->update())
             {
                 print_r($step2Accept->getErrors());
+            }
+            Yii::$app->response->redirect(['site/mytasks','proposal_id' => $proposal_id]);
+        }
+        if(Yii::$app->request->post('proposal_id') && Yii::$app->request->post('annotation_step'))
+        {
+            $proposal_id=Yii::$app->request->post('proposal_id');
+            $annotation_step=Yii::$app->request->post('annotation_step');
+            if($annotation_step==1)
+            {
+                $step3Accept=Userproposal::find()->where(
+                    [
+                        'userproposal_proposal_id' => $proposal_id,
+                        'userproposal_user_id' => Yii::$app->user->identity->user_id
+                ])->one();
+                $step3Accept->userproposal_step="3";
+                if(!$step3Accept->update())
+                {
+                    print_r($step3Accept->getErrors());
+                }
             }
             Yii::$app->response->redirect(['site/mytasks','proposal_id' => $proposal_id]);
         }
@@ -255,10 +274,18 @@ class SiteController extends Controller
                                                     'userproposal_user_id' => Yii::$app->user->identity->user_id,
                                                     'userproposal_proposal_id'=>$userproposal_proposal_id,
                                                 ])->one();
+        //echo print_r($proposal);
+        //echo $userproposal_acceptance_status;
+        //die();
         if($proposal)
         {
             $proposal->userproposal_acceptance_status=$userproposal_acceptance_status;
-            $proposal->save();
+
+            if(!$proposal->save())
+            {
+                print_r($proposal->getErrors());
+                die();
+            }
             $this->redirect('mytasks');
         }
 

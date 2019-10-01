@@ -453,7 +453,7 @@ $this->title = 'My Tasks';
 
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Template Demos</span></a>
+                        <!--<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Template Demos</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="../minisidebar/index.html">Minisidebar</a></li>
                                 <li><a href="../horizontal/index2.html">Horizontal</a></li>
@@ -645,7 +645,7 @@ $this->title = 'My Tasks';
                                 </li>
                                 <li><a href="#">item 1.4</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -752,7 +752,17 @@ $this->title = 'My Tasks';
                                                         <td><?php echo $proposal->userproposalProposal->proposal_title; ?></td>
                                                         <td>Diğer aşamalarda belirlenecektir!<!--<?php print_r($proposal->userproposal_available_time);?>--></span></td>
                                                         <td>
-                                                            <a href="/site/mytasks?proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Kabul"><i class="mdi mdi-checkbox-marked-circle-outline"></i></a> <a href="/site/userproposalacceptancestatus?userproposal_acceptance_status=Ret&userproposal_proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Ret"><i class="mdi mdi-close-octagon-outline"></i></a>
+                                                            <?php
+                                                            if($proposal->userproposal_acceptance_status=="Kabul")
+                                                            { 
+                                                                echo '<a href="/site/mytasks?proposal_id='.$proposal->userproposalProposal->proposal_id.'" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Aç"><i class="mdi mdi-lock-open-outline"></i></a>';
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<a href="" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Kapa"><i class="mdi mdi-lock-outline"></i></a>';                                                                
+                                                            }
+                                                            ?>
+                                                            <a href="/site/userproposalacceptancestatus?userproposal_acceptance_status=Kabul&userproposal_proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse p-r-10" data-toggle="tooltip" title="" data-original-title="Kabul"><i class="mdi mdi-checkbox-marked-circle-outline"></i></a> <a href="/site/userproposalacceptancestatus?userproposal_acceptance_status=Ret&userproposal_proposal_id=<?php echo $proposal->userproposalProposal->proposal_id; ?>" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Ret"><i class="mdi mdi-close-octagon-outline"></i></a>
                                                             <span class="label label-<?php echo Helper::helperStatus($proposal->userproposal_acceptance_status);?>
                                                              font-weight-100"><?php echo $proposal->userproposal_acceptance_status;?></span>
                                                         </td>
@@ -1217,6 +1227,10 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                               </div>
                             </div>
                         </div>
+                        <p align="right">
+                            <br>
+                            <button type="button" style="width:auto;" id="pass_to_step3" class="btn btn-block btn-info">Bilimsel Değerlendirmeye Geç</button>
+                        </p>
                     </div>
                 </div>
 
@@ -1237,9 +1251,9 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                         <div class="card-actions">
                                             <a class="" data-action="collapse"><i class="ti-<?php 
                                              if ($selected_proposal->proposal_id && isset($selected_userproposal)){
-                                                if($selected_userproposal->userproposal_step>=2)
+                                                if($selected_userproposal->userproposal_step>=3)
                                                 {
-                                                    echo "plus";
+                                                    echo "plus";//
                                                 }
                                                 else 
                                                 {
@@ -1253,11 +1267,17 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                         <h4 class="card-title m-b-0"><span class="round round-info">4</span> Bilimsel Değerlendirme </h4>
                                     </div>
                                     <div class="card-body collapse <?php if ($selected_proposal->proposal_id && isset($selected_userproposal)){
-                                        if((int)$selected_userproposal->userproposal_step>=2)
+                                        
+                                        if((int)$selected_userproposal->userproposal_step>=3)
                                                 echo "show";
 
                                     } ?>">
                             <!-- .chat-row -->
+                                <form action="" name="annotation_form" id="annotation_form" method="post">
+                                    <input type="hidden" id="proposal_id" name="proposal_id" value="<?php if($selected_proposal){echo $selected_proposal->proposal_id;}?>" >
+                                    <input type="hidden" id="annotation_step" name="annotation_step" value="1">
+                                     <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+                                </form>
                             <div class="chat-main-box">
                                 <!-- .chat-left-panel -->
                                 <div class="chat-left-aside">
@@ -1333,13 +1353,13 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions">
-                                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                                            <a class="" data-action="collapse"><i class="ti-plus"></i></a>
                                             <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
                                             <!--<a class="btn-close" data-action="close"><i class="ti-close"></i></a>-->
                                         </div>
                                         <h4 class="card-title m-b-0"><span class="round round-info">5</span>Panel Raporu</h4>
                                     </div>
-                                    <div class="card-body collapse show">
+                                    <div id="panel_raporu_gorunum" class="card-body collapse hide">
                                         <div id="panel_raporu"></div>
                                     </div>
                                 </div>
@@ -1384,13 +1404,13 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h4 class="modal-title">
-                                    <strong>Add Event</strong>
+                                    <strong>Panel Tarihi Ekle</strong>
                                 </h4>
                             </div>
                             <div class="modal-body"></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
+                                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">Kapat</button>
+                                <button type="button" class="btn btn-success save-event waves-effect waves-light">Ekle</button>
                                 <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
                             </div>
                         </div>
@@ -1495,6 +1515,7 @@ Proje ekibinde yer alan kişilerin aynı veya benzer içerikli projelerinin, ulu
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/jquery-ui.min.js"></script>
     <script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/fullcalendar.min.js"></script>
     <!--<script src="<?php echo Yii::$app->homeUrl;?>assets/plugins/calendar/dist/cal-init.js"></script>-->
+
     <script src="<?php echo Yii::$app->homeUrl;?>js/chat.js"></script>
     
 
@@ -1768,10 +1789,12 @@ jQuery.ajaxSetup({async:true});
 
 //$("#calendar .fc-agendaWeek-button").click();
 
- Window.socket = io.connect('http://167.71.254.111',{path: '/octagon/socket.io', query: "room_id="+window.proposal_id});
+if(userproposal_step==3)
+{
+    Window.socket = io.connect('http://167.71.254.111',{path: '/octagon/socket.io', query: 'room_id='+window.proposal_id});
   //Window.socket = io.connect('http://167.71.254.111',{path: '/nodejs/socket.io'});
-   Window.socket.on('chat message', function(msg){
-    console.log("retrieved msg",msg);
+Window.socket.on('chat message', function(msg){
+console.log("retrieved msg",msg);
 
 
     var dt = new Date();
@@ -1823,6 +1846,7 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
     {
         var moderator_reply=moderator.reply;
         var moderator_proposal_id=moderator.proposal_id;
+        var moderator_panel_finished=moderator.panel_finished;
         var grading='';
         var root_grading='';
         message_mod='<li><div class="chat-img"><span class="round" style="'+window.user_gradients+'"><img style="width:35px;" src="/assets/images/users/user.png" alt="user" /></span></div><div class="chat-content"><h5>Moderatör: '+'<?php echo "egemen";?>'+'</h5><div class="box bg-light-inverse" style="'+window.user_gradients+'">'+moderator_reply+'</div></div><div class="chat-time">'+_time+'</div></li>';
@@ -1872,6 +1896,11 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
             $('#chat_correspondence').append(message_mod);
         }
 
+        if(moderator_panel_finished==1)
+        {
+            $('#panel_raporu_gorunum').removeClass('hide').addClass('show');
+        }
+
 
 
         
@@ -1910,8 +1939,10 @@ console.log("USER ID issue=>",user_id,window.userIdGlobal);
             }
 
 
+
     });
 
+}
 
 $('#send_message').click(function(event){
     event.preventDefault();
@@ -1968,6 +1999,10 @@ $.ajax({
     $("#chatonline li").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
+  });
+
+  $("#pass_to_step3").click(function(){
+        $("#annotation_form").submit();
   });
 
 
